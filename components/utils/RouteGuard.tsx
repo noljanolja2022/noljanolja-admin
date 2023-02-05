@@ -28,7 +28,7 @@ export default function RouteGuard({ children }) {
 
     function authCheck(url) {
         // redirect to login page if accessing a private page and not logged in 
-        const publicPaths = ['/login'];
+        const publicPaths = ['/login', '/login/signin', '/login/signup'];
         const path = url.split('?')[0];
         const token = AuthService.getToken();
         if (!token && !publicPaths.includes(path)) {
@@ -39,6 +39,11 @@ export default function RouteGuard({ children }) {
             });
         } else {
             setAuthorized(true);
+            if (publicPaths.includes(path)) {
+                router.push({
+                    pathname: '/',
+                }); 
+            }
         }
     }
 

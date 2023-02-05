@@ -9,5 +9,5 @@ const FirebaseCredentials: firebase.FirebaseOptions = {
 }
 // if a Firebase instance doesn't exist, create one
 const firebaseApp = firebase.initializeApp(FirebaseCredentials)
-getAuth(firebaseApp)
+export const firebaseAuthInstance = getAuth(firebaseApp)
 export const googleProvider = new GoogleAuthProvider();
