@@ -1,6 +1,8 @@
 import { Router, useRouter } from "next/router";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
+import { signOut } from "firebase/auth";
+import { firebaseAuthInstance } from "../services/FirebaseService";
 
 function Home() {
     const router = useRouter();
@@ -11,7 +13,11 @@ function Home() {
             <button className='border-1 bg-yellow-200 p-2 rounded-md' onClick={() => {
                 AuthService.clearToken();
                 UserService.saveUser(null);
-                router.replace('/login')
+                signOut(firebaseAuthInstance).then(() => {
+                    router.push({ pathname: '/login' })
+                }).catch(err => {
+                    alert(err)
+                })
             }}>Logout </button>
         </div>
     )
