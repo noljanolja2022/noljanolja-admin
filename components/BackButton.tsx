@@ -1,12 +1,11 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useRouter } from 'next/dist/client/router';
-
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 function BackButton() {
     const router = useRouter();
 
     return (
         <span className='cursor-pointer' onClick={() => router.back()}>
-            <ArrowBackIcon className='mr-1'/>
+            <AiOutlineArrowLeft className='mr-1' />
             Back
         </span>
     )

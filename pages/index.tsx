@@ -14,7 +14,7 @@ function Home() {
                 AuthService.clearToken();
                 UserService.saveUser(null);
                 signOut(firebaseAuthInstance).then(() => {
-                    router.replace('/login')
+                    router.push({ pathname: '/login' })
                 }).catch(err => {
                     alert(err)
                 })

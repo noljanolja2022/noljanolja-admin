@@ -39,11 +39,11 @@ export default function RouteGuard({ children }) {
             });
         } else {
             setAuthorized(true);
-            if (publicPaths.includes(path)) {
-                router.push({
-                    pathname: '/',
-                }); 
-            }
+            // if (publicPaths.includes(path)) {
+            //     router.push({
+            //         pathname: '/',
+            //     }); 
+            // }
         }
     }
 
