@@ -1,5 +1,8 @@
 import client from 'Axios';
 import { GoogleProfile } from '../data/models/AuthModels';
+import { httpsCallable } from 'firebase/functions';
+import { firebaseFunctions } from './FirebaseService';
+import { AccountType } from '../data/enums/AccountType';
 
 class AuthService {
 
@@ -9,6 +12,19 @@ class AuthService {
                 Authorization: `Bearer ${accessToken}`
             }
         })
+    }
+
+    async getExchangedToken(token: string, provider: AccountType) {
+        httpsCallable(
+            firebaseFunctions,
+            `api/auth/${provider}`
+        )({
+            token
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        });
     }
 
     saveToken(token: string) {

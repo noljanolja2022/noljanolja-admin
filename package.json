@@ -17,9 +17,12 @@
         "firebase": "^9.17.1",
         "firebase-functions": "^3.23.0",
         "next": "^13.1.6",
+        "nprogress": "^0.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.7.1",
+        "react-kakao-login": "^2.1.1",
+        "react-naver-login": "^0.1.4",
         "typescript": "^4.9.5",
         "web-vitals": "^2.1.4"
     },

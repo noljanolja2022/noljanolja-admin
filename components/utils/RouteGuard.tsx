@@ -33,17 +33,17 @@ export default function RouteGuard({ children }) {
         const token = AuthService.getToken();
         if (!token && !publicPaths.includes(path)) {
             setAuthorized(false);
-            router.push({
+            router.replace({
                 pathname: '/login',
                 // query: { returnUrl: router.asPath }
             });
         } else {
             setAuthorized(true);
-            // if (publicPaths.includes(path)) {
-            //     router.push({
-            //         pathname: '/',
-            //     }); 
-            // }
+            if (token && publicPaths.includes(path)) {
+                router.replace({
+                    pathname: '/',
+                });
+            }
         }
     }
 

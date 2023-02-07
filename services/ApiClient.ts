@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'Axios';
 
 const axiosConfig: AxiosRequestConfig<any> = {
     // baseURL: `${process.env.REACT_APP_SERVER_PROTOCOL}://${process.env.REACT_APP_SERVER_HOST}/api/`,

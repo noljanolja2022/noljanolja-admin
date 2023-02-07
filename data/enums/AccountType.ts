@@ -1,3 +1,6 @@
 export enum AccountType {
-    GOOGLE, USERNAME_PASSWORD, KAKAO, NAVER
+    GOOGLE = 'Google', 
+    USERNAME_PASSWORD = 'Email/Password', 
+    KAKAO = 'Kakao', 
+    NAVER = 'Naver'
 }

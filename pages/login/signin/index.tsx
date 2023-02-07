@@ -3,12 +3,13 @@ import TextField from "@mui/material/TextField";
 import BackButton from "../../../components/BackButton";
 import { useEffect, useState } from "react";
 import { validateEmail } from "../../../utils/StringUtils";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/dist/client/router";
 import AuthService from "../../../services/AuthService";
 import UserService from "../../../services/UserService";
 import { AccountType } from "../../../data/enums/AccountType";
 import { firebaseAuthInstance } from "../../../services/FirebaseService";
+import AnalyticService from "../../../services/AnalyticService";
 
 function Signin() {
     const router = useRouter();
@@ -29,7 +30,8 @@ function Signin() {
                     accountType: AccountType.USERNAME_PASSWORD,
                     email: user.email
                 })
-                router.push({
+                AnalyticService.logLoginEvent('Email/Password')
+                router.replace({
                     pathname: '/',
                 });
             })
