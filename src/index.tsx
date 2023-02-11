@@ -10,21 +10,30 @@ import {
 } from "react-router-dom";
 import LoginPage from './ui/login/LoginPage';
 import PrivateRoute from './ui/widget/PrivateRoute';
+import './util/MultiLang';
+import { StyledEngineProvider } from '@mui/material/styles';
+import LoadingOverlay from './ui/widget/LoadingOverlay';
+import { AppContextProvider } from './context/AppContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<PrivateRoute />} >
-          <Route path='/' element={<Dashboard />} />
-        </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="*"
-          element={<Navigate to="/" replace />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <AppContextProvider>
+        <LoadingOverlay />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<PrivateRoute />} >
+              <Route path='/' element={<Dashboard />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="*"
+              element={<Navigate to="/" replace />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </AppContextProvider>
+    </StyledEngineProvider>
   </React.StrictMode>
 );
 

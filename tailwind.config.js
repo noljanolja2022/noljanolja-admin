@@ -3,8 +3,12 @@ module.exports = {
     content: [
         "./src/**/*.{ts,tsx}",
     ],
+    important: '#root',
     theme: {
         extend: {},
     },
     plugins: [],
+    corePlugins: {
+        preflight: false,
+    }
 }
