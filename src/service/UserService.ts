@@ -1,6 +1,4 @@
-import { AccountType } from "../data/enums/AccountType";
-import { ClientUser } from "../data/models/UserModels";
-
+import { ClientUser } from "../data/model/UserModels";
 class UserService {
     saveUser(user?: ClientUser) {
         if (user == null) {
@@ -8,16 +6,6 @@ class UserService {
         } else {
             localStorage.setItem("user", JSON.stringify(user));
         }
-    }
-
-    saveGoogleUser(id: string, name: string, email: string, picture: string) {
-        this.saveUser({
-            id: `google-${id}`,
-            name: name,
-            accountType: AccountType.GOOGLE,
-            email: email,
-            picture: picture
-        })
     }
 
     getUser(): ClientUser | null {

@@ -1,6 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-.skill-unit .bar .progress {
-    background: rgb(255, 251, 40);
-}
