@@ -1,7 +1,7 @@
 import { ClientUser } from "../data/model/UserModels";
 class UserService {
     saveUser(user?: ClientUser) {
-        if (user == null) {
+        if (user === null) {
             localStorage.removeItem("user")
         } else {
             localStorage.setItem("user", JSON.stringify(user));

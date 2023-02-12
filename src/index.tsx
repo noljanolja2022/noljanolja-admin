@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import Dashboard from './ui/dashboard/DashboardPage';
+import './style/index.css';
+import HomePage from './ui/home/HomePage';
 import reportWebVitals from './reportWebVitals';
 import {
   Navigate,
@@ -14,6 +14,9 @@ import './util/MultiLang';
 import { StyledEngineProvider } from '@mui/material/styles';
 import LoadingOverlay from './ui/widget/LoadingOverlay';
 import { AppContextProvider } from './context/AppContext';
+import DashBoard from './ui/home/dashboard/DashBoard';
+import ContentManagement from './ui/home/content-management/ContentManagement';
+import MembershipManagement from './ui/home/membership-management/MembershipManagement';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -23,9 +26,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <BrowserRouter>
           <Routes>
             <Route element={<PrivateRoute />} >
-              <Route path='/' element={<Dashboard />} />
+              <Route path='/' element={<HomePage />} >
+                <Route path='dashboard' element={<DashBoard />} />
+                <Route path='membership-management' element={<MembershipManagement />} />
+                <Route path='content-management' element={<ContentManagement />} />
+                <Route index element={<Navigate to='dashboard' />}/>
+              </Route>
             </Route>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="login" element={<LoginPage />} />
             <Route
               path="*"
               element={<Navigate to="/" replace />}

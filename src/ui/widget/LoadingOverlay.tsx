@@ -10,7 +10,7 @@ type LoadingProps = {
 function LoadingOverlay(props: LoadingProps) {
     const { viewState } = useContext(AppContext);
 
-    return (viewState == ViewState.LOADING ?
+    return (viewState === ViewState.LOADING ?
         <div style={{
             position: 'fixed',
             left: 0,

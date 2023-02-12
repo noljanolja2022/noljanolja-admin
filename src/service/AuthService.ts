@@ -1,6 +1,7 @@
 import { httpsCallable } from 'firebase/functions';
-import { firebaseFunctions } from './FirebaseService';
+import { firebaseAuthInstance, firebaseFunctions } from './FirebaseService';
 import api from './ApiClient';
+import { signOut } from 'firebase/auth';
 
 class AuthService {
     saveToken(token: string) {
@@ -13,6 +14,11 @@ class AuthService {
 
     clearToken() {
         localStorage.removeItem('token');
+    }
+
+    async onLogout() {
+        this.clearToken();
+        return signOut(firebaseAuthInstance)
     }
 }
 

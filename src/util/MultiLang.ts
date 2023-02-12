@@ -11,7 +11,11 @@ i18n.use(initReactI18next).init({
     resources: {
         en: {
             translation: {
-                label_signin: "Signin",
+                label_login: "Login",
+                label_logout: "Logout",
+
+                label_home: "Dashboard",
+                label_membership: "Membership",
                 hint_pls_enter_id: "Please enter your username",
                 hint_pls_enter_pwd: "Please enter your password",
 
@@ -22,7 +26,10 @@ i18n.use(initReactI18next).init({
         },
         kr: {
             translation: {
-                label_signin: "로그인",
+                label_login: "로그인",
+                label_logout: "로그아웃",
+                label_home: "대시보드",
+                label_membership: "회원 관리",
                 hint_pls_enter_id: "아이디를 입력하세요",
                 hint_pls_enter_pwd: "비밀번호를 입력하세요",
 

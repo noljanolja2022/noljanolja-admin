@@ -8,7 +8,7 @@ import { useState, useContext } from "react";
 import { validateEmail } from "../../util/StringUtils";
 import { Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { PrimaryTextField } from "../widget/MaterialTextField";
+import { PrimaryTextField } from "../widget/MuiTextField";
 import { AppContext } from "../../context/AppContext";
 import { ViewState } from "../../data/enum/ViewState";
 import { parseFirebaseErr } from "../../util/ErrorMapper";
@@ -26,8 +26,8 @@ function LoginPage() {
 
     const onSignin = () => {
         setResError('')
-        const usrErr = userName.length == 0 ? 'Username is invalid' : '';
-        const pwdErr = pwd.length == 0 ? 'Password is invalid' : '';
+        const usrErr = userName.length === 0 ? 'Username is invalid' : '';
+        const pwdErr = pwd.length === 0 ? 'Password is invalid' : '';
         setUNError(usrErr);
         setPwdError(pwdErr);
         if (usrErr || pwdErr) {
@@ -54,7 +54,7 @@ function LoginPage() {
     return (
         <div className='w-screen h-screen bg-black flex flex-col justify-center items-center'>
             <div className="bg-white flex flex-col w-96 py-8 px-16 rounded-2xl justify-center">
-                <img src="pp-yy-logo.png" />
+                <img src="pp-yy-logo.png" alt="App Logo" />
                 <Divider />
                 <PrimaryTextField id="input-email"
                     label={t('hint_pls_enter_id')} required
@@ -66,7 +66,10 @@ function LoginPage() {
                     className="mb-8 "
                     value={pwd} error={pwdError.length > 0} helperText={pwdError}
                     onChange={(event) => setpwd(event.target.value)} />
-                <button className="bg-black mb-4 rounded-lg text-white h-12" onClick={() => onSignin()} >{t('label_signin')}</button>
+                <button className="bg-black mb-4 rounded-lg text-white h-12"
+                    onClick={() => onSignin()} >
+                    {t('label_login')}
+                </button>
 
                 {resError.length > 0 && (<div className="text-red-500">
                     {resError}
