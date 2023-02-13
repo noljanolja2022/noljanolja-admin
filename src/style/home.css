@@ -1,0 +1,11 @@
+.sidebar-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 2.5rem;
+    gap: 0.5rem
+}
+
+.sidebar-item:hover {
+    background-color: gray;
+}

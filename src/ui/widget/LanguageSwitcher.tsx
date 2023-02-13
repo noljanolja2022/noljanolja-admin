@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { PrimaryToggleButton } from "./MuiButton";
 
 function LanguageSwitcher() {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const [curLang, setCurLang] = useState(i18n.language);
 
     useEffect(() => {
-        if (curLang != i18n.language) {
+        if (curLang !== i18n.language) {
             i18n.changeLanguage(curLang);
         }
     }, [curLang])

@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import LoginPage from './ui/login/LoginPage';
 import PrivateRoute from './ui/widget/PrivateRoute';
-import './util/MultiLang';
+import './util/translation/LanguageUtil';
 import { StyledEngineProvider } from '@mui/material/styles';
 import LoadingOverlay from './ui/widget/LoadingOverlay';
 import { AppContextProvider } from './context/AppContext';

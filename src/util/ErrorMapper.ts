@@ -1,4 +1,4 @@
-import i18n from './MultiLang';
+import i18n from './translation/LanguageUtil';
 
 export const parseFirebaseErr = (errorCode?: string) => {
     if (!errorCode) {

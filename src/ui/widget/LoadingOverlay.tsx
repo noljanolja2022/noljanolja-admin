@@ -2,12 +2,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { ViewState } from "../../data/enum/ViewState";
 
-type LoadingProps = {
-    text?: string;
-    isActive?: boolean;
-}
-
-function LoadingOverlay(props: LoadingProps) {
+function LoadingOverlay() {
     const { viewState } = useContext(AppContext);
 
     return (viewState === ViewState.LOADING ?
@@ -24,7 +19,7 @@ function LoadingOverlay(props: LoadingProps) {
             alignItems: 'center',
             zIndex: 99
         }}>
-            <img src="pp-yy-logo.png" className="app-logo"/>
+            <img src="pp-yy-logo.png" className="app-logo" alt="App Logo"/>
         </div>
         : null)
 }
