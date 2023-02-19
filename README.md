@@ -2,23 +2,40 @@
 
 Currently deployed on [Firebase](https://noljanolja2023.firebaseapp.com/)
 
+## Pre-requisite
+
+- [Nodejs](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+- [Gcloud CLI](https://cloud.google.com/sdk/docs/install)
+
 ## Quick start
 
-Before starting to do anything, run: 
-### `npm i`
+### `yarn`
 
-It will generate all required dependencies. (Of course, have npm installed first).\
+It will generate all required dependencies.\
 In the project directory, you can run:
 
-### `npm start`
+### `yarn start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:80](http://localhost:80) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm run deploy`
+## Deployment to firebase hosting
+
+### `yarn deploy`
 
 Builds the app for production to the `build` folder.\
 Then it will deploy to firebase automatically
+
+### Deployment to Google Kubernetes Engine
+
+Following this [Guide](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app) \
+anh this [Guide](https://jsramblings.com/dockerizing-a-react-app/)\
+
+After every components are installed, run:
+### `yarn deploy`
+
+This will build a docker image and published it to Google Artifact registry. Then replace the current deployment with new version

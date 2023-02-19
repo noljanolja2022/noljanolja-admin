@@ -7,6 +7,8 @@
     "hint_pls_enter_id": "아이디를 입력하세요",
     "hint_pls_enter_pwd": "비밀번호를 입력하세요",
 
+    "error_empty_email": "이메일은 비워둘 수 없습니다",
+    "error_empty_pwd": "비밀번호는 비워둘 수 없습니다",
     "error_invalid_email": "이메일이 유효하지 않습니다. 다시 시도해 주세요",
     "error_invalid_pwd": "비밀번호를 잘못 입력하셨습니다. 다시 시도해 주세요",
     "error_common": "오류가 발생했습니다"

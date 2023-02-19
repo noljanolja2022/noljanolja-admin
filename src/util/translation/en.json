@@ -7,6 +7,8 @@
     "hint_pls_enter_id": "Please enter your username",
     "hint_pls_enter_pwd": "Please enter your password",
 
+    "error_empty_email": "Email can't be empty",
+    "error_empty_pwd": "Password can't be empty",
     "error_invalid_email": "Email is invalid. Please try again",
     "error_invalid_pwd": "You have entered a wrong password. Please try again",
     "error_common": "An error has occurred"

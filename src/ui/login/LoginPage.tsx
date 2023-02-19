@@ -13,7 +13,7 @@ import { AppContext } from "../../context/AppContext";
 import { ViewState } from "../../data/enum/ViewState";
 import { parseFirebaseErr } from "../../util/ErrorMapper";
 
-function LoginPage() {
+export default function LoginPage() {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const { setViewState } = useContext(AppContext);
@@ -21,13 +21,12 @@ function LoginPage() {
     const [unError, setUNError] = useState('');
     const [pwd, setpwd] = useState('');
     const [pwdError, setPwdError] = useState('');
-
     const [resError, setResError] = useState('');
 
     const onSignin = () => {
         setResError('')
-        const usrErr = userName.length === 0 ? 'Username is invalid' : '';
-        const pwdErr = pwd.length === 0 ? 'Password is invalid' : '';
+        const usrErr = userName.length === 0 ? t('error_empty_email') : '';
+        const pwdErr = pwd.length === 0 ? t('error_empty_pwd') : '';
         setUNError(usrErr);
         setPwdError(pwdErr);
         if (usrErr || pwdErr) {
@@ -53,7 +52,7 @@ function LoginPage() {
 
     return (
         <div className='w-screen h-screen bg-black flex flex-col justify-center items-center'>
-            <div className="bg-white flex flex-col w-96 py-8 px-16 rounded-2xl justify-center">
+            <div className="bg-white flex flex-col md:w-96 w-56 py-8 md:px-16 px-8 rounded-2xl justify-center">
                 <img src="pp-yy-logo.png" alt="App Logo" />
                 <Divider />
                 <PrimaryTextField id="input-email"
@@ -85,5 +84,3 @@ function LoginPage() {
         </div>
     )
 }
-
-export default LoginPage;
