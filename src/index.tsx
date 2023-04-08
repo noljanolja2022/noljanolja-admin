@@ -13,7 +13,6 @@ import PrivateRoute from './ui/widget/PrivateRoute';
 import './util/translation/LanguageUtil';
 import { StyledEngineProvider } from '@mui/material/styles';
 import LoadingOverlay from './ui/widget/LoadingOverlay';
-import { AppContextProvider } from './context/AppContext';
 import DashBoard from './ui/home/dashboard/DashBoard';
 import ContentManagement from './ui/home/content-management/ContentManagement';
 import MembershipManagement from './ui/home/membership-management/MembershipManagement';
@@ -21,26 +20,24 @@ import MembershipManagement from './ui/home/membership-management/MembershipMana
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      <AppContextProvider>
-        <LoadingOverlay />
-        <BrowserRouter>
-          <Routes>
-            <Route element={<PrivateRoute />} >
-              <Route path='/' element={<HomePage />} >
-                <Route path='dashboard' element={<DashBoard />} />
-                <Route path='membership-management' element={<MembershipManagement />} />
-                <Route path='content-management' element={<ContentManagement />} />
-                <Route index element={<Navigate to='dashboard' />}/>
-              </Route>
+      <LoadingOverlay />
+      <BrowserRouter>
+        <Routes>
+          <Route element={<PrivateRoute />} >
+            <Route path='/' element={<HomePage />} >
+              <Route path='dashboard' element={<DashBoard />} />
+              <Route path='membership-management' element={<MembershipManagement />} />
+              <Route path='content-management' element={<ContentManagement />} />
+              <Route index element={<Navigate to='dashboard' />} />
             </Route>
-            <Route path="login" element={<LoginPage />} />
-            <Route
-              path="*"
-              element={<Navigate to="/" replace />}
-            />
-          </Routes>
-        </BrowserRouter>
-      </AppContextProvider>
+          </Route>
+          <Route path="login" element={<LoginPage />} />
+          <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+          />
+        </Routes>
+      </BrowserRouter>
     </StyledEngineProvider>
   </React.StrictMode>
 );

@@ -1,27 +1,12 @@
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
 import { ViewState } from "../../data/enum/ViewState";
+import { useLoading } from "../../state/LoadingState";
 
-function LoadingOverlay() {
-    const { viewState } = useContext(AppContext);
+export default function LoadingOverlay() {
+    const loadingState = useLoading();
 
-    return (viewState === ViewState.LOADING ?
-        <div style={{
-            position: 'fixed',
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 0,
-            flexGrow: 1,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 99
-        }}>
-            <img src="pp-yy-logo.png" className="app-logo" alt="App Logo"/>
+    return (loadingState.viewState === ViewState.LOADING &&
+        <div className="fixed left-0 top-0 right-0 bottom-0 flex-grow bg-[#00000080] flex justify-center items-center z-50">
+            <img src="pp-yy-logo.png" className="app-logo" alt="App Logo" />
         </div>
-        : null)
+    ) || null
 }
-
-export default LoadingOverlay;

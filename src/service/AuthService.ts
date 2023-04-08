@@ -1,19 +1,18 @@
-import { httpsCallable } from 'firebase/functions';
-import { firebaseAuthInstance, firebaseFunctions } from './FirebaseService';
-import api from './ApiClient';
+import { firebaseAuthInstance } from './FirebaseService';
 import { signOut } from 'firebase/auth';
+import { StorageKey } from '../util/Constants';
 
 class AuthService {
     saveToken(token: string) {
-        localStorage.setItem('token', token);
+        localStorage.setItem(StorageKey.bearer, token);
     }
 
     getToken() {
-        return localStorage.getItem('token');
+        return localStorage.getItem(StorageKey.bearer);
     }
 
     clearToken() {
-        localStorage.removeItem('token');
+        localStorage.removeItem(StorageKey.bearer);
     }
 
     async onLogout() {
@@ -21,5 +20,6 @@ class AuthService {
         return signOut(firebaseAuthInstance)
     }
 }
+const authService = new AuthService();
 
-export default new AuthService();
+export default authService;

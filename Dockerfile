@@ -14,7 +14,9 @@ ENV NODE_ENV production
 # Add your nginx.conf
 # Copy built assets from `react-build` image
 COPY --from=react-build /app/build /usr/share/nginx/html
+# Delete default config of nginx
 RUN rm /etc/nginx/conf.d/default.conf
+# Apply local nginx config
 COPY nginx.conf /etc/nginx/conf.d
 
 # Expose port

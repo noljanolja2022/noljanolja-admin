@@ -1,9 +1,12 @@
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { logEvent } from "firebase/analytics";
+import { firebaseAnalytics } from "./FirebaseService";
 
 class AnalyticService {
     logLoginEvent() {
-        logEvent(getAnalytics(), 'login')
+        logEvent(firebaseAnalytics, 'login')
     }
 }
 
-export default new AnalyticService();
+const analyticService = new AnalyticService();
+
+export default analyticService;

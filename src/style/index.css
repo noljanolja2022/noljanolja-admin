@@ -6,9 +6,9 @@ body {
     margin: 0;
 }
 
-#experiement {
-    color: rgb(179, 149, 105);
-}
+/* #experiement {
+    color: #00000080
+} */
 
 @media (prefers-reduced-motion: no-preference) {
     .app-logo {

@@ -1,3 +1,4 @@
+import { getAnalytics } from "firebase/analytics";
 import * as firebase from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFunctions } from 'firebase/functions';
@@ -14,8 +15,9 @@ const FirebaseCredentials: firebase.FirebaseOptions = {
 const appInstance = firebase.initializeApp(FirebaseCredentials)
 const firebaseAuthInstance = getAuth(appInstance)
 const firebaseFunctions = getFunctions(appInstance, process.env.REACT_APP_GOOGLE_FUNCTIONS_REGION);
-
+const firebaseAnalytics = getAnalytics(appInstance);
 export {
     firebaseAuthInstance,
     firebaseFunctions,
+    firebaseAnalytics
 }

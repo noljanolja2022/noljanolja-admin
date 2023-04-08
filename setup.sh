@@ -1,8 +1,5 @@
-VERSION=0.1.0
-CLUSTER_NAME=development-cluster
-REGION=asia-northeast3
-APP_NAME=app
-IMAGE_NAME=$REGION-docker.pkg.dev/noljanolja2023/noljanolja-admin/$APP_NAME:$VERSION
+APP_NAME=$1
+IMAGE_NAME=$2
 
 # Create a Kubernetes Deployment for your `app` Docker image.
 kubectl create deployment $APP_NAME --image=$IMAGE_NAME
@@ -17,7 +14,7 @@ kubectl autoscale deployment $APP_NAME --cpu-percent=80 --min=1 --max=5
 # kubectl get pods
 
 # Use the kubectl expose command to generate a Kubernetes Service for the app deployment:
-kubectl expose deployment $APP_NAME --name=admin-app-service --type=LoadBalancer --port 80 --target-port 80
+kubectl expose deployment $APP_NAME --name=$APP_NAME-service --type=LoadBalancer --port 80 --target-port 80
 
 # Get Current service (optional)
 # kubectl get service

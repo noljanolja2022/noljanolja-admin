@@ -1,22 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from '@firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@firebase/auth';
 import { firebaseAuthInstance } from '../../service/FirebaseService';
 import AuthService from "../../service/AuthService";
 import UserService from "../../service/UserService";
 import AnalyticService from "../../service/AnalyticService";
-import { useState, useContext } from "react";
-import { validateEmail } from "../../util/StringUtils";
+import { useState } from "react";
 import { Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { PrimaryTextField } from "../widget/MuiTextField";
-import { AppContext } from "../../context/AppContext";
 import { ViewState } from "../../data/enum/ViewState";
 import { parseFirebaseErr } from "../../util/ErrorMapper";
+import { useLoading } from "../../state/LoadingState";
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { setViewState } = useContext(AppContext);
+    const { setViewState } = useLoading();
     const [userName, setUserName] = useState('');
     const [unError, setUNError] = useState('');
     const [pwd, setpwd] = useState('');
@@ -35,15 +34,31 @@ export default function LoginPage() {
         setViewState(ViewState.LOADING)
         signInWithEmailAndPassword(firebaseAuthInstance, userName, pwd).then(userCredential => {
             const user = userCredential.user;
-            AuthService.saveToken(user.uid);
-            UserService.saveUser({
-                id: user.uid,
-                name: user.displayName || undefined,
-                email: user.email || undefined
+            user.getIdToken().then(firebaseToken => {
+                AuthService.saveToken(firebaseToken);
+                UserService.fetchUser().then(res => {
+                    if (res.isFailure()) {
+                        if (res.error?.name == "401001") {
+                            setResError("Your account doesn't have permission to access this. Please contact admin for support.")
+                        }
+                        return;
+                    }
+                    UserService.saveUser({
+                        id: user.uid,
+                        name: user.displayName || undefined,
+                        email: user.email || undefined,
+                        avatar: user.photoURL || undefined,
+                        phone: user.phoneNumber || undefined
+                    })
+                    AnalyticService.logLoginEvent();
+                    navigate('/', { replace: true });
+                }).catch(e => {
+                    console.log(e)
+                    AuthService.clearToken();
+                }).finally(() => {
+                    setViewState(ViewState.IDLE)
+                })
             })
-            AnalyticService.logLoginEvent()
-            setViewState(ViewState.SUCCESS);
-            navigate('/', { replace: true });
         }).catch((err: any) => {
             setViewState(ViewState.ERROR)
             setResError(parseFirebaseErr(err.code))
@@ -51,8 +66,8 @@ export default function LoginPage() {
     }
 
     return (
-        <div className='w-screen h-screen bg-black flex flex-col justify-center items-center'>
-            <div className="bg-white flex flex-col md:w-96 w-56 py-8 md:px-16 px-8 rounded-2xl justify-center">
+        <div className=' bg-black flex flex-col justify-center items-center overflow-y-auto min-h-screen'>
+            <div className="bg-white flex flex-col md:w-96 w-56 py-8 md:px-16 px-8 rounded-2xl my-4 justify-center">
                 <img src="pp-yy-logo.png" alt="App Logo" />
                 <Divider />
                 <PrimaryTextField id="input-email"
@@ -76,7 +91,7 @@ export default function LoginPage() {
 
                 <Divider className="mt-4" />
                 <div className="mt-3 text-xs text-[#BDBDBD]">
-                    (주)유니온콘텐츠 UnionContents   Co., Ltd<br />
+                    (주)유니온콘텐츠 UnionContents Co., Ltd<br />
                     TEL : 070-7700-1555<br />
                     ADRESS : 서울시 금천구 디지털로 121 에이스가산타워 906호
                 </div>
