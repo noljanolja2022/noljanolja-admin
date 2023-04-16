@@ -1,4 +1,5 @@
 import { Result } from '../data/model/Result';
+import { Video } from '../data/model/VideoModels';
 import api from './ApiClient';
 import parseResponse from './ResponseParse';
 
@@ -11,6 +12,26 @@ class MediaService {
                 "Content-Type": "multipart/form-data",
             }
         }))
+    }
+
+    async importVideo(youtubeUrl: string): Promise<Result<Video>> {
+        return parseResponse(await api.post('v1/media/videos', {
+            youtubeUrl: youtubeUrl,
+            isHighlighted: false
+        }))
+    }
+
+    async getVideoList(page: number = 1, pageSize: number = 10): Promise<Result<Array<Video>>> {
+        return parseResponse(await api.get('v1/media/videos', {
+            params: {
+                page,
+                pageSize
+            }
+        }))
+    }
+
+    async deleteVideo(videoId: string) {
+        return parseResponse(await api.delete(`v1/media/videos/${videoId}`))
     }
 }
 

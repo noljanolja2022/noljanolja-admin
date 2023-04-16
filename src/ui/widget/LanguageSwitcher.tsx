@@ -1,4 +1,4 @@
-import { ToggleButtonGroup } from "@mui/material";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PrimaryToggleButton } from "./MuiButton";

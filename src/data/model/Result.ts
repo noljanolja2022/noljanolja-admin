@@ -24,6 +24,10 @@ export class Result<T> {
     getError(): Error | undefined {
         return this.error;
     }
+
+    getErrorMsg(): string {
+        return this.error?.message ?? 'An error has occured'
+    }
 }
 
 export class Success<T> extends Result<T> {

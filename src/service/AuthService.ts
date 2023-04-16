@@ -1,6 +1,7 @@
 import { firebaseAuthInstance } from './FirebaseService';
 import { signOut } from 'firebase/auth';
 import { StorageKey } from '../util/Constants';
+import { useUserStore } from '../store/UserStore';
 
 class AuthService {
     saveToken(token: string) {
@@ -15,7 +16,8 @@ class AuthService {
         localStorage.removeItem(StorageKey.bearer);
     }
 
-    async onLogout() {
+    async logout() {
+        useUserStore.getState().setUser(null)
         this.clearToken();
         return signOut(firebaseAuthInstance)
     }

@@ -1,14 +1,12 @@
 import { useState } from "react";
+import { useLoadingStore } from "../../store/LoadingStore";
+import mediaService from "../../service/MediaService";
 import { FileUploader } from "react-drag-drop-files";
-import { useLoading } from "../../../state/LoadingState";
-import { ViewState } from "../../../data/enum/ViewState";
-import mediaService from "../../../service/MediaService";
-import userService from "../../../service/UserService";
 
 const fileTypes = ["zip", "7z"];
 
-function DashBoard() {
-    const { setViewState } = useLoading();
+function ContentManagement() {
+    const { setLoading, setIdle } = useLoadingStore();
     const [file, setFile] = useState<any>(null);
     const [message, setMsg] = useState('')
     const handleChange = (file: any) => {
@@ -19,7 +17,7 @@ function DashBoard() {
         if (file == null) {
             return;
         }
-        setViewState(ViewState.LOADING)
+        setLoading()
         mediaService.createStickerPack(file).then(res => {
             if (res.isFailure()) {
                 setMsg('Uploaded Failured')
@@ -30,13 +28,11 @@ function DashBoard() {
         }).catch(e => {
             setMsg(`Upload failed. ${e}`)
         }).finally(() => {
-            setViewState(ViewState.IDLE)
+            setIdle()
         })
     }
-
     return (
         <div className="p-4">
-            This is dashboard. If you see this exact message, it means this is version updated on 21/3/2023
             <FileUploader handleChange={handleChange}
                 name="sticker file"
                 fileOrFiles={file}
@@ -59,14 +55,8 @@ function DashBoard() {
                 {message && <span className="text-red-500">{message}</span>}
 
             </div>
-
-            {/* <button onClick={() => {
-                userService.fetchUser().then(res => {
-                    console.log(res)
-                })
-            }}>Test User fetching</button> */}
         </div>
     )
 }
 
-export default DashBoard;
+export default ContentManagement;

@@ -9,6 +9,8 @@ import { CgProfile } from "react-icons/cg";
 import LanguageSwitcher from "../widget/LanguageSwitcher";
 import LogoutButton from "../widget/LogoutButton";
 import useWindowWidth from "../../hook/UseWindowWidth";
+import { MdOutlineVideocam } from "react-icons/md";
+import { GrResources } from "react-icons/gr";
 
 const drawerWidth = 200;
 const appBarHeight = 80;
@@ -26,6 +28,8 @@ function HomePage() {
 
     const drawerItems: DrawerItem[] = [
         { path: "dashboard", text: t('label_home'), icon: <SlHome size={24} /> },
+        { path: "video-management", text: t('label_video'), icon: <MdOutlineVideocam color="white" size={24} /> },
+        { path: "content-management", text: t('label_content'), icon: <GrResources color="white" size={24} /> },
         { path: "membership-management", text: t('label_membership'), icon: <CgProfile color="white" size={24} /> },
     ]
 

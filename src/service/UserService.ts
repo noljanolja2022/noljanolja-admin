@@ -1,26 +1,12 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Result } from "../data/model/Result";
-import { ClientUser, User } from "../data/model/UserModels";
+import { User, ApiUser } from "../data/model/UserModels";
 import api from './ApiClient';
 import parseResponse from "./ResponseParse";
+import { firebaseAuthInstance } from "./FirebaseService";
 class UserService {
-    saveUser(user?: ClientUser) {
-        if (user === null) {
-            localStorage.removeItem("user")
-        } else {
-            localStorage.setItem("user", JSON.stringify(user));
-        }
-    }
-
-    getUser(): ClientUser | null {
-        const user = localStorage.getItem("user");
-        if (user) {
-            return JSON.parse(user);
-        }
-        return null;
-    }
-
-    async fetchUser(): Promise<Result<User>> {
-        return parseResponse<User>(await api.get('v1/users/me')) 
+    async fetchUser(): Promise<Result<ApiUser>> {
+        return parseResponse<ApiUser>(await api.get('v1/users/me')) 
     }
 }
 

@@ -13,33 +13,33 @@ import PrivateRoute from './ui/widget/PrivateRoute';
 import './util/translation/LanguageUtil';
 import { StyledEngineProvider } from '@mui/material/styles';
 import LoadingOverlay from './ui/widget/LoadingOverlay';
-import DashBoard from './ui/home/dashboard/DashBoard';
-import ContentManagement from './ui/home/content-management/ContentManagement';
-import MembershipManagement from './ui/home/membership-management/MembershipManagement';
+import DashBoard from './ui/dashboard/DashBoard';
+import ContentManagement from './ui/content/ContentManagement';
+import MembershipManagement from './ui/membership/MembershipManagement';
+import VideoManagement from './ui/video/VideoIndex';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <LoadingOverlay />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<PrivateRoute />} >
-            <Route path='/' element={<HomePage />} >
-              <Route path='dashboard' element={<DashBoard />} />
-              <Route path='membership-management' element={<MembershipManagement />} />
-              <Route path='content-management' element={<ContentManagement />} />
-              <Route index element={<Navigate to='dashboard' />} />
-            </Route>
+  <StyledEngineProvider injectFirst>
+    <LoadingOverlay />
+    <BrowserRouter>
+      <Routes>
+        <Route element={<PrivateRoute />} >
+          <Route path='/' element={<HomePage />} >
+            <Route path='dashboard' element={<DashBoard />} />
+            <Route path='membership-management' element={<MembershipManagement />} />
+            <Route path='video-management' element={<VideoManagement />} />
+            <Route path='content-management' element={<ContentManagement />} />
+            <Route index element={<Navigate to='dashboard' />} />
           </Route>
-          <Route path="login" element={<LoginPage />} />
-          <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </StyledEngineProvider>
-  </React.StrictMode>
+        </Route>
+        <Route path="login" element={<LoginPage />} />
+        <Route
+          path="*"
+          element={<Navigate to="/" replace />}
+        />
+      </Routes>
+    </BrowserRouter>
+  </StyledEngineProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -3,9 +3,12 @@
     "label_logout": "Logout",
     "label_home": "Dashboard",
     "label_membership": "Membership",
-
+    "label_content": "Content",
+    "label_video": "Video",
+    
     "hint_pls_enter_id": "Please enter your username",
     "hint_pls_enter_pwd": "Please enter your password",
+    "hint_enter_youtube_url": "Please enter youtube url",
 
     "error_empty_email": "Email can't be empty",
     "error_empty_pwd": "Password can't be empty",

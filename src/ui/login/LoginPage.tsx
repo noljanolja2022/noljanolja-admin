@@ -1,21 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@firebase/auth';
+import { signInWithEmailAndPassword } from '@firebase/auth';
 import { firebaseAuthInstance } from '../../service/FirebaseService';
 import AuthService from "../../service/AuthService";
 import UserService from "../../service/UserService";
 import AnalyticService from "../../service/AnalyticService";
 import { useState } from "react";
-import { Divider } from "@mui/material";
+import Divider from "@mui/material/Divider";
 import { useTranslation } from "react-i18next";
 import { PrimaryTextField } from "../widget/MuiTextField";
-import { ViewState } from "../../data/enum/ViewState";
 import { parseFirebaseErr } from "../../util/ErrorMapper";
-import { useLoading } from "../../state/LoadingState";
+import { useLoadingStore } from "../../store/LoadingStore";
+import { useUserStore } from "../../store/UserStore";
+import { User } from "../../data/model/UserModels";
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { setViewState } = useLoading();
+    const { setLoading, setIdle, setError } = useLoadingStore();
+    const { setUser } = useUserStore();
     const [userName, setUserName] = useState('');
     const [unError, setUNError] = useState('');
     const [pwd, setpwd] = useState('');
@@ -31,7 +33,7 @@ export default function LoginPage() {
         if (usrErr || pwdErr) {
             return;
         }
-        setViewState(ViewState.LOADING)
+        setLoading()
         signInWithEmailAndPassword(firebaseAuthInstance, userName, pwd).then(userCredential => {
             const user = userCredential.user;
             user.getIdToken().then(firebaseToken => {
@@ -43,24 +45,29 @@ export default function LoginPage() {
                         }
                         return;
                     }
-                    UserService.saveUser({
+                    const apiUser = res.data!;
+                    const newUSer: User = {
                         id: user.uid,
-                        name: user.displayName || undefined,
-                        email: user.email || undefined,
-                        avatar: user.photoURL || undefined,
-                        phone: user.phoneNumber || undefined
-                    })
+                        name: apiUser.name,
+                        email: apiUser.email,
+                        avatar: apiUser.avatar,
+                        phone: apiUser.phone,
+                        gender: apiUser.gender,
+                        createdAt: apiUser.createdAt,
+                        updatedAt: apiUser.updatedAt,
+                    }
+                    setUser(newUSer);
                     AnalyticService.logLoginEvent();
                     navigate('/', { replace: true });
                 }).catch(e => {
                     console.log(e)
                     AuthService.clearToken();
                 }).finally(() => {
-                    setViewState(ViewState.IDLE)
+                    setIdle()
                 })
             })
         }).catch((err: any) => {
-            setViewState(ViewState.ERROR)
+            setError()
             setResError(parseFirebaseErr(err.code))
         });
     }

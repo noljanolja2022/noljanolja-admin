@@ -9,8 +9,7 @@ function LogoutButton() {
     const { t } = useTranslation();
 
     const onLogout = () => {
-        UserService.saveUser();
-        AuthService.onLogout().then(() => {
+        AuthService.logout().then(() => {
             navigate('/login', { replace: true })
         }).catch(err => {
             alert(err)
