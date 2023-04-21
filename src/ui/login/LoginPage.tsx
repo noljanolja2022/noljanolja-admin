@@ -4,18 +4,20 @@ import { firebaseAuthInstance } from '../../service/FirebaseService';
 import AuthService from "../../service/AuthService";
 import UserService from "../../service/UserService";
 import AnalyticService from "../../service/AnalyticService";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Divider from "@mui/material/Divider";
-import { useTranslation } from "react-i18next";
-import { PrimaryTextField } from "../widget/MuiTextField";
 import { parseFirebaseErr } from "../../util/ErrorMapper";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { useUserStore } from "../../store/UserStore";
 import { User } from "../../data/model/UserModels";
+import { TextField } from "../widget/mui/TextField";
+import { Button } from "../widget/mui/Button";
+import { Box } from "../widget/mui/Box";
+import { t } from "i18next";
+import { Typography } from "../widget/mui";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const { t } = useTranslation();
     const { setLoading, setIdle, setError } = useLoadingStore();
     const { setUser } = useUserStore();
     const [userName, setUserName] = useState('');
@@ -24,7 +26,9 @@ export default function LoginPage() {
     const [pwdError, setPwdError] = useState('');
     const [resError, setResError] = useState('');
 
-    const onSignin = () => {
+    const onSignin = (e: FormEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         setResError('')
         const usrErr = userName.length === 0 ? t('error_empty_email') : '';
         const pwdErr = pwd.length === 0 ? t('error_empty_pwd') : '';
@@ -40,7 +44,7 @@ export default function LoginPage() {
                 AuthService.saveToken(firebaseToken);
                 UserService.fetchUser().then(res => {
                     if (res.isFailure()) {
-                        if (res.error?.name == "401001") {
+                        if (res.error?.name === "401001") {
                             setResError("Your account doesn't have permission to access this. Please contact admin for support.")
                         }
                         return;
@@ -60,7 +64,6 @@ export default function LoginPage() {
                     AnalyticService.logLoginEvent();
                     navigate('/', { replace: true });
                 }).catch(e => {
-                    console.log(e)
                     AuthService.clearToken();
                 }).finally(() => {
                     setIdle()
@@ -73,36 +76,51 @@ export default function LoginPage() {
     }
 
     return (
-        <div className=' bg-black flex flex-col justify-center items-center overflow-y-auto min-h-screen'>
-            <div className="bg-white flex flex-col md:w-96 w-56 py-8 md:px-16 px-8 rounded-2xl my-4 justify-center">
+        <Box
+            bgcolor="black"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="100vh">
+            <Box 
+            bgcolor="white"
+                display="flex"
+                flexDirection="column"
+                gap={1}
+                alignItems="center"
+                borderRadius={2} padding={4} minWidth={500} >
                 <img src="pp-yy-logo.png" alt="App Logo" />
-                <Divider />
-                <PrimaryTextField id="input-email"
-                    label={t('hint_pls_enter_id')} required
-                    className="mb-3 mt-8 border-white hover:border-white"
-                    value={userName} error={unError.length > 0} helperText={unError}
-                    onChange={(event) => setUserName(event.target.value)} />
-                <PrimaryTextField id="input-password" type="password"
-                    label={t('hint_pls_enter_pwd')} required
-                    className="mb-8 "
-                    value={pwd} error={pwdError.length > 0} helperText={pwdError}
-                    onChange={(event) => setpwd(event.target.value)} />
-                <button className="bg-black mb-4 rounded-lg text-white h-12"
-                    onClick={() => onSignin()} >
-                    {t('label_login')}
-                </button>
+                <Divider sx={{ minWidth: '80%' }} />
+                <form style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 8,
+                    width: '80%'
+                }} onSubmit={(e) => onSignin(e)}>
+                    <TextField id="input-email"
+                        label={t('hint_pls_enter_id')} required
+                        value={userName} error={unError.length > 0} helperText={unError}
+                        onChange={(event) => setUserName(event.target.value)} />
+                    <TextField id="input-password" type="password"
+                        label={t('hint_pls_enter_pwd')} required
+                        value={pwd} error={pwdError.length > 0} helperText={pwdError}
+                        onChange={(event) => setpwd(event.target.value)} />
+                    <Button type="submit">
+                        {t('label_login')}
+                    </Button>
+                    {resError.length > 0 && 
+                    <Box color="red">
+                        {resError}
+                    </Box>}
+                </form>
 
-                {resError.length > 0 && (<div className="text-red-500">
-                    {resError}
-                </div>)}
-
-                <Divider className="mt-4" />
-                <div className="mt-3 text-xs text-[#BDBDBD]">
+                <Divider sx={{ minWidth: '80%' }} />
+                <Typography paddingTop={0.5} variant="caption" color={'#BDBDBD'} width={'80%'}>
                     (주)유니온콘텐츠 UnionContents Co., Ltd<br />
                     TEL : 070-7700-1555<br />
                     ADRESS : 서울시 금천구 디지털로 121 에이스가산타워 906호
-                </div>
-            </div>
-        </div>
+                </Typography>
+            </Box>
+        </Box>
     )
 }

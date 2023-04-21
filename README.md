@@ -2,6 +2,8 @@
 
 Currently deployed on [Firebase](https://noljanolja2023.firebaseapp.com/)
 
+[Design](https://www.figma.com/file/cN1ZY1Q4TT6NF1fCFkCiDo/NOLJA-NOLJA-APP-Green)
+
 ## Pre-requisite
 
 - [Nodejs](https://nodejs.org/en/)

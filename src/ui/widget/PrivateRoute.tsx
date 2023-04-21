@@ -6,6 +6,7 @@ import authService from '../../service/AuthService';
 import userService from '../../service/UserService';
 import { User } from '../../data/model/UserModels';
 import { useUserStore } from '../../store/UserStore';
+import { LoginPath } from '../../util/routes';
 
 enum VerifyingState {
     INIT, FAIL, SUCCESS
@@ -17,7 +18,7 @@ export default function PrivateRoute() {
 
     useEffect(() => {
         const observer = firebaseAuthInstance.onAuthStateChanged(nextOrObserver => {
-            if (nextOrObserver == null) {
+            if (!nextOrObserver) {
                 authService.clearToken()
                 setVerified(VerifyingState.FAIL)
             } else {
@@ -51,11 +52,13 @@ export default function PrivateRoute() {
         return () => observer()
     }, [firebaseAuthInstance.currentUser]);
 
-    if (verified == VerifyingState.INIT) {
-        return <LoadingOverlay />
+    switch (verified) {
+        case VerifyingState.INIT:
+            return <LoadingOverlay />
+        case VerifyingState.FAIL:
+            return <Navigate to={LoginPath} replace />
+        default:
+            return <Outlet />
+
     }
-    if (verified == VerifyingState.FAIL) {
-        return <Navigate to='/login' replace />
-    }
-    return <Outlet />
 }

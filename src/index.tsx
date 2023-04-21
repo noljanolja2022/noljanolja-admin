@@ -1,48 +1,14 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './style/index.css';
-import HomePage from './ui/home/HomePage';
-import reportWebVitals from './reportWebVitals';
-import {
-  Navigate,
-  Route, Routes,
-  BrowserRouter,
-} from "react-router-dom";
-import LoginPage from './ui/login/LoginPage';
-import PrivateRoute from './ui/widget/PrivateRoute';
 import './util/translation/LanguageUtil';
 import { StyledEngineProvider } from '@mui/material/styles';
-import LoadingOverlay from './ui/widget/LoadingOverlay';
-import DashBoard from './ui/dashboard/DashBoard';
-import ContentManagement from './ui/content/ContentManagement';
-import MembershipManagement from './ui/membership/MembershipManagement';
-import VideoManagement from './ui/video/VideoIndex';
+import { BrowserRouter } from 'react-router-dom';
+import App from './ui/App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <StyledEngineProvider injectFirst>
-    <LoadingOverlay />
-    <BrowserRouter>
-      <Routes>
-        <Route element={<PrivateRoute />} >
-          <Route path='/' element={<HomePage />} >
-            <Route path='dashboard' element={<DashBoard />} />
-            <Route path='membership-management' element={<MembershipManagement />} />
-            <Route path='video-management' element={<VideoManagement />} />
-            <Route path='content-management' element={<ContentManagement />} />
-            <Route index element={<Navigate to='dashboard' />} />
-          </Route>
-        </Route>
-        <Route path="login" element={<LoginPage />} />
-        <Route
-          path="*"
-          element={<Navigate to="/" replace />}
-        />
-      </Routes>
-    </BrowserRouter>
-  </StyledEngineProvider>
+  <BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <App/>
+    </StyledEngineProvider>
+  </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

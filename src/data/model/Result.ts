@@ -26,7 +26,7 @@ export class Result<T> {
     }
 
     getErrorMsg(): string {
-        return this.error?.message ?? 'An error has occured'
+        return this.error?.message || 'An error has occured'
     }
 }
 

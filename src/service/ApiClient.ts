@@ -4,7 +4,7 @@ import { Failure, Success } from '../data/model/Result';
 import i18n from '../util/translation/LanguageUtil';
 
 const axiosConfig: AxiosRequestConfig<any> = {
-    baseURL: `${process.env.REACT_APP_NOLJA_ADMIN_SERVER}/api/`,
+    baseURL: `${import.meta.env.VITE_NOLJA_ADMIN_SERVER}/api/`,
     // withCredentials: true
 }
 const axiosClient = axios.create(axiosConfig);
@@ -27,10 +27,12 @@ axiosClient.interceptors.response.use(
     response => {
         return response;
     }, error => {
+        console.log(error)
         if (error.response.data) {
-            const err = new Error(error.response.data.message);
+            const err = new Error();
             err.name = error.response.data.code;
             err.stack = error;
+            err.message = error.response.data.message;
             return new Failure(err);
         }
         return new Failure(error);

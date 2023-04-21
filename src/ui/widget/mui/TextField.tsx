@@ -1,7 +1,9 @@
 import { styled } from '@mui/material/styles';
-import TextField from "@mui/material/TextField";
+import MuiTextField, { TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
 
-const PrimaryTextField = styled(TextField)({
+export const TextField = styled((props: MuiTextFieldProps) => (
+  <MuiTextField {...props} />
+))(({ theme }) => ({
   // '& label.Mui-focused': {
   //   backgroundColor: '#F2F2F2',
   // },
@@ -10,19 +12,15 @@ const PrimaryTextField = styled(TextField)({
   // },
   '& .MuiOutlinedInput-root': {
     background: "#F2F2F2",
-    borderRadius: '8px',
+    borderRadius: theme.spacing(1),
     '& fieldset': {
-      borderColor: 'white',
+      borderColor: theme.palette.common.white,
     },
     '&:hover fieldset': {
-      borderColor: 'black',
+      borderColor: theme.palette.common.black,
     },
     '&.Mui-focused fieldset': {
       borderColor: '#F2F2F2'
     },
   },
-});
-
-export {
-  PrimaryTextField
-}
+}));

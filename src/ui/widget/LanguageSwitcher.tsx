@@ -1,7 +1,6 @@
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PrimaryToggleButton } from "./MuiButton";
+import { ToggleButton, ToggleButtonGroup } from "./mui/ToggleButton";
 
 function LanguageSwitcher() {
     const { i18n } = useTranslation();
@@ -27,8 +26,8 @@ function LanguageSwitcher() {
             exclusive
             onChange={onChangeLanguage}
             aria-label="Language Switcher">
-            <PrimaryToggleButton value="en"><img src="us.webp" alt="us-flag" /></PrimaryToggleButton>
-            <PrimaryToggleButton value="kr"><img src="kr.webp" alt="korea-flag" /></PrimaryToggleButton>
+            <ToggleButton value="en"><img src="us.webp" alt="us-flag" /></ToggleButton>
+            <ToggleButton value="kr"><img src="kr.webp" alt="korea-flag" /></ToggleButton>
         </ToggleButtonGroup>
     )
 }

@@ -1,4 +1,7 @@
 {
+    "label_save": "Save",
+    "label_delete": "Delete",
+    "label_cancel": "Cancel",
     "label_login": "Login",
     "label_logout": "Logout",
     "label_home": "Dashboard",

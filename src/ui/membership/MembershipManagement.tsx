@@ -1,16 +1,12 @@
-import userService from "../../service/UserService";
+import { Box } from "../widget/mui";
 
 function MembershipManagement() {
 
-    const onRefreshToken = () => {
-        // userService.getUser
-    }
-
     return (
-        <div>
+        <Box>
             This is Membership
-            <button onClick={onRefreshToken}>Refresh token</button>
-        </div>
+
+        </Box>
     )
 }
 

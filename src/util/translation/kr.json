@@ -1,4 +1,7 @@
 {
+    "label_save": "구하다",
+    "label_delete": "삭제",
+    "label_cancel": "취소",
     "label_login": "로그인",
     "label_logout": "로그아웃",
     "label_home": "대시보드",
