@@ -1,9 +1,15 @@
 import { Result } from '../data/model/Result';
+import { StickerPack } from '../data/model/StickerModels';
 import { Video } from '../data/model/VideoModels';
 import api from './ApiClient';
 import parseResponse from './ResponseParse';
 
 class MediaService {
+
+    async getStickerPacks(): Promise<Result<StickerPack[]>> {
+        return parseResponse(await api.get('v1/media/sticker-packs'))
+    }
+
     async createStickerPack(file: any): Promise<Result<any>> {
         return parseResponse(await api.post('v1/media/sticker-packs', {
             file: file
@@ -21,7 +27,7 @@ class MediaService {
         }))
     }
 
-    async getVideoList(page: number = 1, pageSize: number = 10): Promise<Result<Array<Video>>> {
+    async getVideoList(page: number = 1, pageSize: number = 5): Promise<Result<Array<Video>>> {
         return parseResponse(await api.get('v1/media/videos', {
             params: {
                 page,

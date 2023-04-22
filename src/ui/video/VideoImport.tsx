@@ -37,7 +37,7 @@ export default function VideoList() {
     }
 
     return (
-        <Box gap={1} display={"flex"} flexDirection={"column"} padding={2}>
+        <Box gap={1} display={"flex"} flexDirection={"column"} p={2}>
             <form onSubmit={onImportVideo}
                 style={{
                     display: 'flex',

@@ -10,6 +10,7 @@ export * from "./Dialog";
 
 export * from "./Drawer";
 export * from "./Paper";
+export * from "./Stack";
 export * from "./Table";
 
 export * from "./TextField";

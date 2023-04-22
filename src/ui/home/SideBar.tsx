@@ -7,6 +7,8 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Box, SidebarAccordion, SidebarAccordionSummary, SidebarBox, useTheme } from "../widget/mui";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import { useTranslation } from "react-i18next";
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import { RoutePaths } from "../../util/routes";
 
 type DrawerItem = {
     text: string;
@@ -25,7 +27,7 @@ type SidebarItemProps = {
 }
 
 function SideBarItem(props: SidebarItemProps) {
-    const {spacing, palette} = useTheme();
+    const { spacing, palette } = useTheme();
 
     return (
         <NavLink to={props.item.path} onClick={props.onDrawerClose}
@@ -51,15 +53,22 @@ export default function SideBar(props: Props) {
     const { t } = useTranslation();
 
     const drawerItems: DrawerItem[] = [
-        { path: "dashboard", text: t('label_home'), icon: <HomeIcon color="primary" /> },
+        { path: RoutePaths.dashboard, text: t('label_home'), icon: <HomeIcon color="primary" /> },
         {
             path: "", text: t('label_video'), icon: <OndemandVideoIcon color="primary" />,
             subMenu: [
-                { path: "video-management", text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
-                { path: "video-import", text: 'Import', icon: <ImportExportIcon color="primary" /> }
+                { path: RoutePaths.videoManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
+                { path: RoutePaths.videoImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
             ]
         },
-        { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
+        {
+            path: "", text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" />,
+            subMenu: [
+                { path: RoutePaths.stickerManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
+                { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
+            ]
+        },
+        // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
         { path: "membership-management", text: t('label_membership'), icon: <CardMembershipIcon color="primary" /> },
     ]
 

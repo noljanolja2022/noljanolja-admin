@@ -10,7 +10,7 @@ export default function LoadingOverlay(props: Props) {
     const loadingState = useLoadingStore();
 
     return (
-        <Backdrop open={loadingState.viewState === ViewState.LOADING || props.forceShowing == true} sx={{zIndex: 99}}>
+        <Backdrop open={loadingState.viewState === ViewState.LOADING || props.forceShowing == true} sx={{zIndex: 2000}}>
             <img src="pp-yy-logo.png" className="app-logo" alt="App Logo" />
         </Backdrop>
     )

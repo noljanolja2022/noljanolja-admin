@@ -5,5 +5,5 @@ export default function parseResponse<T>(response: AxiosResponse<Result<T>>): Re
     if (response.status != 200) {
         return new Failure(new Error(response.statusText));
     }
-    return new Success(response.data.data);
+    return new Success(response.data.data, response.data.pagination);
 }

@@ -88,7 +88,7 @@ export default function LoginPage() {
                 flexDirection="column"
                 gap={1}
                 alignItems="center"
-                borderRadius={2} padding={4} minWidth={500} >
+                borderRadius={2} p={4} minWidth={500} >
                 <img src="pp-yy-logo.png" alt="App Logo" />
                 <Divider sx={{ minWidth: '80%' }} />
                 <form style={{

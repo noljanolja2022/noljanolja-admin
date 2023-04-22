@@ -4,13 +4,21 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, T
 
 type Props = {
     data: Video | null
+    onDelete: (item: Video) => void
     onClose: () => void
 }
 
 export default function YoutubeVideoCard(props: Props) {
     const { t } = useTranslation();
+
+
     if (props.data == null)
         return null;
+
+    const onDelete = () => {
+        if (!props.data) return;
+        props.onDelete(props.data)
+    }
 
     return (
         <Dialog open maxWidth={'md'}>
@@ -39,7 +47,7 @@ export default function YoutubeVideoCard(props: Props) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.onClose}>{t('label_save')}</Button>
-                <Button color="error" onClick={props.onClose}>{t('label_delete')}</Button>
+                <Button color="error" onClick={onDelete}>{t('label_delete')}</Button>
                 <Button color="neutral" onClick={props.onClose}>{t('label_cancel')}</Button>
             </DialogActions>
         </Dialog>

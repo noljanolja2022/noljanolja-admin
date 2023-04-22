@@ -5,7 +5,7 @@ function DashBoard() {
     const { user } = useUserStore();
 
     return (
-        <Box padding={4} flex={1} flexDirection={"column"}>
+        <Box p={4} display={"flex"} flexDirection={"column"}>
             This is dashboard. If you see this exact message, it means this is version updated on 20/4/2023
             <br />
             Your Info

@@ -2,11 +2,13 @@ export class Result<T> {
     success: boolean;
     data?: T;
     error?: Error;
+    pagination?: Pagination;
 
-    constructor(isSuccess: boolean, error?: Error, value?: T) {
+    constructor(isSuccess: boolean, error?: Error, value?: T, pagination?: Pagination) {
         this.success = isSuccess;
         this.data = value;
         this.error = error;
+        this.pagination = pagination;
     }
 
     isSuccess(): boolean {
@@ -31,8 +33,8 @@ export class Result<T> {
 }
 
 export class Success<T> extends Result<T> {
-    constructor(value?: T) {
-        super(true, undefined, value);
+    constructor(value?: T, pagination?: Pagination) {
+        super(true, undefined, value, pagination);
     }
 }
 
@@ -40,4 +42,10 @@ export class Failure extends Result<never> {
     constructor(error: Error) {
         super(false, error);
     }
+}
+
+export interface Pagination {
+    page: number;
+    pageSize: number;
+    total: number;
 }
