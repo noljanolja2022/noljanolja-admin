@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { Box, Button } from "../widget/mui";
+import { Box, Button, Stack } from "../widget/mui";
 import { RSocket, RSocketConnector } from 'rsocket-core';
-import {WebsocketClientTransport} from 'rsocket-websocket-client';
+import { WebsocketClientTransport } from 'rsocket-websocket-client';
+
 
 const client = new RSocketConnector({
     setup: {
-        dataMimeType: 'text/plain',
+        dataMimeType: "application/json",
         keepAlive: 1000000, // avoid sending during test
         lifetime: 100000,
-        metadataMimeType: 'text/plain',
+        metadataMimeType: "application/json",
     },
     transport: new WebsocketClientTransport({
-        url: 'ws://localhost:10081',
-        // wsCreator: (url) => {
-
-        // }
+        url: 'ws://localhost:10081/rsocket',
+        wsCreator: (url) => {
+            return new WebSocket(url)
+        }
     }),
+
 })
 
 export default function ContentManagement() {
@@ -25,19 +27,19 @@ export default function ContentManagement() {
         client.connect().then(res => {
             alert('conected')
             setSocket(res)
-        }).catch(err=> {
-            alert(err)
+        }).catch(err => {
+            console.log(err)
         })
     }
 
     const onFireAndForget = () => {
         const route = "v1/videos"
         socket?.fireAndForget({
-            data: Buffer.from('hey', 'utf8') ,
-            metadata: Buffer.from(route, 'utf8') 
+            data: null,
+            metadata: Buffer.from(route, 'utf8')
         }, {
             onComplete() {
-                
+
             },
             onError(err) {
 
@@ -46,13 +48,13 @@ export default function ContentManagement() {
     }
 
     return (
-        <Box p={2}>
+        <Stack p={2} gap={1}>
             Content Manager page
             <Button onClick={onConnectSocket}>Connect socket</Button>
 
             {socket && <>
                 <Button onClick={onFireAndForget}>Send test message</Button>
             </>}
-        </Box>
+        </Stack>
     )
 }
