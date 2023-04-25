@@ -1829,6 +1829,18 @@ rollup@^3.18.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
+rsocket-core@^1.0.0-alpha.3:
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/rsocket-core/-/rsocket-core-1.0.0-alpha.3.tgz#bbfbda9806a48f3be39956ed62ab9c7216c77969"
+  integrity sha512-BzIe2w8dFJlUS5N9fGUNRkxL19kd64bxbXsT11wj7isLfKkPZeNXisB2p/LWvSjFzWStnpOiScZ0g3/8ROE0pw==
+
+rsocket-websocket-client@^1.0.0-alpha.3:
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/rsocket-websocket-client/-/rsocket-websocket-client-1.0.0-alpha.3.tgz#7e34e828677007b9bac2112974e408c1e4e68ba6"
+  integrity sha512-CwTwTNMGa8BKvrWde/kM3q8IHuzO8RCIfzuj25BsVe9y8eehDQHt4fXk0g1i/wpsxTm+RY6DxE6Vr5snozKVOg==
+  dependencies:
+    rsocket-core "^1.0.0-alpha.3"
+
 safe-buffer@>=5.1.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"

@@ -68,7 +68,7 @@ export default function SideBar(props: Props) {
                 { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
             ]
         },
-        // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
+        { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
         { path: "membership-management", text: t('label_membership'), icon: <CardMembershipIcon color="primary" /> },
     ]
 
