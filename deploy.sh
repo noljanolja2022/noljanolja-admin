@@ -16,16 +16,16 @@ IMAGE_NAME=$REGION-docker.pkg.dev/noljanolja2023/noljanolja-admin/$APP_NAME:$VER
 docker build --no-cache . -t $IMAGE_NAME
 
 # Push image to artifact registry
-# docker push $IMAGE_NAME
+docker push $IMAGE_NAME
 
 # Ensure that you are connected to your GKE cluster.
-# gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION
+gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION
 
 # IF FIRST TIME SETUP, RUN THIS
 # ./setup.sh $APP_NAME $IMAGE_NAME
 
 # ELSE IF Update existing deployment with new version, RUN THIS
-# kubectl set image deployment/$APP_NAME $APP_NAME=$IMAGE_NAME
+kubectl set image deployment/$APP_NAME $APP_NAME=$IMAGE_NAME
 # kubectl rollout restart deployment/$APP_NAME 
 
 #uncomment this to debug

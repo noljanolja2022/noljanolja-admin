@@ -18,7 +18,7 @@ import { Typography } from "../widget/mui";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const { setLoading, setIdle, setError } = useLoadingStore();
+    const { setLoading, setIdle } = useLoadingStore();
     const { setUser } = useUserStore();
     const [userName, setUserName] = useState('');
     const [unError, setUNError] = useState('');
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 })
             })
         }).catch((err: any) => {
-            setError()
+            setIdle()
             setResError(parseFirebaseErr(err.code))
         });
     }
@@ -88,7 +88,7 @@ export default function LoginPage() {
                 flexDirection="column"
                 gap={1}
                 alignItems="center"
-                borderRadius={2} p={4} minWidth={500} >
+                borderRadius={2} p={4} minWidth={'30vw'} >
                 <img src="pp-yy-logo.png" alt="App Logo" />
                 <Divider sx={{ minWidth: '80%' }} />
                 <form style={{
@@ -114,12 +114,12 @@ export default function LoginPage() {
                     </Box>}
                 </form>
 
-                <Divider sx={{ minWidth: '80%' }} />
+                {/* <Divider sx={{ minWidth: '80%' }} />
                 <Typography paddingTop={0.5} variant="caption" color={'#BDBDBD'} width={'80%'}>
                     (주)유니온콘텐츠 UnionContents Co., Ltd<br />
                     TEL : 070-7700-1555<br />
                     ADRESS : 서울시 금천구 디지털로 121 에이스가산타워 906호
-                </Typography>
+                </Typography> */}
             </Box>
         </Box>
     )

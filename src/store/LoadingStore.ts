@@ -6,7 +6,7 @@ type LoadingStore = {
     setLoading: () => void
     setIdle: () => void
     setSuccess: () => void
-    setError: () => void
+    setIniting: () => void
 }
 
 export const useLoadingStore = create<LoadingStore>((set) => ({
@@ -14,5 +14,5 @@ export const useLoadingStore = create<LoadingStore>((set) => ({
     setLoading: () => set(state => ({ viewState: ViewState.LOADING })),
     setIdle: () => set(state => ({ viewState: ViewState.IDLE })),
     setSuccess: () => set(state => ({ viewState: ViewState.SUCCESS })),
-    setError: () => set(state => ({ viewState: ViewState.ERROR })),
+    setIniting: () => set(state => ({ viewState: ViewState.INITING })),
 }))

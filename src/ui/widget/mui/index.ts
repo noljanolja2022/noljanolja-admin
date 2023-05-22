@@ -9,12 +9,15 @@ export * from "./Menu";
 export * from "./Dialog";
 
 export * from "./Drawer";
+export * from "./Grid";
 export * from "./Paper";
 export * from "./Stack";
+export * from "./Switch";
 export * from "./Table";
 
 export * from "./TextField";
 export * from "./ToggleButton";
+export * from "./Tooltip";
 export * from "./Typography";
 
 

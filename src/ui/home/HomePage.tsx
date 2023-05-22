@@ -72,7 +72,11 @@ function HomePage() {
             <Box
                 display="flex"
                 flexDirection="row"
-                height={`calc(100vh - ${appBarHeight}px)`}>
+
+                height={`calc(100vh - ${appBarHeight}px)`}
+                sx={{
+                    ...(!isWindowSize && { overflowX: 'scroll' })
+                }}>
                 {isWindowSize && (
                     <Box id='side-bar' width={drawerWidth} position="sticky" bgcolor={"black"}>
                         <SideBar onDrawerClose={handleDrawerClose} />

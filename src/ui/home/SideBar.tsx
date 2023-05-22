@@ -9,6 +9,9 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import { useTranslation } from "react-i18next";
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { RoutePaths } from "../../util/routes";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ChatIcon from '@mui/icons-material/Chat';
 
 type DrawerItem = {
     text: string;
@@ -68,8 +71,16 @@ export default function SideBar(props: Props) {
                 { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
             ]
         },
+        {
+            path: "", text: t('label_setting'), icon: <SettingsIcon color="primary" />,
+            subMenu: [
+                { path: RoutePaths.videoRewardConfig, text: t('label_video_setting'), icon: <OndemandVideoIcon color="primary" /> },
+                { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> }
+            ]
+        },
         // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
         { path: "membership-management", text: t('label_membership'), icon: <CardMembershipIcon color="primary" /> },
+        { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
     ]
 
     return (

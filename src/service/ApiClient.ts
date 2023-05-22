@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { StorageKey } from '../util/Constants';
 import { Failure, Success } from '../data/model/Result';
 import i18n from '../util/translation/LanguageUtil';
+import { firebaseAuthInstance } from './FirebaseService';
 
 const axiosConfig: AxiosRequestConfig<any> = {
     baseURL: `${import.meta.env.VITE_NOLJA_ADMIN_SERVER}/api/`,
@@ -26,9 +27,19 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
     response => {
         return response;
-    }, error => {
-        console.log(error)
+    }, async (error) => {
         if (error.response.data) {
+            if (error.response.data.code == 401_003) {
+                const originalRequest = error.config;
+                if (!originalRequest._retry) {
+                    originalRequest._retry = true;
+                    console.log('Token Expired, refreshing token')
+                    await firebaseAuthInstance.currentUser?.getIdToken();
+                    // Retry the request one time
+                    return axiosClient(originalRequest);
+                }
+                return Promise.reject(error);
+            }
             const err = new Error();
             err.name = error.response.data.code;
             err.stack = error;

@@ -9,13 +9,19 @@ import PrivateRoute from '../ui/widget/PrivateRoute';
 import VideoImport from '../ui/video/VideoImport';
 import StickerManager from '../ui/sticker/StickerManager';
 import StickerImport from '../ui/sticker/StickerImport';
+import UserManager from '../ui/user/UsersManager';
+import VideoRewardSetting from '../ui/setting/VideoRewardSetting';
+import ChatRewardSetting from '../ui/setting/ChatRewardSetting';
 
 export const RoutePaths = {
     dashboard: 'dashboard',
     videoManager: 'video-manager',
     videoImport: 'video-import',
     stickerManager: 'sticker-manager',
-    stickerImport: 'sticker-import'
+    stickerImport: 'sticker-import',
+    userManager: 'user-manager',
+    videoRewardConfig: 'video-reward-config',
+    chatRewardConfig: 'chat-reward-config',
 }
 
 export const LoginPath = "/login"
@@ -32,6 +38,9 @@ export default function NoljaRoutes() {
                     <Route path={RoutePaths.stickerImport} element={<StickerImport />} />
                     <Route path={RoutePaths.stickerManager} element={<StickerManager />} />
                     <Route path='content-management' element={<ContentManagement />} />
+                    <Route path={RoutePaths.userManager} element={<UserManager />} />
+                    <Route path={RoutePaths.videoRewardConfig} element={<VideoRewardSetting />} />
+                    <Route path={RoutePaths.chatRewardConfig} element={<ChatRewardSetting />} />
                     <Route index element={<Navigate to={RoutePaths.dashboard} />} />
                 </Route>
             </Route>

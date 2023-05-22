@@ -34,11 +34,9 @@ export default function StickerManager() {
 
     return (
         <Box p={2}>
-            <TableContainer  component={Paper}>
+            <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="video table">
-                    <TableHead sx={{
-                        backgroundColor: theme.palette.secondary.main
-                    }}>
+                    <TableHead>
                         <TableRow>
                             <TableCell >Name</TableCell>
                             <TableCell >Publisher</TableCell>
@@ -53,13 +51,13 @@ export default function StickerManager() {
                                 <TableCell >{item.publisher}</TableCell>
                             </TableRow>
                         )}
-                        {data.length == 0 && viewState != ViewState.LOADING &&
+                        {/* {data.length == 0 && viewState != ViewState.LOADING &&
                             <TableRow sx={{
                                 padding: theme.spacing(1)
 
                             }}>
                                 No Sticker available. Please Import them first
-                            </TableRow>}
+                            </TableRow>} */}
                     </TableBody>
                 </Table>
             </TableContainer>
