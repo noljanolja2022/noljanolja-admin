@@ -7,16 +7,17 @@ import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { parseDate } from "../../util/DateUtil";
 import { theme } from "../../util/theme";
-import { zeroOrHigher } from "../../util/StringUtils";
+import { formatToDecimal, formatToInt } from "../../util/StringUtils";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-
+import InfoIcon from '@mui/icons-material/Info';
 
 export type VideoSettingCardProps = {
     id?: number;
     videoId: string;
     isActive?: boolean;
     maxApplyTimes?: number;
+    totalPoints?: number;
     rewardProgresses?: VideoRewardConfigProgress[]
 }
 
@@ -34,10 +35,11 @@ export default function VideoSettingCard(props: Props) {
     const theme = useTheme();
     const { setLoading, setIdle, viewState } = useLoadingStore();
     const [maxApplyTimes, setMaxApplyTimes] = useState(props.data.maxApplyTimes || 1);
+    const [totalPoints, setTotalPoints] = useState(props.data.totalPoints || 0);
     const [isActive, setIsActive] = useState(props.data.isActive || false);
     const [milestones, setMilestones] = useState<ProgressProps[]>(
         props.data.rewardProgresses?.map(p => ({ ...p, id: Math.random() * 100 }))
-        || [{ point: 0, progress: 0, id: 0 }]
+        || [{ point: 50, progress: 0.5, id: 0 }]
     );
 
 
@@ -62,9 +64,7 @@ export default function VideoSettingCard(props: Props) {
         if (milestones.length <= 1) {
             return;
         }
-        console.log(item)
         let tmp = [...milestones].filter(e => e.id != item.id)
-        console.log(tmp)
         setMilestones(tmp)
     }
 
@@ -79,7 +79,7 @@ export default function VideoSettingCard(props: Props) {
         }
         setLoading();
 
-        rewardService.updateVideoRewardConfig(props.data.videoId, isActive, maxApplyTimes, eligibleProgress).then(res => {
+        rewardService.updateVideoRewardConfig(props.data.videoId, isActive, maxApplyTimes, eligibleProgress, totalPoints).then(res => {
             props.onClose();
         }).finally(() => {
             setIdle();
@@ -92,31 +92,43 @@ export default function VideoSettingCard(props: Props) {
             <DialogContent>
                 <Grid container rowSpacing={1} columnSpacing={{ md: 2 }}>
                     <Grid item md={6}>
-                        <Tooltip title="Is this setting activated">
-                            <Typography>Status</Typography>
-                        </Tooltip>
+                        <Typography>Status</Typography>
                     </Grid>
                     <Grid item md={6}>
                         <Switch checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
-
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} display={'flex'} flexDirection={'row'} gap={1}>
+                        <Typography>Maximum reward times</Typography>
                         <Tooltip title="The amounf of times user will be rewarded by watching full video">
-                            <Typography>Maximum reward times</Typography>
+                            <InfoIcon />
                         </Tooltip>
                     </Grid>
                     <Grid item md={6}>
                         <TextField id="input-point-reward"
                             size="small"
-                            sx={{
-                                width: 200
-                            }}
                             fullWidth={false}
                             required
                             inputMode="numeric"
                             value={maxApplyTimes}
                             error={maxApplyTimes < 0}
-                            onChange={(event) => setMaxApplyTimes(zeroOrHigher(event.target.value))} />
+                            onChange={(event) => setMaxApplyTimes(formatToInt(event.target.value))} />
+                    </Grid>
+                    <Grid item md={6} display={'flex'} flexDirection={'row'} gap={1}>
+                        <Typography>Total points</Typography>
+                        <Tooltip title="The maximum points an user can gain in one reward cycle. **Set to 0 for automatic">
+                            <InfoIcon />
+                        </Tooltip>
+                    </Grid>
+                    <Grid item md={6}>
+                        <TextField id="input-point-reward"
+                            size="small"
+                            fullWidth={false}
+                            required
+                            inputMode="numeric"
+                            value={totalPoints}
+                            error={totalPoints < 0}
+                            onChange={(event) => setTotalPoints(formatToInt(event.target.value))}
+                        />
                     </Grid>
                 </Grid>
                 <TableContainer sx={{
@@ -125,8 +137,22 @@ export default function VideoSettingCard(props: Props) {
                     <Table aria-label="video table">
                         <TableHead>
                             <TableRow >
-                                <TableCell sx={{ fontWeight: 700 }}>Milestone</TableCell>
-                                <TableCell sx={{ fontWeight: 700 }}>Points</TableCell>
+                                <TableCell sx={{ fontWeight: 700 }} >
+                                    <Box display={'flex'} flexDirection={'row'} gap={0.5}>
+                                        Milestone
+                                        <Tooltip title="Indicate when an user will receive reward based on milestone. Value must be bigger than 0 and smaller and equal to 1">
+                                            <InfoIcon />
+                                        </Tooltip>
+                                    </Box>
+                                </TableCell>
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    <Box display={'flex'} flexDirection={'row'} gap={0.5}>
+                                        Points
+                                        <Tooltip title="Total points received each milestone. The later must be bigger than the former">
+                                            <InfoIcon />
+                                        </Tooltip>
+                                    </Box>
+                                </TableCell>
                                 <TableCell ><AddCircleIcon onClick={() => onAddMileStone()} sx={{
                                     cursor: 'pointer',
                                     color: theme.palette.primary.main
@@ -166,10 +192,11 @@ export function VideoRewardProgressInput(props: VideoRewardConfigProgress & {
                     size="small"
                     fullWidth={false}
                     required
-                    inputMode="numeric"
-                    value={props.point}
-                    error={props.point < 0}
-                    onChange={(event) => props.onChangePoint(zeroOrHigher(event.target.value))}
+                    inputMode="decimal"
+                    type="number"
+                    value={props.progress}
+                    error={props.progress < 0 || props.progress > 1}
+                    onChange={(event) => props.onChangeProgress(formatToDecimal(event.target.value))}
                 />
             </TableCell>
             <TableCell >
@@ -178,9 +205,10 @@ export function VideoRewardProgressInput(props: VideoRewardConfigProgress & {
                     fullWidth={false}
                     required
                     inputMode="numeric"
-                    value={props.progress}
-                    error={props.progress < 0}
-                    onChange={(event) => props.onChangeProgress(zeroOrHigher(event.target.value))}
+                    type="number"
+                    value={props.point}
+                    error={props.point < 0}
+                    onChange={(event) => props.onChangePoint(formatToInt(event.target.value))}
                 />
             </TableCell>
             <TableCell >

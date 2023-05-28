@@ -10,11 +10,6 @@ export default function VideoList() {
     const [isHighlight, setIsHighlight] = useState(false)
     const [resultMsg, setResultMsg] = useState('');
 
-    const onSelectDropdown = (event: React.MouseEvent<HTMLElement>,
-        value: boolean) => {
-        setIsHighlight(value);
-    };
-
     const onImportVideo = (e: FormEvent) => {
         e.preventDefault();
         e.stopPropagation();

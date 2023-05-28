@@ -5,6 +5,7 @@ export interface ApiVideoRewardConfig {
     videoId: string;
     isActive: boolean;
     maxApplyTimes: number;
+    totalPoints: number;
     rewardProgresses: ApiVideoRewardConfigProgress[];
 }
 
@@ -18,6 +19,7 @@ export interface VideoRewardConfig {
     videoId: string;
     isActive: boolean;
     maxApplyTimes: number;
+    totalPoints: number;
     rewardProgresses: VideoRewardConfigProgress[];
 }
 

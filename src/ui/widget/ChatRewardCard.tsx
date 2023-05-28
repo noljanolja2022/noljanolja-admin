@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { ChatRewardConfig, RoomType } from "../../data/model/ConfigModels";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Stack, Switch, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from "./mui";
 import { useState } from "react";
-import { zeroOrHigher } from "../../util/StringUtils";
+import { formatToInt } from "../../util/StringUtils";
 import rewardService from "../../service/RewardService";
 
 type Props = {
@@ -80,7 +80,7 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                         inputMode="numeric"
                         value={maxApplyTimes}
                         error={maxApplyTimes < 0}
-                        onChange={(event) => setMaxApplyTimes(zeroOrHigher(event.target.value))} />
+                        onChange={(event) => setMaxApplyTimes(formatToInt(event.target.value))} />
                 </Grid>
                 <Grid item md={6}>
                     <Tooltip title="The amount of point rewarded to user">
@@ -98,7 +98,7 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                         inputMode="numeric"
                         value={rewardPoint}
                         error={rewardPoint < 0}
-                        onChange={(event) => setRewardPoint(zeroOrHigher(event.target.value))} />
+                        onChange={(event) => setRewardPoint(formatToInt(event.target.value))} />
                 </Grid>
                 <Grid item md={6}>
                     <Tooltip title="The amount of messages required to get rewarded">
@@ -116,7 +116,7 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                         inputMode="numeric"
                         value={numberOfMessages}
                         error={numberOfMessages < 0}
-                        onChange={(event) => setNumberOfMessages(zeroOrHigher(event.target.value))} />
+                        onChange={(event) => setNumberOfMessages(formatToInt(event.target.value))} />
                 </Grid>
                 <Grid item md={6}>
                     <Typography>Only reward creator</Typography>

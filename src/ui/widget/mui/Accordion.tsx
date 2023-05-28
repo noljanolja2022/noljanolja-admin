@@ -25,7 +25,7 @@ export const SidebarAccordionSummary = styled((props: MuiAccordionSummaryProps) 
     //   transform: 'rotate(90deg)',
     // },
     '& .MuiAccordionSummary-root': {
-      height: '30px',
+        height: '30px',
     },
     // '& .MuiAccordionSummary-gutters': {
     //     height: '10px',
@@ -33,14 +33,16 @@ export const SidebarAccordionSummary = styled((props: MuiAccordionSummaryProps) 
 }));
 
 export const SidebarAccordion = styled((props: MuiAccordionProps) => (
-    <MuiAccordion sx={{
-        '&:before': {
-            display: 'none',
-        }
-    }} {...props} />))(({ theme }) => ({
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-        "& .MuiAccordion-root": {
-            
-        }
-    }))
+    <MuiAccordion
+        disableGutters
+        sx={{
+            '&:before': {
+                display: 'none',
+            }
+        }} {...props} />))(({ theme }) => ({
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+            // "& .MuiAccordion-root": {
+
+            // }
+        }))

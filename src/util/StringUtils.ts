@@ -4,9 +4,19 @@ export const validateEmail = (email?: string) => {
     );
 };
 
-export const zeroOrHigher = (input: string) => {
+export const formatToInt = (input: string) => {
     if (!input) {
         return 0;
     }
     return parseInt(input)
+}
+
+export const formatToDecimal = (input: string) => {
+
+    if (!input) {
+        return 0;
+    }
+
+    return input.replace(/[^.\d]/g, '')
+        .replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2")
 }

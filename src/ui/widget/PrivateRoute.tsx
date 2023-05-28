@@ -54,7 +54,7 @@ export default function PrivateRoute() {
 
     switch (verified) {
         case VerifyingState.INIT:
-            return <LoadingOverlay />
+            return <LoadingOverlay forceShowing/>
         case VerifyingState.FAIL:
             return <Navigate to={LoginPath} replace />
         default:

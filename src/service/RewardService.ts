@@ -13,10 +13,19 @@ class RewardService {
         }))
     }
 
-    async updateVideoRewardConfig(videoId: string, isActive: boolean = true, maxApplyTimes: number = 1, progresses: VideoRewardConfigProgress[] = []) {
-        return parseResponse(await api.put('v1/reward/videos/configs', {
+    async updateVideoRewardConfig(videoId: string,
+        isActive: boolean = true,
+        maxApplyTimes: number = 1,
+        progresses: VideoRewardConfigProgress[] = [],
+        totalPoints: number = 0,
+    ) {
+        let param: any = {
             videoId, isActive, maxApplyTimes, rewardProgresses: progresses
-        }))
+        }
+        if (totalPoints > 0) {
+            param.totalPoints = totalPoints;
+        }
+        return parseResponse(await api.put('v1/reward/videos/configs', param))
     }
 
     async getVideoRewardConfig(videoId: string): Promise<Result<ApiVideoRewardConfig>> {

@@ -74,7 +74,6 @@ export default function SideBar(props: Props) {
         {
             path: "", text: t('label_setting'), icon: <SettingsIcon color="primary" />,
             subMenu: [
-                { path: RoutePaths.videoRewardConfig, text: t('label_video_setting'), icon: <OndemandVideoIcon color="primary" /> },
                 { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> }
             ]
         },
