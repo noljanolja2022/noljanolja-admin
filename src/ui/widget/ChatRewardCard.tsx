@@ -4,27 +4,33 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Stack,
 import { useState } from "react";
 import { formatToInt } from "../../util/StringUtils";
 import rewardService from "../../service/RewardService";
+import { useLoadingStore } from "../../store/LoadingStore";
 
 type Props = {
-    data: ChatRewardConfig | null,
+    data: ChatRewardConfig,
     onClose: () => void
 }
 
 export default function ChatRewardCard({ data, onClose }: Props) {
     const { t } = useTranslation();
-    const [roomType, setRoomType] = useState<RoomType>(data?.roomType || RoomType.SINGLE)
-    const [isActive, setIsActive] = useState<boolean>(data?.isActive || true);
-    const [onlyRewardCreator, setOnlyRewardCreator] = useState<boolean>(data?.onlyRewardCreator || true);
+    const { setLoading, setIdle, viewState } = useLoadingStore();
+    const [roomType, setRoomType] = useState<RoomType>(data.roomType || RoomType.SINGLE)
+    const [isActive, setIsActive] = useState<boolean>(data.isActive);
+    const [onlyRewardCreator, setOnlyRewardCreator] = useState<boolean>(data.onlyRewardCreator || true);
     const [maxApplyTimes, setMaxApplyTimes] = useState(data?.maxApplyTimes || 1);
     const [rewardPoint, setRewardPoint] = useState(data?.rewardPoint || 1);
     const [numberOfMessages, setNumberOfMessages] = useState(data?.numberOfMessages || 1);
-
     if (data == null) {
         return null;
     }
     const onSaveConfig = () => {
-        rewardService.updateChatRewardConfig()
-        onClose();
+        setLoading()
+        rewardService.updateChatRewardConfig(roomType, isActive, maxApplyTimes, onlyRewardCreator, rewardPoint, numberOfMessages).then(res => {
+            onClose();
+
+        }).finally(() => {
+            setIdle();
+        })
     }
     const onChangeRoomType = (
         event: React.MouseEvent<HTMLElement>,

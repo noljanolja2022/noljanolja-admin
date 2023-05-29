@@ -33,7 +33,6 @@ export enum RoomType {
 }
 
 export interface ApiChatRewardConfig {
-    id: number;
     roomType: RoomType;
     isActive: boolean;
     maxApplyTimes: number;
@@ -43,7 +42,6 @@ export interface ApiChatRewardConfig {
 }
 
 export interface ChatRewardConfig {
-    id?: number;
     roomType?: RoomType;
     isActive?: boolean;
     maxApplyTimes?: number;

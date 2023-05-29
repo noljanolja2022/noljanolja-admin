@@ -1,4 +1,4 @@
-import { ApiVideoRewardConfig, VideoRewardConfigProgress } from "../data/model/ConfigModels";
+import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, VideoRewardConfigProgress } from "../data/model/ConfigModels";
 import { Result } from "../data/model/Result";
 import parseResponse from "./ResponseParse";
 import api from './ApiClient';
@@ -32,8 +32,26 @@ class RewardService {
         return parseResponse(await api.get(`v2/reward/videos/configs/${videoId}`))
     }
 
-    async updateChatRewardConfig() {
+    async getChatRewardConfigs(): Promise<Result<ApiChatRewardConfig[]>> {
+        return parseResponse(await api.get(`v1/reward/chat/configs`))
+    }
 
+    async updateChatRewardConfig(
+        roomType: RoomType,
+        isActive: boolean,
+        maxApplyTimes: number,
+        onlyRewardCreator: boolean,
+        rewardPoint: number,
+        numberOfMessages: number) {
+        const param: any = {
+            roomType,
+            isActive,
+            maxApplyTimes,
+            onlyRewardCreator,
+            rewardPoint,
+            numberOfMessages
+        }
+        return parseResponse(await api.put(`v1/reward/chat/configs`, param))
     }
 }
 
