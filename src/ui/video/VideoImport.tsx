@@ -1,73 +1,84 @@
 import { useState, FormEvent } from "react";
 import mediaService from "../../service/MediaService";
-import { Box, Button, Menu, MenuItem, Paper, Switch, TextField, Typography } from "../widget/mui";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Paper, Switch, TextField, Typography } from "../widget/mui";
 import { t } from "i18next";
 import { useLoadingStore } from "../../store/LoadingStore";
+import { Controller, useForm } from "react-hook-form";
+import useVideoManager from "../../hook/useVideoManager";
 
-export default function VideoList() {
+interface ImportFormProps {
+    url: string;
+    isHighlight: boolean;
+}
+
+type Props = {
+    onClose: () => void
+}
+
+export function VideoImport(props: Props) {
     const { setLoading, setIdle } = useLoadingStore();
-    const [url, setUrl] = useState('')
-    const [isHighlight, setIsHighlight] = useState(false)
-    const [resultMsg, setResultMsg] = useState('');
+    const {
+        control,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<ImportFormProps>({
+        // resolver: yupResolver(LoginSchemaValidator),
+    });
 
-    const onImportVideo = (e: FormEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const onImportVideo = (data: ImportFormProps) => {
         setLoading()
-        mediaService.importVideo(url, isHighlight).then(res => {
+        mediaService.importVideo(data.url, data.isHighlight).then(res => {
             if (res.isFailure()) {
-                setResultMsg(res.getErrorMsg())
+                control.setError("root", { message: res.getErrorMsg() })
                 return;
             }
-            setResultMsg(`Imported success for video Id ${res.data?.id}`)
-            setUrl('')
+            control.setError("root", { message: `Imported success for video Id ${res.data?.id}` })
+            setValue("url", '');
         }).finally(() => {
             setIdle()
         })
     }
 
     return (
-        <Box gap={1} display={"flex"} flexDirection={"column"} p={2}>
-            <Paper elevation={3} sx={{
-                padding: 2
-            }}>
-                <form onSubmit={onImportVideo}
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 8,
-                        width: '360px'
-                    }}>
-                    <TextField id="input-url"
-                        fullWidth
-                        label={t('hint_enter_youtube_url')} required
-                        value={url}
-                        onChange={(event) => setUrl(event.target.value)} />
-                    <Box>
+        <Dialog open>
+            <DialogTitle>Import video via Url</DialogTitle>
+            <form onSubmit={handleSubmit(onImportVideo)} >
+                <DialogContent>
+                    <Box gap={1} display={"flex"} flexDirection={"column"} p={2} width={360}>
+                        <Controller
+                            render={({ field: { ref, ...rest } }) => (
+                                <TextField {...rest}
+                                    fullWidth
+                                    label={t('hint_enter_youtube_url')} required />
+                            )}
+                            control={control}
+                            name="url"
+                            defaultValue=""
+                        />
                         <Box display={'flex'} alignItems={'center'}>
                             <Typography>Is Highlighted:</Typography>
-                            <Switch />
-                            {/* <Button onClick={handleClick}
-                            >{isHighlight.toString().toUpperCase()}</Button>
-                            <Menu anchorEl={anchorEl}
-                                open={open}
-                                onClose={() => setAnchorEl(null)}>
-                                <MenuItem onClick={(e) => onSelectDropdown(e, true)} >
-                                    True
-                                </MenuItem>
-                                <MenuItem onClick={(e) => onSelectDropdown(e, false)}>
-                                    False
-                                </MenuItem>
-                            </Menu> */}
+                            <Controller
+                                render={({ field: { ref, ...rest } }) => (
+                                    <Switch {...rest} />
+                                )}
+                                control={control}
+                                name="isHighlight"
+                                defaultValue={false}
+                            />
                         </Box>
-
+                        {errors.root?.message &&
+                            <Typography color={'red'}>
+                                {errors.root?.message}
+                            </Typography>
+                        }
                     </Box>
-
-                    <Button type="submit" >Import video</Button>
-                </form>
-            </Paper>
-
-            <Typography color={'red'}>{resultMsg}</Typography>
-        </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button type="submit" >Import</Button>
+                    <Button color="neutral" onClick={props.onClose}>{t('label_cancel')}</Button>
+                </DialogActions>
+            </form>
+        </Dialog>
     )
 }

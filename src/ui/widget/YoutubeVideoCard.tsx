@@ -1,23 +1,35 @@
 import { useTranslation } from "react-i18next";
 import { Video } from "../../data/model/VideoModels";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typography } from "./mui";
+import { useLoadingStore } from "../../store/LoadingStore";
+import mediaService from "../../service/MediaService";
+import useVideoManager from "../../hook/useVideoManager";
 
 type Props = {
-    data: Video | null
-    onDelete: (item: Video) => void
+    data: Video
     onClose: () => void
 }
 
 export default function YoutubeVideoCard(props: Props) {
     const { t } = useTranslation();
-
-
-    if (props.data == null)
-        return null;
-
+    const { setLoading, setIdle } = useLoadingStore();
+    const { setCurrentPage, loadVideos, videos } = useVideoManager();
     const onDelete = () => {
-        if (!props.data) return;
-        props.onDelete(props.data)
+        setLoading()
+        mediaService.deleteVideo(props.data.id).then(res => {
+            if (res.isFailure()) {
+                alert(res.getErrorMsg())
+                return;
+            }
+            props.onClose();
+            if (videos.length <= 1) {
+                setCurrentPage(0)
+            } else {
+                loadVideos()
+            }
+        }).finally(() => {
+            setIdle()
+        })
     }
 
     return (

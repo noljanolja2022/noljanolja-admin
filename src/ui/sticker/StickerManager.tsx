@@ -34,8 +34,8 @@ export default function StickerManager() {
 
     return (
         <Box p={2}>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="video table">
+            <TableContainer>
+                <Table sx={{ maxWidth: 650 }} aria-label="video table">
                     <TableHead>
                         <TableRow>
                             <TableCell >Name</TableCell>

@@ -133,7 +133,7 @@ export default function VideoSettingCard(props: Props) {
                 </Grid>
                 <TableContainer sx={{
                     marginTop: 4
-                }} component={Paper}>
+                }} >
                     <Table aria-label="video table">
                         <TableHead>
                             <TableRow >

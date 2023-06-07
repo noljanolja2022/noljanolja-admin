@@ -4,7 +4,6 @@ import { firebaseAuthInstance } from '../../service/FirebaseService';
 import AuthService from "../../service/AuthService";
 import UserService from "../../service/UserService";
 import AnalyticService from "../../service/AnalyticService";
-import { FormEvent, useState } from "react";
 import Divider from "@mui/material/Divider";
 import { parseFirebaseErr } from "../../util/ErrorMapper";
 import { useLoadingStore } from "../../store/LoadingStore";
@@ -14,38 +13,40 @@ import { TextField } from "../widget/mui/TextField";
 import { Button } from "../widget/mui/Button";
 import { Box } from "../widget/mui/Box";
 import { t } from "i18next";
-import { Typography } from "../widget/mui";
+import { Controller, useForm } from "react-hook-form";
+
+interface LoginFormProps {
+    username: string;
+    password: string;
+}
+
+// const LoginSchemaValidator = Yup.object().shape({
+//     username: Yup.string().required(t('error_empty_email')),
+//     password: Yup.string().required(t('error_empty_pwd')),
+// });
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const { setLoading, setIdle } = useLoadingStore();
     const { setUser } = useUserStore();
-    const [userName, setUserName] = useState('');
-    const [unError, setUNError] = useState('');
-    const [pwd, setpwd] = useState('');
-    const [pwdError, setPwdError] = useState('');
-    const [resError, setResError] = useState('');
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormProps>({
+        // resolver: yupResolver(LoginSchemaValidator),
+    });
 
-    const onSignin = (e: FormEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setResError('')
-        const usrErr = userName.length === 0 ? t('error_empty_email') : '';
-        const pwdErr = pwd.length === 0 ? t('error_empty_pwd') : '';
-        setUNError(usrErr);
-        setPwdError(pwdErr);
-        if (usrErr || pwdErr) {
-            return;
-        }
+    const onSignin = (data: LoginFormProps) => {
         setLoading()
-        signInWithEmailAndPassword(firebaseAuthInstance, userName, pwd).then(userCredential => {
+        signInWithEmailAndPassword(firebaseAuthInstance, data.username, data.password).then(userCredential => {
             const user = userCredential.user;
             user.getIdToken().then(firebaseToken => {
                 AuthService.saveToken(firebaseToken);
                 UserService.fetchUser().then(res => {
                     if (res.isFailure()) {
                         if (res.error?.name === "401001") {
-                            setResError("Your account doesn't have permission to access this. Please contact admin for support.")
+                            control.setError("root", { message: "Your account doesn't have permission to access this. Please contact admin for support." })
                         }
                         return;
                     }
@@ -71,7 +72,7 @@ export default function LoginPage() {
             })
         }).catch((err: any) => {
             setIdle()
-            setResError(parseFirebaseErr(err.code))
+            control.setError("root", { message: parseFirebaseErr(err.code) })
         });
     }
 
@@ -82,8 +83,8 @@ export default function LoginPage() {
             justifyContent="center"
             alignItems="center"
             minHeight="100vh">
-            <Box 
-            bgcolor="white"
+            <Box
+                bgcolor="white"
                 display="flex"
                 flexDirection="column"
                 gap={1}
@@ -96,30 +97,36 @@ export default function LoginPage() {
                     flexDirection: 'column',
                     gap: 8,
                     width: '80%'
-                }} onSubmit={(e) => onSignin(e)}>
-                    <TextField id="input-email"
-                        label={t('hint_pls_enter_id')} required
-                        value={userName} error={unError.length > 0} helperText={unError}
-                        onChange={(event) => setUserName(event.target.value)} />
-                    <TextField id="input-password" type="password"
-                        label={t('hint_pls_enter_pwd')} required
-                        value={pwd} error={pwdError.length > 0} helperText={pwdError}
-                        onChange={(event) => setpwd(event.target.value)} />
+                }} onSubmit={handleSubmit(onSignin)}>
+                    <Controller
+                        render={({ field: { ref, ...rest } }) => (
+                            <TextField {...rest}
+                                label={t('hint_pls_enter_id')} required
+                                error={errors.username?.message !== undefined}
+                                helperText={errors.username?.message} />
+                        )}
+                        name="username"
+                        control={control}
+                    />
+
+                    <Controller
+                        render={({ field: { ref, ...rest } }) => (
+                            <TextField {...rest} type="password"
+                                label={t('hint_pls_enter_pwd')} required
+                                error={errors.password?.message !== undefined}
+                                helperText={errors.password?.message} />
+                        )}
+                        name="password"
+                        control={control}
+                    />
                     <Button type="submit">
                         {t('label_login')}
                     </Button>
-                    {resError.length > 0 && 
-                    <Box color="red">
-                        {resError}
-                    </Box>}
+                    {errors.root?.message !== undefined &&
+                        <Box color="red">
+                            {errors.root?.message}
+                        </Box>}
                 </form>
-
-                {/* <Divider sx={{ minWidth: '80%' }} />
-                <Typography paddingTop={0.5} variant="caption" color={'#BDBDBD'} width={'80%'}>
-                    (주)유니온콘텐츠 UnionContents Co., Ltd<br />
-                    TEL : 070-7700-1555<br />
-                    ADRESS : 서울시 금천구 디지털로 121 에이스가산타워 906호
-                </Typography> */}
             </Box>
         </Box>
     )

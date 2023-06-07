@@ -32,7 +32,7 @@ export default function NoljaRoutes() {
                     <Route path={RoutePaths.dashboard} element={<DashBoard />} />
                     <Route path='membership-management' element={<MembershipManagement />} />
                     <Route path={RoutePaths.videoManager} element={<VideoManager />} />
-                    <Route path={RoutePaths.videoImport} element={<VideoImport />} />
+                    {/* <Route path={RoutePaths.videoImport} element={<VideoImport />} /> */}
                     <Route path={RoutePaths.stickerImport} element={<StickerImport />} />
                     <Route path={RoutePaths.stickerManager} element={<StickerManager />} />
                     <Route path='content-management' element={<ContentManagement />} />

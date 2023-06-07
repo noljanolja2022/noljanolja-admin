@@ -42,10 +42,10 @@ export interface ApiChatRewardConfig {
 }
 
 export interface ChatRewardConfig {
-    roomType?: RoomType;
-    isActive?: boolean;
-    maxApplyTimes?: number;
-    onlyRewardCreator?: boolean;
-    rewardPoint?: number;
-    numberOfMessages?: number;
+    roomType: RoomType;
+    isActive: boolean;
+    maxApplyTimes: number;
+    onlyRewardCreator: boolean;
+    rewardPoint: number;
+    numberOfMessages: number;
 }

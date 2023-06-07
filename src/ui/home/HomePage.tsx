@@ -72,7 +72,6 @@ function HomePage() {
             <Box
                 display="flex"
                 flexDirection="row"
-
                 height={`calc(100vh - ${appBarHeight}px)`}
                 sx={{
                     ...(!isWindowSize && { overflowX: 'scroll' })
@@ -82,7 +81,13 @@ function HomePage() {
                         <SideBar onDrawerClose={handleDrawerClose} />
                     </Box>
                 )}
-                <Outlet />
+                <Box sx={{
+                    overflowY: 'scroll',
+                    flexGrow: 1
+                }}>
+                    <Outlet />
+
+                </Box>
             </Box>
         </>
     )

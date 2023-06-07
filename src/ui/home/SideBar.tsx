@@ -57,13 +57,14 @@ export default function SideBar(props: Props) {
 
     const drawerItems: DrawerItem[] = [
         { path: RoutePaths.dashboard, text: t('label_home'), icon: <HomeIcon color="primary" /> },
-        {
-            path: "", text: t('label_video'), icon: <OndemandVideoIcon color="primary" />,
-            subMenu: [
-                { path: RoutePaths.videoManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
-                { path: RoutePaths.videoImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
-            ]
-        },
+        { path: RoutePaths.videoManager, text: t('label_video'), icon: <OndemandVideoIcon color="primary" /> },
+        // {
+        //     path: "", text: t('label_video'), icon: <OndemandVideoIcon color="primary" />,
+        //     subMenu: [
+        //         { path: RoutePaths.videoManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
+        //         { path: RoutePaths.videoImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
+        //     ]
+        // },
         {
             path: "", text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" />,
             subMenu: [
@@ -71,12 +72,13 @@ export default function SideBar(props: Props) {
                 { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
             ]
         },
-        {
-            path: "", text: t('label_setting'), icon: <SettingsIcon color="primary" />,
-            subMenu: [
-                { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> }
-            ]
-        },
+        // {
+        //     path: "", text: t('label_setting'), icon: <SettingsIcon color="primary" />,
+        //     subMenu: [
+        //         { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> }
+        //     ]
+        // },
+        { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> },
         // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
         { path: "membership-management", text: t('label_membership'), icon: <CardMembershipIcon color="primary" /> },
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
