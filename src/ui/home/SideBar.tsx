@@ -12,6 +12,8 @@ import { RoutePaths } from "../../util/routes";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ChatIcon from '@mui/icons-material/Chat';
+import RedeemIcon from '@mui/icons-material/Redeem';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 
 type DrawerItem = {
     text: string;
@@ -81,6 +83,8 @@ export default function SideBar(props: Props) {
         { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> },
         // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
         { path: "membership-management", text: t('label_membership'), icon: <CardMembershipIcon color="primary" /> },
+        { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon color="primary" /> },
+        { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon color="primary" /> },
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
     ]
 

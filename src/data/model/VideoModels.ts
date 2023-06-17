@@ -5,6 +5,7 @@ export interface Video {
     title: string,
     thumbnail: string,
     duration: string,
+    durationMs: number,
     viewCount: number,
     likeCount: number,
     favoriteCount: number,

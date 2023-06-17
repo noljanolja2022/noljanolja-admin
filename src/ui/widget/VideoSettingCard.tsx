@@ -137,7 +137,7 @@ export default function VideoSettingCard(props: Props) {
                     <Table aria-label="video table">
                         <TableHead>
                             <TableRow >
-                                <TableCell sx={{ fontWeight: 700 }} >
+                                <TableCell >
                                     <Box display={'flex'} flexDirection={'row'} gap={0.5}>
                                         Milestone
                                         <Tooltip title="Indicate when an user will receive reward based on milestone. Value must be bigger than 0 and smaller and equal to 1">
@@ -145,7 +145,7 @@ export default function VideoSettingCard(props: Props) {
                                         </Tooltip>
                                     </Box>
                                 </TableCell>
-                                <TableCell sx={{ fontWeight: 700 }}>
+                                <TableCell>
                                     <Box display={'flex'} flexDirection={'row'} gap={0.5}>
                                         Points
                                         <Tooltip title="Total points received each milestone. The later must be bigger than the former">

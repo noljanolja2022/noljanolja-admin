@@ -7,6 +7,8 @@
     "label_home": "Dashboard",
     "label_membership": "Membership",
     "label_users": "Users",
+    "label_gift": "Gifts",
+    "label_brand": "Brands",
     "label_sticker": "Sticker",
     "label_content": "Content",
     "label_setting": "Setting",
@@ -17,11 +19,11 @@
     "label_channel": "Channel",
     "label_published_date": "Published Date",
     "label_actions": "Actions",
-
+    "label_add": "Add",
+    "label_save": "Save",
     "hint_pls_enter_id": "Please enter your username",
     "hint_pls_enter_pwd": "Please enter your password",
     "hint_enter_youtube_url": "Please enter youtube url",
-
     "error_empty_email": "Email can't be empty",
     "error_empty_pwd": "Password can't be empty",
     "error_invalid_email": "Email is invalid. Please try again",

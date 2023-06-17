@@ -75,7 +75,7 @@ export function VideoImport(props: Props) {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button type="submit" >Import</Button>
+                    <Button type="submit" >{t('label_add')}</Button>
                     <Button color="neutral" onClick={props.onClose}>{t('label_cancel')}</Button>
                 </DialogActions>
             </form>

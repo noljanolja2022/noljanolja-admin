@@ -3,6 +3,7 @@ import { StorageKey } from '../util/Constants';
 import { Failure, Success } from '../data/model/Result';
 import i18n from '../util/translation/LanguageUtil';
 import { firebaseAuthInstance } from './FirebaseService';
+import authService from './AuthService';
 
 const axiosConfig: AxiosRequestConfig<any> = {
     baseURL: `${import.meta.env.VITE_NOLJA_ADMIN_SERVER}/api/`,
@@ -34,7 +35,9 @@ axiosClient.interceptors.response.use(
                 if (!originalRequest._retry) {
                     originalRequest._retry = true;
                     console.log('Token Expired, refreshing token')
-                    await firebaseAuthInstance.currentUser?.getIdToken();
+                    const newToken = await firebaseAuthInstance.currentUser?.getIdToken(true);
+                    if (newToken)
+                        authService.saveToken(newToken)
                     // Retry the request one time
                     return axiosClient(originalRequest);
                 }

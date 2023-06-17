@@ -5,3 +5,7 @@ export enum ViewState {
     SUCCESS,
     INITING
 }
+
+export enum SnackbarState {
+    SUCCESS, ERROR
+}

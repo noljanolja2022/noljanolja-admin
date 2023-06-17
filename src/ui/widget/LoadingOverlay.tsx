@@ -8,7 +8,7 @@ type Props = {
 
 export default function LoadingOverlay(props: Props) {
     const loadingState = useLoadingStore();
-
+    //TODO:  Implement snackbar
     return (
         <Backdrop open={loadingState.viewState === ViewState.LOADING ||
             loadingState.viewState === ViewState.INITING ||

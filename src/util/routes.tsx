@@ -6,11 +6,12 @@ import LoginPage from '../ui/login/LoginPage';
 import MembershipManagement from '../ui/membership/MembershipManagement';
 import VideoManager from '../ui/video/VideoManager';
 import PrivateRoute from '../ui/widget/PrivateRoute';
-import VideoImport from '../ui/video/VideoImport';
 import StickerManager from '../ui/sticker/StickerManager';
 import StickerImport from '../ui/sticker/StickerImport';
 import UserManager from '../ui/user/UsersManager';
 import ChatRewardSetting from '../ui/setting/ChatRewardSetting';
+import GiftManager from '../ui/gift/GiftManager';
+import BrandManager from '../ui/brand/BrandManager';
 
 export const RoutePaths = {
     dashboard: 'dashboard',
@@ -19,7 +20,9 @@ export const RoutePaths = {
     stickerManager: 'sticker-manager',
     stickerImport: 'sticker-import',
     userManager: 'user-manager',
+    brandManager: 'brand-manager',
     chatRewardConfig: 'chat-reward-config',
+    giftManager: 'gift-manager'
 }
 
 export const LoginPath = "/login"
@@ -38,6 +41,8 @@ export default function NoljaRoutes() {
                     <Route path='content-management' element={<ContentManagement />} />
                     <Route path={RoutePaths.userManager} element={<UserManager />} />
                     <Route path={RoutePaths.chatRewardConfig} element={<ChatRewardSetting />} />
+                    <Route path={RoutePaths.giftManager} element={<GiftManager />} />
+                    <Route path={RoutePaths.brandManager} element={<BrandManager />} />
                     <Route index element={<Navigate to={RoutePaths.dashboard} />} />
                 </Route>
             </Route>

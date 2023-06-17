@@ -1,5 +1,10 @@
 export function parseDate(date: Date) {
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    const tmp = new Date(date)
+    return `${tmp.getDate()}/${tmp.getMonth()+1}/${tmp.getFullYear()}`
+}
+
+export function parseDateToIso(date: Date) {
+    return (new Date(date)).toISOString()
 }
 
 export function convertISO8601ToSeconds(input: string): number {

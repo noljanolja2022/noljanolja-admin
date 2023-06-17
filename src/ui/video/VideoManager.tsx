@@ -59,34 +59,31 @@ function VideoManager() {
 
     return (
         <Stack spacing={1} p={2}>
-
             <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
                 {/* <TextField  sx={{
                     width: '300px',
                 }} /> */}
-                <Button onClick={() => setShowImport(true)}><AddIcon />Import</Button>
+                <Button onClick={() => setShowImport(true)}><AddIcon />{t('label_add')}</Button>
             </Box>
             <Table sx={{ minWidth: 650, }}
                 cellSpacing={20}
                 aria-label="video table">
                 <TableHead>
                     <TableRow >
-                        <TableCell sx={{ fontWeight: 700 }}>Thumbnail</TableCell>
+                        <TableCell>Thumbnail</TableCell>
                         <TableCell sx={{ maxWidth: '300px', fontWeight: 700 }}>{t('label_name')}</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>Views</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>Likes</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>Comments</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>Duration</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>{t('label_channel')}</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>{t('label_published_date')}</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>{t('label_actions')}</TableCell>
+                        <TableCell>Views</TableCell>
+                        <TableCell>Likes</TableCell>
+                        <TableCell>Comments</TableCell>
+                        <TableCell>Duration</TableCell>
+                        <TableCell>{t('label_channel')}</TableCell>
+                        <TableCell>{t('label_published_date')}</TableCell>
+                        <TableCell>{t('label_actions')}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {videos.map(video =>
-                        <TableRow key={video.id} sx={{
-                            border: 'none'
-                        }}>
+                        <TableRow key={video.id}>
                             <TableCell align="left" sx={{ width: 100 }} >
                                 <img src={video.thumbnail} alt={video.title} style={{
                                     maxWidth: '100px'
@@ -98,7 +95,7 @@ function VideoManager() {
                             <TableCell >{video.viewCount}</TableCell>
                             <TableCell >{video.likeCount}</TableCell>
                             <TableCell >{video.commentCount}</TableCell>
-                            <TableCell >{convertMsToTime(convertISO8601ToSeconds(video.duration))}</TableCell>
+                            <TableCell >{convertMsToTime(video.durationMs)}</TableCell>
                             <TableCell >{video.channel.title}</TableCell>
                             <TableCell >{parseDate(new Date(video.publishedAt))}</TableCell>
                             <TableCell >

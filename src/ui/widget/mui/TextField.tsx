@@ -10,8 +10,12 @@ export const TextField = styled((props: MuiTextFieldProps) => (
   // '& .MuiInput-underline:after': {
   //   borderBottomColor: 'green',
   // },
+  // '& .MuiInputBase-root': {
+  //   outerHeight: 300,
+  // },
   '& .MuiOutlinedInput-root': {
     background: "#F2F2F2",
+
     borderRadius: theme.spacing(1),
     '& fieldset': {
       borderColor: theme.palette.common.white,

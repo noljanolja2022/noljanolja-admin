@@ -15,7 +15,10 @@ const Table = styled((props: MuiTableProps) => (
 
 const TableHead = styled((props: MuiTableHeadProps) => (
     <MuiTableHead {...props} />))(({ theme }) => ({
-        backgroundColor: theme.palette.secondary.main
+        "& .MuiTableRow-root .MuiTableCell-root": {
+            fontWeight: 700,
+        },
+        backgroundColor: theme.palette.secondary.main,
     }));
 
 const TableHeadRow = styled((props: MuiTableRowProps) => (
@@ -25,10 +28,10 @@ const TableHeadRow = styled((props: MuiTableRowProps) => (
 
 const TableBody = styled((props: MuiTableBodyProps) => (
     <MuiTableBody {...props} />))(({ theme }) => ({
-        "& .MuiTableRow-root:nth-child(odd)": {
+        "& .MuiTableRow-root:nth-of-type(odd)": {
             backgroundColor: theme.palette.grey[200]
         },
-        "& .MuiTableRow-root:nth-child(even)": {
+        "& .MuiTableRow-root:nth-of-type(even)": {
             backgroundColor: theme.palette.grey[300]
         },
         "& .MuiTableRow-root": {
@@ -61,11 +64,11 @@ const TableCell = styled((props: MuiTableCellProps) => (
         paddingTop: theme.spacing(1.5),
         paddingBottom: theme.spacing(1.5),
 
-        "&:first-child": {
+        "&:first-of-type": {
             borderTopLeftRadius: theme.spacing(1),
             borderBottomLeftRadius: theme.spacing(1)
         },
-        "&:last-child": {
+        "&:last-of-type": {
             borderTopRightRadius: theme.spacing(1),
             borderBottomRightRadius: theme.spacing(1)
         }

@@ -1,5 +1,10 @@
 import { create } from 'zustand'
-import { ViewState } from '../data/enum/ViewState'
+import { SnackbarState, ViewState } from '../data/enum/ViewState'
+
+type SnackBarProps = {
+    message: string;
+    state: SnackbarState
+}
 
 type LoadingStore = {
     viewState: ViewState;
@@ -7,6 +12,10 @@ type LoadingStore = {
     setIdle: () => void
     setSuccess: () => void
     setIniting: () => void
+    snackBarProps: Nullable<SnackBarProps>;
+    clearSnackBar: () => void
+    showSuccessNoti: (message: string) => void,
+    showErrorNoti: (message: string) => void,
 }
 
 export const useLoadingStore = create<LoadingStore>((set) => ({
@@ -15,4 +24,9 @@ export const useLoadingStore = create<LoadingStore>((set) => ({
     setIdle: () => set(state => ({ viewState: ViewState.IDLE })),
     setSuccess: () => set(state => ({ viewState: ViewState.SUCCESS })),
     setIniting: () => set(state => ({ viewState: ViewState.INITING })),
+    snackBarProps: null,
+    clearSnackBar: () => set(state => ({ snackBarProps: null })),
+    showSuccessNoti: (message: string) => set(_ => ({ snackBarProps: { message: message, state: SnackbarState.SUCCESS } })),
+    showErrorNoti: (message: string) => set(_ => ({ snackBarProps: { message: message, state: SnackbarState.ERROR } })),
+
 }))

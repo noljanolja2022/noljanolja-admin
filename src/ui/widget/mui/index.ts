@@ -10,7 +10,10 @@ export * from "./Dialog";
 
 export * from "./Drawer";
 export * from "./Grid";
+export * from "./Pagination";
 export * from "./Paper";
+export * from "./Select";
+export * from "./Snackbar";
 export * from "./Stack";
 export * from "./Switch";
 export * from "./Table";
