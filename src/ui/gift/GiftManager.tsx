@@ -11,9 +11,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function GiftManager() {
-    const { gifts, fetchCategories, totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
+    const { data, fetchCategories, totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
     const { fetchBrands } = useBrandManager();
-    const [editing, setEditing] = useState<Nullable<Gift>>(null);
+    const [editing, setEditing] = useState<Nullable<Partial<Gift>>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
@@ -32,7 +32,7 @@ export default function GiftManager() {
 
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <Button onClick={() => setEditing({ id: -1 })}>
+            <Button onClick={() => setEditing(null)}>
                 <AddIcon />
                 {t('label_add')}
             </Button>
@@ -40,17 +40,19 @@ export default function GiftManager() {
         <Table sx={{ minWidth: 650, }}>
             <TableHead>
                 <TableRow >
-                    <TableCell >Image</TableCell>
-                    <TableCell sx={{ maxWidth: '300px', fontWeight: 700 }}>{t('label_name')}</TableCell>
+                    <TableCell >{t('label_thumbnail')}</TableCell>
+                    <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
                     <TableCell >Price</TableCell>
+                    <TableCell >Remaining</TableCell>
+                    <TableCell >Total</TableCell>
                     <TableCell >Description</TableCell>
-                    <TableCell >Effective Date</TableCell>
-                    <TableCell >Expiring Date</TableCell>
+                    <TableCell >{t('label_effective_date')}</TableCell>
+                    <TableCell >{t('label_expire_date')}</TableCell>
                     <TableCell ></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {gifts.map(item =>
+                {data.map(item =>
                     <TableRow key={item.id}>
                         <TableCell align="left" sx={{ width: 100, height: 100 }} >
                             <img src={item.image} alt={item.name} style={{
@@ -65,6 +67,8 @@ export default function GiftManager() {
                         <TableCell >
                             {item.price}
                         </TableCell>
+                        <TableCell >{item.remaining}</TableCell>
+                        <TableCell >{item.total}</TableCell>
                         <TableCell >
                             {item.description}
                         </TableCell>

@@ -9,22 +9,22 @@ import giftService from "../../service/GiftService";
 import useBrandManager from "../../hook/useBrandManager";
 
 type Props = {
-    data: GiftBrand
+    data: Partial<GiftBrand>
     onClose: () => void
 }
 
-interface ImportFormProps {
+interface FormProps {
     name: string;
     image: string;
 }
 
 const fileTypes = ["jpg", "png"];
 
-export default function BrandEditorDialog(props: Props) {
+export default function BrandEditorDialog({ data, onClose }: Props) {
     const { setLoading, setIdle, showSuccessNoti } = useLoadingStore();
     const { fetchBrands } = useBrandManager();
     const [image, setImage] = useState<Nullable<File>>(null);
-    const [imagePreview, setImagePreview] = useState<Nullable<string>>(props.data.image)
+    const [imagePreview, setImagePreview] = useState<Nullable<string>>(data.image || null)
     const {
         control,
         handleSubmit,
@@ -32,16 +32,11 @@ export default function BrandEditorDialog(props: Props) {
         setError,
         clearErrors,
         formState: { errors },
-    } = useForm<ImportFormProps>({
+    } = useForm<FormProps>({
         defaultValues: {
-            name: props.data.name || ''
+            name: data.name || ''
         }
     });
-    const handleChange = (file: File) => {
-        setImage(file);
-        setImagePreview(file ? URL.createObjectURL(file) : null)
-    };
-
     useEffect(() => {
         setValue("image", imagePreview || '')
         if (imagePreview && errors.image?.message !== null) {
@@ -49,14 +44,19 @@ export default function BrandEditorDialog(props: Props) {
         }
     }, [imagePreview])
 
-    const onSave = (data: ImportFormProps) => {
-        if (props.data.image) {
-            onUpdateBrand(data.name, true, image)
+    const handleChange = (file: File) => {
+        setImage(file);
+        setImagePreview(file ? URL.createObjectURL(file) : null)
+    };
+
+    const onSave = (inputForm: FormProps) => {
+        if (data.image) {
+            onUpdateBrand(inputForm.name, true, image)
         } else {
             if (!imagePreview) {
                 setError("image", { message: "Image Required" })
             } else {
-                onUpdateBrand(data.name, false, image)
+                onUpdateBrand(inputForm.name, false, image)
             }
         }
     }
@@ -64,13 +64,13 @@ export default function BrandEditorDialog(props: Props) {
     const onUpdateBrand = (name: string, isUpdate: boolean, img: Nullable<File>,) => {
         setLoading()
         if (isUpdate) {
-            giftService.updateBrand(props.data.id, img, name).then(res => {
+            giftService.updateBrand(data.id!, img, name).then(res => {
                 if (res.isFailure()) {
                     return;
                 }
                 showSuccessNoti('Brand updated succesfully')
                 fetchBrands()
-                props.onClose();
+                onClose();
             }).finally(() => {
                 setIdle()
             })
@@ -79,7 +79,7 @@ export default function BrandEditorDialog(props: Props) {
                 if (res.isFailure()) {
                     return;
                 }
-                props.onClose();
+                onClose();
                 showSuccessNoti('Brand created succesfully')
                 fetchBrands()
             }).finally(() => {
@@ -110,9 +110,7 @@ export default function BrandEditorDialog(props: Props) {
                             <FileUploader handleChange={handleChange}
                                 fileOrFiles={image}
                                 types={fileTypes} >
-                                <Button>
-                                    Update
-                                </Button>
+                                <Button>{t('label_update')}</Button>
                             </FileUploader>
                             {errors.image?.message && <Typography color={'red'}>{errors.image.message}</Typography>}
                         </Grid>
@@ -131,8 +129,8 @@ export default function BrandEditorDialog(props: Props) {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button type="submit" >{props.data.id > -1 ? t('label_save') : t('label_add')}</Button>
-                    <Button color="neutral" onClick={props.onClose}>{t('label_cancel')}</Button>
+                    <Button type="submit" >{data.id ? t('label_save') : t('label_add')}</Button>
+                    <Button color="neutral" onClick={onClose}>{t('label_cancel')}</Button>
                 </DialogActions>
             </form>
         </Dialog>

@@ -8,7 +8,7 @@ import { GiftBrand } from "../../data/model/Gift";
 
 export default function BrandManager() {
     const { brands, fetchBrands, currentPage, setCurrentPage, totalPage } = useBrandManager();
-    const [editingItem, setEditingItem] = useState<Nullable<GiftBrand>>(null);
+    const [editingItem, setEditingItem] = useState<Nullable<Partial<GiftBrand>>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
@@ -20,11 +20,7 @@ export default function BrandManager() {
 
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <Button onClick={() => setEditingItem({
-                id: -1,
-                image: '',
-                name: ''
-            })}>
+            <Button onClick={() => setEditingItem({})}>
                 <AddIcon />
                 {t('label_add')}
             </Button>
@@ -32,8 +28,8 @@ export default function BrandManager() {
         <Table sx={{ maxWidth: 550 }}>
             <TableHead>
                 <TableRow >
-                    <TableCell>Image</TableCell>
-                    <TableCell sx={{ maxWidth: '300px', fontWeight: 700 }}>{t('label_name')}</TableCell>
+                    <TableCell>{t('label_thumbnail')}</TableCell>
+                    <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

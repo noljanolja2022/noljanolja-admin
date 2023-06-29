@@ -17,7 +17,7 @@ export default function NotificationOverlay() {
 
     const getColor = () => {
         return snackBarProps?.state === SnackbarState.SUCCESS
-            ? theme.palette.common.green[50]
+            ? theme.palette.common.green[100]
             : theme.palette.common.red[200]
     }
 

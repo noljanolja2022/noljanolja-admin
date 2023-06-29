@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { ChatRewardConfig, RoomType } from "../../data/model/ConfigModels";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Switch, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from "./mui";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Switch, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from "../widget/mui";
 import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { Controller, useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ interface FormProps {
     numberOfMessages: number;
 }
 
-export default function ChatRewardCard({ data, onClose }: Props) {
+export default function ChatConfigEditor({ data, onClose }: Props) {
     const { t } = useTranslation();
     const { setLoading, setIdle } = useLoadingStore();
     const { fetchChatConfig } = useChatRewardConfig();
@@ -61,10 +61,10 @@ export default function ChatRewardCard({ data, onClose }: Props) {
         <form onSubmit={handleSubmit(onSaveConfig)}>
             <DialogContent>
                 <Grid container rowSpacing={1} columnSpacing={{ md: 1 }}>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Typography>Status</Typography>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Controller
                             render={({ field: { ref, ...rest } }) => (
                                 <Switch checked={rest.value} onChange={rest.onChange} />
@@ -73,13 +73,14 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                             name="isActive"
                         />
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Typography>Room Type</Typography>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Controller
                             render={({ field: { ref, ...rest } }) => (
                                 <ToggleButtonGroup
+                                    disabled
                                     value={rest.value}
                                     onChange={(_, data) => {
                                         rest.onChange(data)
@@ -99,12 +100,12 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                         />
                     </Grid>
 
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Tooltip title="The amounf of times user will be rewarded by watching full video">
                             <Typography>Maximum reward times</Typography>
                         </Tooltip>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Controller
                             render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
@@ -122,12 +123,12 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                             name="maxApplyTimes"
                         />
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Tooltip title="The amount of point rewarded to user">
                             <Typography>Point Reward</Typography>
                         </Tooltip>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Controller
                             render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
@@ -145,12 +146,12 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                             name="rewardPoint"
                         />
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Tooltip title="The amount of messages required to get rewarded">
                             <Typography>Message number</Typography>
                         </Tooltip>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Controller
                             render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
@@ -168,10 +169,10 @@ export default function ChatRewardCard({ data, onClose }: Props) {
                             name="numberOfMessages"
                         />
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Typography>Only reward creator</Typography>
                     </Grid>
-                    <Grid item md={6}>
+                    <Grid item md={6} sm={12}>
                         <Controller
                             render={({ field: { ref, ...rest } }) => (
                                 <Switch checked={rest.value} onChange={rest.onChange} />

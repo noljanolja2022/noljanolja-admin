@@ -9,7 +9,9 @@ export * from "./Menu";
 export * from "./Dialog";
 
 export * from "./Drawer";
+export * from "./FormControl";
 export * from "./Grid";
+export * from "./InputLabel";
 export * from "./Pagination";
 export * from "./Paper";
 export * from "./Select";

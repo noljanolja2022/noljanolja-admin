@@ -6,6 +6,11 @@ export interface ApiVideoRewardConfig {
     isActive: boolean;
     maxApplyTimes: number;
     totalPoints: number;
+    minCommentLength: number;
+    commentMaxApplyTimes: number;
+    commentRewardPoints: number;
+    likeMaxApplyTimes: number;
+    likeRewardPoints: number;
     rewardProgresses: ApiVideoRewardConfigProgress[];
 }
 
@@ -20,12 +25,30 @@ export interface VideoRewardConfig {
     isActive: boolean;
     maxApplyTimes: number;
     totalPoints: number;
+    minCommentLength: number;
+    commentMaxApplyTimes: number;
+    commentRewardPoints: number;
+    likeMaxApplyTimes: number;
+    likeRewardPoints: number;
     rewardProgresses: VideoRewardConfigProgress[];
 }
 
 export interface VideoRewardConfigProgress {
     progress: number;
     point: number;
+}
+
+export interface UpdateVideoRewardPayload {
+    videoId: string;
+    isActive: boolean;
+    maxApplyTimes: number;
+    rewardProgresses: VideoRewardConfigProgress[];
+    totalPoints: number;
+    minCommentLength: number;
+    commentMaxApplyTimes: number;
+    commentRewardPoints: number;
+    likeMaxApplyTimes: number;
+    likeRewardPoints: number;
 }
 
 export enum RoomType {

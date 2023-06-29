@@ -1,27 +1,25 @@
 import { useEffect, useState } from "react";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { Video } from "../../data/model/VideoModels";
-import YoutubeVideoCard from "../widget/YoutubeVideoCard";
-import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, useTheme, Box, Button, Link, TableHeadRow, TextField } from "../widget/mui";
-import { convertISO8601ToSeconds, convertMsToTime, parseDate } from "../../util/DateUtil";
+import { Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme, Box, Button, Link } from "../widget/mui";
+import { convertMsToTime, parseDate } from "../../util/DateUtil";
 import { Pagination } from "../widget/mui/Pagination";
 import { useTranslation } from "react-i18next";
 import SettingsIcon from '@mui/icons-material/Settings';
-import VideoSettingCard, { VideoSettingCardProps } from "../widget/VideoSettingCard";
-import { VideoRewardConfig } from "../../data/model/ConfigModels";
+import VideoSettingEditorDialog from "./VideoSettingEditorDialog";
 import rewardService from "../../service/RewardService";
 import useVideoManager from "../../hook/useVideoManager";
 import { VideoImport } from "./VideoImport";
-import DeleteIcon from '@mui/icons-material/Delete';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import AddIcon from '@mui/icons-material/Add';
+import { VideoRewardConfig } from "../../data/model/ConfigModels";
 
 function VideoManager() {
     const theme = useTheme();
     const { t } = useTranslation();
     const { setLoading, setIdle } = useLoadingStore();
     const { videos, loadVideos, currentPage, setCurrentPage, totalPage } = useVideoManager();
-    const [videoSetting, setVideoSetting] = useState<Nullable<VideoSettingCardProps>>();
+    const [settingEditor, setSettingEditor] = useState<Nullable<Partial<VideoRewardConfig>>>(null);
     const [showImport, setShowImport] = useState(false);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -36,15 +34,9 @@ function VideoManager() {
                 return;
             }
             if (res.data != null) {
-                setVideoSetting({
-                    id: res.data.id,
-                    isActive: res.data.isActive,
-                    maxApplyTimes: res.data.maxApplyTimes,
-                    rewardProgresses: res.data.rewardProgresses,
-                    videoId: item.id,
-                })
+                setSettingEditor(res.data)
             } else {
-                setVideoSetting({
+                setSettingEditor({
                     videoId: item.id,
                 })
             }
@@ -60,9 +52,6 @@ function VideoManager() {
     return (
         <Stack spacing={1} p={2}>
             <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-                {/* <TextField  sx={{
-                    width: '300px',
-                }} /> */}
                 <Button onClick={() => setShowImport(true)}><AddIcon />{t('label_add')}</Button>
             </Box>
             <Table sx={{ minWidth: 650, }}
@@ -70,8 +59,8 @@ function VideoManager() {
                 aria-label="video table">
                 <TableHead>
                     <TableRow >
-                        <TableCell>Thumbnail</TableCell>
-                        <TableCell sx={{ maxWidth: '300px', fontWeight: 700 }}>{t('label_name')}</TableCell>
+                        <TableCell>{t('label_thumbnail')}</TableCell>
+                        <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
                         <TableCell>Views</TableCell>
                         <TableCell>Likes</TableCell>
                         <TableCell>Comments</TableCell>
@@ -113,22 +102,11 @@ function VideoManager() {
                             </TableCell>
                         </TableRow>
                     )}
-                    {/* {videos.length == 0 && viewState != ViewState.LOADING &&
-                            <TableRow sx={{
-                                padding: theme.spacing(1)
-
-                            }}>
-                                No Video to show
-                            </TableRow>} */}
                 </TableBody>
             </Table>
             {totalPage > 1 && <Pagination count={totalPage} shape="rounded" onChange={onChangePage} />}
-            {/* {videoDetail &&
-                <YoutubeVideoCard data={videoDetail}
-                    onClose={() => setVideoDetail(null)} />
-            } */}
-            {videoSetting && <VideoSettingCard data={videoSetting}
-                onClose={() => setVideoSetting(null)} />}
+            {settingEditor && <VideoSettingEditorDialog data={settingEditor}
+                onClose={() => setSettingEditor(null)} />}
             {showImport && <VideoImport onClose={() => setShowImport(false)} />}
         </Stack>
     )

@@ -14,6 +14,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ChatIcon from '@mui/icons-material/Chat';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 
 type DrawerItem = {
     text: string;
@@ -67,13 +68,15 @@ export default function SideBar(props: Props) {
         //         { path: RoutePaths.videoImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
         //     ]
         // },
-        {
-            path: "", text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" />,
-            subMenu: [
-                { path: RoutePaths.stickerManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
-                { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
-            ]
-        },
+        // {
+        //     path: "", text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" />,
+        //     subMenu: [
+        //         { path: RoutePaths.stickerManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
+        //         { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
+        //     ]
+        // },
+        { path: RoutePaths.stickerManager, text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" /> },
+        { path: RoutePaths.bannerManager, text: t('label_banner'), icon: <ViewCarouselIcon color="primary" /> },
         // {
         //     path: "", text: t('label_setting'), icon: <SettingsIcon color="primary" />,
         //     subMenu: [

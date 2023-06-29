@@ -1,14 +1,11 @@
 import { create } from "zustand";
 import { Video } from "../data/model/VideoModels";
+import { PaginationStore } from "./common";
 
 type Store = {
     videos: Video[];
     setVideos: (value: Video[]) => void;
-    currentPage: number;
-    setCurrentPage: (value: number) => void;
-    totalPage: number;
-    setTotalPage: (value: number) => void;
-}
+} & PaginationStore
 
 export const useVideoStore = create<Store>((set) => ({
     videos: [],

@@ -20,6 +20,12 @@ class MediaService {
         }))
     }
 
+    async getStickerUrl(stickerPackId: number, name: string) {
+        return api.get(`v1/media/sticker-packs/${stickerPackId}/${name}`, {
+            responseType: 'arraybuffer'
+        })
+    }
+
     async importVideo(youtubeUrl: string, isHighlighted: boolean): Promise<Result<Video>> {
         return parseResponse(await api.post('v1/media/videos', {
             youtubeUrl,

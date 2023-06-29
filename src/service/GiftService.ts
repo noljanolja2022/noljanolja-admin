@@ -27,7 +27,7 @@ class GiftService {
         endTime: Date,
         categoryId: number,
         brandId: number,
-        price: number
+        price: number,
     ) {
         return parseResponse(await api.post('v1/gifts', {
             image: image,
@@ -37,7 +37,8 @@ class GiftService {
             description,
             categoryId,
             brandId,
-            price
+            price,
+            codes,
         }, {
             headers: {
                 "Content-Type": "multipart/form-data",

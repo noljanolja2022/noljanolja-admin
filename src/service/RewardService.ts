@@ -1,4 +1,4 @@
-import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, VideoRewardConfigProgress } from "../data/model/ConfigModels";
+import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, UpdateVideoRewardPayload, VideoRewardConfigProgress } from "../data/model/ConfigModels";
 import { Result } from "../data/model/Result";
 import parseResponse from "./ResponseParse";
 import api from './ApiClient';
@@ -13,19 +13,8 @@ class RewardService {
         }))
     }
 
-    async updateVideoRewardConfig(videoId: string,
-        isActive: boolean = true,
-        maxApplyTimes: number = 1,
-        progresses: VideoRewardConfigProgress[] = [],
-        totalPoints: number = 0,
-    ) {
-        let param: any = {
-            videoId, isActive, maxApplyTimes, rewardProgresses: progresses
-        }
-        if (totalPoints > 0) {
-            param.totalPoints = totalPoints;
-        }
-        return parseResponse(await api.put('v1/reward/videos/configs', param))
+    async updateVideoRewardConfig(payload: UpdateVideoRewardPayload) {
+        return parseResponse(await api.put('v1/reward/videos/configs', payload))
     }
 
     async getVideoRewardConfig(videoId: string): Promise<Result<ApiVideoRewardConfig>> {

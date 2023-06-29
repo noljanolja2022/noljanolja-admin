@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Stack, Table, TableBody, TableCell, TableHead, TableRow } from "../widget/mui";
 import { ChatRewardConfig } from "../../data/model/ConfigModels";
-import ChatRewardCard from "../widget/ChatRewardCard";
+import ChatConfigEditor from "./ChatConfigEditor";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import useChatRewardConfig from "../../hook/useChatRewardConfig";
 
-export default function ChatRewardSetting() {
+export default function ChatConfigManager() {
     const { chatConfigs, fetchChatConfig } = useChatRewardConfig();
     const [editData, setEditData] = useState<Nullable<ChatRewardConfig>>(null);
 
@@ -33,7 +33,7 @@ export default function ChatRewardSetting() {
                 )}
             </TableBody>
         </Table>
-        {editData && <ChatRewardCard data={editData}
+        {editData && <ChatConfigEditor data={editData}
             onClose={() => setEditData(null)} />}
     </Stack>
 }

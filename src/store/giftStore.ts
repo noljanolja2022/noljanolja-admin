@@ -1,18 +1,15 @@
 import { create } from 'zustand'
 import { Gift } from "../data/model/Gift";
+import { PaginationStore } from './common';
 
 type Store = {
-    gifts: Gift[];
-    setGifts: (data: Gift[]) => void;
-    currentPage: number;
-    setCurrentPage: (value: number) => void;
-    totalPage: number;
-    setTotalPage: (value: number) => void;
-}
+    data: Gift[];
+    setData: (data: Gift[]) => void;
+} & PaginationStore
 
 export const useGiftStore = create<Store>((set) => ({
-    gifts: [],
-    setGifts: (data: Gift[]) => set((_) => ({ gifts: data })),
+    data: [],
+    setData: (data: Gift[]) => set((_) => ({ data: data })),
     currentPage: 1,
     setCurrentPage: (value: number) => set(_ => ({ currentPage: value })),
     totalPage: 1,

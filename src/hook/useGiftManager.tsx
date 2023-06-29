@@ -7,7 +7,7 @@ import { Gift } from "../data/model/Gift";
 
 export default function useGiftManager() {
     const { setLoading, setIdle, showSuccessNoti, showErrorNoti } = useLoadingStore();
-    const { gifts, setGifts, totalPage, setTotalPage, currentPage, setCurrentPage } = useGiftStore();
+    const { data, setData, totalPage, setTotalPage, currentPage, setCurrentPage } = useGiftStore();
     const { setCategories, categories } = useCategoryStore();
     const { brands, setBrands } = useBrandStore();
 
@@ -17,7 +17,7 @@ export default function useGiftManager() {
             if (res.isFailure()) {
                 return;
             }
-            setGifts(res.data || [])
+            setData(res.data || [])
         }).finally(() => {
             setIdle();
         })
@@ -42,7 +42,7 @@ export default function useGiftManager() {
     }
 
     return {
-        gifts, fetchGifts, deleteGift,
+        data, fetchGifts, deleteGift,
         totalPage, setTotalPage, currentPage, setCurrentPage,
         fetchCategories , categories,
     }
