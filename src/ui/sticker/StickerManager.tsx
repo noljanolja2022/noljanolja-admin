@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { StickerPack } from "../../data/model/StickerModels";
 import { useLoadingStore } from "../../store/LoadingStore";
-import { Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "../widget/mui";
+import { Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "../widget/mui";
 import mediaService from "../../service/MediaService";
 import AddIcon from '@mui/icons-material/Add';
 import { t } from "i18next";
@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { AxiosResponse } from "axios";
 import { responseToBase64Img } from "../../util/StringUtils";
 import { useTranslation } from "react-i18next";
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function StickerManager() {
     const { t } = useTranslation();
@@ -65,21 +66,25 @@ export default function StickerManager() {
                             <TableCell >{t('label_name')}</TableCell>
                             <TableCell >{t('label_publisher')}</TableCell>
                             <TableCell >{t('label_is_animated')}</TableCell>
+                            <TableCell ></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {data.map(item =>
-                            <TableRow key={item.id} hover sx={{
-                                cursor: 'pointer'
-                            }} onClick={() => setStickerDetail(item)}>
+                            <TableRow key={item.id}>
                                 <TableCell align="left" sx={{ width: 100 }} >
-                                    <img src={item.trayImageFile} alt={item.name} style={{
-                                        maxWidth: '100px'
-                                    }} />
+                                    <img src={item.trayImageFile}
+                                        alt={item.name}
+                                        className='auto-scale-thumbnail' />
                                 </TableCell>
                                 <TableCell >{item.name}</TableCell>
                                 <TableCell >{item.publisher}</TableCell>
-                                <TableCell >{item.isAnimated ? <CheckIcon /> : <CloseIcon />}</TableCell>
+                                <TableCell >{item.isAnimated ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
+                                <TableCell >
+                                    <Tooltip title={t('label_edit')}>
+                                        <EditIcon cursor={'pointer'} onClick={() => setStickerDetail(item)} />
+                                    </Tooltip>
+                                </TableCell>
                             </TableRow>
                         )}
                         {/* {data.length == 0 && viewState != ViewState.LOADING &&

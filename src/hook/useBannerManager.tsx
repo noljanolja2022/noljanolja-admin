@@ -6,9 +6,9 @@ export default function useBannerManager() {
     const { setLoading, setIdle } = useLoadingStore();
     const { data, setData, currentPage, totalPage, setCurrentPage } = userBannerStore();
 
-    const fetch = () => {
+    const fetch = (query: string = '') => {
         setLoading()
-        bannerService.getBanners(currentPage).then(res => {
+        bannerService.getBanners(query, currentPage).then(res => {
             if (res.isFailure()) {
                 return;
             }

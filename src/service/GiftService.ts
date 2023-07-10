@@ -32,8 +32,8 @@ class GiftService {
         return parseResponse(await api.post('v1/gifts', {
             image: image,
             name: name,
-            startTime,
-            endTime,
+            startTime: startTime && parseDateToIso(startTime),
+            endTime: endTime && parseDateToIso(endTime),
             description,
             categoryId,
             brandId,
@@ -46,18 +46,18 @@ class GiftService {
         }))
     }
 
-    async updateGift(id: number, 
-        image: Nullable<File>, 
+    async updateGift(id: number,
+        image: Nullable<File>,
         name?: string,
         description?: string,
         startTime?: Date,
         endTime?: Date,
         price?: number,
-        ) {
+    ) {
         return parseResponse(await api.patch(`v1/gifts/${id}`, {
             image: image,
             name: name,
-            startTime: startTime && parseDateToIso(startTime) ,
+            startTime: startTime && parseDateToIso(startTime),
             endTime: endTime && parseDateToIso(endTime),
             description,
             price
@@ -73,8 +73,14 @@ class GiftService {
     }
 
 
-    async fetchBrands(page: number = 1, pageSize: number = 10): Promise<Result<Array<GiftBrand>>> {
-        return parseResponse(await api.get('v1/gifts/brands'))
+    async fetchBrands(query: string = '', page: number = 1, pageSize: number = 10): Promise<Result<Array<GiftBrand>>> {
+        return parseResponse(await api.get('v1/gifts/brands', {
+            params: {
+                name: query,
+                page,
+                pageSize
+            }
+        }))
     }
 
     async createBrand(image: File, name: string) {

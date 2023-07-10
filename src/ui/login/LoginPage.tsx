@@ -35,6 +35,10 @@ export default function LoginPage() {
         formState: { errors },
     } = useForm<LoginFormProps>({
         // resolver: yupResolver(LoginSchemaValidator),
+        defaultValues: {
+            password: '',
+            username: ''
+        }
     });
 
     const onSignin = (data: LoginFormProps) => {
@@ -91,11 +95,11 @@ export default function LoginPage() {
                 alignItems="center"
                 borderRadius={2} p={4} minWidth={'30vw'} >
                 <img src="pp-yy-logo.png" alt="App Logo" />
-                <Divider sx={{ minWidth: '80%' }} />
+                <Divider sx={{ minWidth: '80%', marginBottom: 2 }} />
                 <form style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 8,
+                    gap: 16,
                     width: '80%'
                 }} onSubmit={handleSubmit(onSignin)}>
                     <Controller
@@ -111,7 +115,8 @@ export default function LoginPage() {
 
                     <Controller
                         render={({ field: { ref, ...rest } }) => (
-                            <TextField {...rest} type="password"
+                            <TextField {...rest}
+                                type="password"
                                 label={t('hint_pls_enter_pwd')} required
                                 error={errors.password?.message !== undefined}
                                 helperText={errors.password?.message} />

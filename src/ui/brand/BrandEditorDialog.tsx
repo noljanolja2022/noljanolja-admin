@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { GiftBrand } from "../../data/model/Gift";
 import giftService from "../../service/GiftService";
 import useBrandManager from "../../hook/useBrandManager";
+import { imageFileTypes } from "../../util/Constants";
 
 type Props = {
     data: Partial<GiftBrand>
@@ -17,8 +18,6 @@ interface FormProps {
     name: string;
     image: string;
 }
-
-const fileTypes = ["jpg", "png"];
 
 export default function BrandEditorDialog({ data, onClose }: Props) {
     const { setLoading, setIdle, showSuccessNoti } = useLoadingStore();
@@ -101,15 +100,11 @@ export default function BrandEditorDialog({ data, onClose }: Props) {
                             <Box width={128} height={128} borderRadius={4} overflow={'hidden'}>
                                 <img alt={image ? image.name : 'placeholder'}
                                     src={imagePreview ? imagePreview : 'placeholder_bg.png'}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'contain'
-                                    }} />
+                                    className='auto-scale-thumbnail' />
                             </Box>
                             <FileUploader handleChange={handleChange}
                                 fileOrFiles={image}
-                                types={fileTypes} >
+                                types={imageFileTypes} >
                                 <Button>{t('label_update')}</Button>
                             </FileUploader>
                             {errors.image?.message && <Typography color={'red'}>{errors.image.message}</Typography>}

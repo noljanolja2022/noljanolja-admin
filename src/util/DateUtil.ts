@@ -1,4 +1,7 @@
-export function parseDate(date: Date) {
+export function parseDate(date?: Date) {
+    if (!date) {
+        return "-"
+    }
     const tmp = new Date(date)
     return `${tmp.getDate()}/${tmp.getMonth()+1}/${tmp.getFullYear()}`
 }

@@ -8,6 +8,9 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { Banner } from "../../data/model/BannerModels";
 import BannerEditorDialog from "./BannerEditorDialog";
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import BannerFilter from "./BannerFilter";
 
 export default function BannerManager() {
     const { t } = useTranslation();
@@ -23,8 +26,11 @@ export default function BannerManager() {
 
     return (
         <Stack spacing={1} p={2}>
-            <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-                <Button onClick={() => setEditing({})}><AddIcon />{t('label_add')}</Button>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'between', alignItems: 'center' }}>
+                <BannerFilter />
+                <Button onClick={() => setEditing({})} startIcon={<AddIcon />}>
+                    {t('label_add')}
+                </Button>
             </Box>
             <Table sx={{ minWidth: 650, }}
                 cellSpacing={20}
@@ -32,8 +38,8 @@ export default function BannerManager() {
                 <TableHead>
                     <TableRow >
                         <TableCell>{t('label_thumbnail')}</TableCell>
-                        <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
-                        <TableCell>Description</TableCell>
+                        <TableCell sx={{ maxWidth: '300px'}}>{t('label_name')}</TableCell>
+                        <TableCell>{t('label_description')}</TableCell>
                         <TableCell>Status</TableCell>
                         <TableCell>Priority</TableCell>
                         <TableCell>{t('label_start_date')}</TableCell>
@@ -44,25 +50,23 @@ export default function BannerManager() {
                 <TableBody>
                     {data.map(item =>
                         <TableRow key={item.id}>
-                            <TableCell align="left" sx={{ width: 100 }} >
-                                <img src={item.image} alt={item.title} style={{
-                                    maxWidth: '100px'
-                                }} />
+                            <TableCell align="left" sx={{ width: 100, height: 100 }} >
+                                <img src={item.image} alt={item.title} className="auto-scale-thumbnail" />
                             </TableCell>
                             <TableCell sx={{ maxWidth: '180px', minWidth: '150px' }}>
                                 {item.title}
                             </TableCell>
                             <TableCell >{item.description}</TableCell>
-                            <TableCell >{item.isActive}</TableCell>
+                            <TableCell >{item.isActive ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                             <TableCell >{item.priority}</TableCell>
                             <TableCell >{parseDate(new Date(item.startTime))}</TableCell>
                             <TableCell >{parseDate(new Date(item.endTime))}</TableCell>
 
                             <TableCell >
-                                <Tooltip title="Edit">
+                                <Tooltip title={t('label_edit')}>
                                     <EditIcon cursor={'pointer'} onClick={() => setEditing(item)} />
                                 </Tooltip>
-                                <Tooltip title="Delete">
+                                <Tooltip title={t('label_delete')}>
                                     <DeleteIcon cursor={'pointer'} />
                                 </Tooltip>
                             </TableCell>

@@ -1,72 +1,67 @@
 import { PaletteColorOptions, PaletteOptions } from "@mui/material/styles";
 
 const redLevel: ColorLevel = {
-    50: '#FFF8F8',
-    100: '#410E0B',
-    200: '#841A1A',
-    300: '#BB3030',
-    400: '#DB2828',
-    500: '#FD1414',
-    600: '#FF4242',
-    700: '#FF6262',
-    800: '#FF9797',
-    900: '#FFD2D2',
-    1000: '#FFE5E5',
+    50: "#FFEBEE",
+    100: "#FFCDD2",
+    200: "#EF9A9A",
+    300: "#E57373",
+    400: "#EF5350",
+    500: "#F44336",
+    600: "#E53935",
+    700: "#D32F2F",
+    800: "#C62828",
+    900: "#B71C1C"
 }
 
 const greenLevel: ColorLevel = {
-    50: '#B8EB42',
-    100: '#AED94A',
-    200: '#32C864',
-    300: '#2E8646',
-    400: '#25A549',
-    500: '#29B550',
-    600: '#34C85E',
-    700: '#46D96F',
-    800: '#66E58A',
-    900: '#87F2A6',
-    1000: '#ACFFC4',
+    50: "#E8F5E9",
+    100: "#C8E6C9",
+    200: "#A5D6A7",
+    300: "#81C784",
+    400: "#66BB6A",
+    500: "#4CAF50",
+    600: "#43A047",
+    700: "#388E3C",
+    800: "#2E7D32",
+    900: "#1B5E20"
 }
 
 const yellow: ColorLevel = {
-    50: '#FFFAD0',
-    100: '#FFF490',
-    200: '#F8DF00',
-    300: '#FFC700',
-    400: '#FFA800',
-    500: '#AC7D0C',
-    600: '#FFBA32',
-    700: '#FFC960',
-    800: '#FFD98E',
-    900: '#FFE6B7',
-    1000: '#FFF3DC',
+    50: "#FFFDE7",
+    100: "#FFF9C4",
+    200: "#FFF59D",
+    300: "#FFF176",
+    400: "#FFEE58",
+    500: "#FFEB3B",
+    600: "#FDD835",
+    700: "#FBC02D",
+    800: "#F9A825",
+    900: "#F57F17"
 }
 const blue: ColorLevel = {
-    50: '#D3F4FF',
-    100: '#084558',
-    200: '#095F7B',
-    300: '#0B83AA',
-    400: '#1097C3',
-    500: '#13ACDE',
-    600: '#29BEEF',
-    700: '#40CBF9',
-    800: '#6FDBFF',
-    900: '#ACEBFF',
-    1000: '#EEFBFF',
+    50: "#E3F2FD",
+    100: "#BBDEFB",
+    200: "#90CAF9",
+    300: "#64B5F6",
+    400: "#42A5F5",
+    500: "#2196F3",
+    600: "#1E88E5",
+    700: "#1976D2",
+    800: "#1565C0",
+    900: "#0D47A1"
 }
 
 const gray: ColorLevel = {
-    50: '#7f7f7f',
-    100: '#727272',
-    200: '#656565',
-    300: '#585858',
-    400: '#4c4c4c',
-    500: '#3f3f3f',
-    600: '#323232',
-    700: '#262626',
-    800: '#191919',
-    900: '#0c0c0c',
-    1000: '#000000',
+    50: "#FAFAFA",
+    100: "#F5F5F5",
+    200: "#EEEEEE",
+    300: "#E0E0E0",
+    400: "#BDBDBD",
+    500: "#9E9E9E",
+    600: "#757575",
+    700: "#616161",
+    800: "#424242",
+    900: "#212121"
 };
 
 interface ColorLevel {
@@ -80,14 +75,13 @@ interface ColorLevel {
     700: string,
     800: string,
     900: string,
-    1000: string
 }
 
 declare module '@mui/material/styles' {
     interface CommonColors {
         red: ColorLevel
         green: ColorLevel
-        purple: ColorLevel
+        blue: ColorLevel
         yellow: ColorLevel
         gray: ColorLevel
     }
@@ -109,11 +103,12 @@ const BasePalettes: PaletteOptions = {
         green: greenLevel,
         yellow: yellow,
         gray: gray,
+        blue: blue
     },
     neutral: {
-        main: gray[50],
-        light: gray[50],
-        dark: gray[100],
+        main: gray[500],
+        light: gray[400],
+        dark: gray[700],
         contrastText: 'white'
     },
 }
@@ -122,15 +117,15 @@ export const LightPalettes: PaletteOptions = {
     ...BasePalettes,
     mode: 'light',
     primary: {
-        main: greenLevel[100],
-        light: greenLevel[50],
-        dark: greenLevel[200],
+        main: greenLevel[500],
+        light: greenLevel[400],
+        dark: greenLevel[700],
         contrastText: 'white'
     },
     secondary: {
-        main: yellow[100],
-        light: yellow[50],
-        dark: yellow[300]
+        main: yellow[500],
+        light: yellow[400],
+        dark: yellow[700]
     },
 }
 

@@ -10,13 +10,12 @@ import bannerService from "../../service/BannerService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import useBannerManager from "../../hook/useBannerManager";
 import { Result } from "../../data/model/Result";
+import { imageFileTypes } from "../../util/Constants";
 
 type Props = {
     data: Partial<Banner>;
     onClose: () => void
 }
-
-const fileTypes = ["jpg", "png"];
 
 interface FormProps {
     name: string;
@@ -137,16 +136,12 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                 <Box width={128} height={128} borderRadius={4} overflow={'hidden'}>
                                     <img alt={image ? image.name : 'avatar-placeholder'}
                                         src={imagePreview ? imagePreview : 'placeholder_bg.png'}
-                                        style={{
-                                            width: '100%',
-                                            height: '100%',
-                                            objectFit: 'contain'
-                                        }} />
+                                        className='auto-scale-thumbnail' />
                                 </Box>
                                 <FileUploader handleChange={onThumbnailChange}
                                     name="image"
                                     fileOrFiles={image}
-                                    types={fileTypes} >
+                                    types={imageFileTypes} >
                                     <Button>{t('label_update')}</Button>
                                 </FileUploader>
                             </Box>

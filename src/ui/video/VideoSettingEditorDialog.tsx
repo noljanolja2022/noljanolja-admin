@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import { VideoRewardConfig, VideoRewardConfigProgress } from "../../data/model/ConfigModels";
 import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
-import { parseDate } from "../../util/DateUtil";
-import { theme } from "../../util/theme";
 import { formatToDecimal, formatToInt } from "../../util/StringUtils";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';

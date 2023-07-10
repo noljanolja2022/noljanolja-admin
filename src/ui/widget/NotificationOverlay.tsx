@@ -7,24 +7,26 @@ import { SnackbarState } from "../../data/enum/ViewState";
 export default function NotificationOverlay() {
     const { snackBarProps, clearSnackBar } = useLoadingStore();
     const theme = useTheme();
+    if (!snackBarProps) {
+        return null;
+    }
     const onClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-
         clearSnackBar()
     };
 
     const getColor = () => {
-        return snackBarProps?.state === SnackbarState.SUCCESS
-            ? theme.palette.common.green[100]
-            : theme.palette.common.red[200]
+        return snackBarProps.state === SnackbarState.SUCCESS
+            ? theme.palette.common.green[500]
+            : theme.palette.common.red[500]
     }
 
     return (
         <Snackbar
-            open={snackBarProps != null}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            open
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             autoHideDuration={5000}
             onClose={onClose}
         >
@@ -41,7 +43,7 @@ export default function NotificationOverlay() {
                 borderRadius: 4
             }}>
                 <Box maxWidth={240}>
-                    <Typography>{snackBarProps?.message}</Typography>
+                    <Typography>{snackBarProps.message}</Typography>
                 </Box>
                 <Box>
                     <IconButton

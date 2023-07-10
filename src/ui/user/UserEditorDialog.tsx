@@ -1,62 +1,52 @@
-import { Controller, useForm } from "react-hook-form";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { Box, Button, ChipTextField, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
+import { Gender, User } from "../../data/model/UserModels";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
 import { FileUploader } from "react-drag-drop-files";
 import { useEffect, useState } from "react";
-import useGiftManager from "../../hook/useGiftManager";
-import { Gift, GiftBrand, GiftCategory } from "../../data/model/Gift";
-import useBrandManager from "../../hook/useBrandManager";
-import giftService from "../../service/GiftService";
-import { DateTimePickerInput } from "../widget/DateWidget";
+import { Controller, useForm } from "react-hook-form";
 import dayjs from "dayjs";
+import { DatePickerInput } from "../widget/DateWidget";
 import { imageFileTypes } from "../../util/Constants";
+import { useLoadingStore } from "../../store/LoadingStore";
+import userService from "../../service/UserService";
+import useUsersManager from "../../hook/useUsersManager";
 
 type Props = {
-    data: Partial<Gift>,
-    onClose: () => void
+    data: Partial<User>;
+    onClose: () => void;
 }
 
-interface ImportFormProps {
+type FormProps = {
     name: string;
-    description: string;
-    category: GiftCategory;
-    brand: GiftBrand;
-    startTime: Date;
-    endTime: Date;
-    price: number;
-    codes: string[];
+    phone: string;
+    avatar: string;
+    email: string;
+    gender: Gender;
+    dob?: Date;
 }
 
-
-export function GiftEditorDialog({ data, onClose }: Props) {
-    // const theme = useTheme();
+export default function UserEditorDialog({ data, onClose }: Props) {
+    const { t } = useTranslation();
     const { setLoading, setIdle, showSuccessNoti } = useLoadingStore();
-    const { categories, fetchGifts } = useGiftManager();
-    const { brands } = useBrandManager();
+    const { users, totalPage, currentPage, setCurrentPage, fetch } = useUsersManager();
     const [image, setImage] = useState<Nullable<File>>(null);
-    const [imagePreview, setImagePreview] = useState<Nullable<string>>(data?.image || null)
+    const [imagePreview, setImagePreview] = useState<Nullable<string>>(data?.avatar || null)
     const {
         control,
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<ImportFormProps>({
+    } = useForm<FormProps>({
         // resolver: yupResolver(LoginSchemaValidator),
         defaultValues: {
             name: data?.name,
-            description: data?.description,
-            category: data?.category,
-            brand: data?.brand,
-            startTime: data?.startTime,
-            endTime: data?.endTime,
-            price: data?.price,
-            codes: data?.codes,
+            phone: data?.phone,
+            avatar: data?.avatar,
+            email: data.email,
+            gender: data.gender,
+            dob: data.dob ? new Date(data.dob) : undefined
         }
     });
-    const onThumbnailChange = (file: File) => {
-        setImage(file);
-    };
 
     useEffect(() => {
         if (image) {
@@ -64,46 +54,50 @@ export function GiftEditorDialog({ data, onClose }: Props) {
         }
     }, [image])
 
-    const onUpdate = (formInput: ImportFormProps) => {
+    const onUpdate = (formInput: FormProps) => {
         setLoading()
         if (data?.id != null) {
-            giftService.updateGift(data.id!,
-                image, formInput.name, formInput.description,
-                formInput.startTime,
-                formInput.endTime, formInput.price).then(res => {
-                    if (res.isFailure()) {
-                        control.setError("root", { message: res.getErrorMsg() })
-                        return;
-                    }
-                    onClose();
-                    showSuccessNoti('Gift updated successfully')
-                    fetchGifts();
-                }).finally(() => {
-                    setIdle()
-                })
+            userService.updateUser(data.id!, {
+                avatar: image,
+                name: formInput.name,
+                email: formInput.email,
+                gender: formInput.gender,
+                dob: formInput.dob
+            }).then(res => {
+                if (res.isFailure()) {
+                    control.setError("root", { message: res.getErrorMsg() })
+                    return;
+                }
+                onClose();
+                showSuccessNoti('User updated successfully')
+                fetch();
+            }).finally(() => {
+                setIdle()
+            })
         } else {
-            giftService.createGift(formInput.name,
-                formInput.description, image!, formInput.codes,
-                formInput.startTime,
-                formInput.endTime,
-                formInput.category.id, formInput.brand.id, formInput.price).then(res => {
-                    if (res.isFailure()) {
-                        control.setError("root", { message: res.getErrorMsg() })
-                        return;
-                    }
-                    onClose();
-                    showSuccessNoti('Gift created successfully')
-                    fetchGifts();
-                }).finally(() => {
-                    setIdle()
-                })
+            userService.createUser({
+                avatar: image,
+                name: formInput.name,
+                email: formInput.email,
+                gender: formInput.gender,
+                dob: formInput.dob
+            }).then(res => {
+                if (res.isFailure()) {
+                    control.setError("root", { message: res.getErrorMsg() })
+                    return;
+                }
+                onClose();
+                showSuccessNoti('User created successfully')
+                fetch();
+            }).finally(() => {
+                setIdle()
+            })
         }
-
     }
 
     return (
         <Dialog open fullWidth maxWidth="md">
-            <DialogTitle>Update Gift</DialogTitle>
+            <DialogTitle>Update User</DialogTitle>
             <form onSubmit={handleSubmit(onUpdate)} >
                 <DialogContent>
                     <Grid container
@@ -120,14 +114,14 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                                         src={imagePreview ? imagePreview : 'placeholder_avatar.png'}
                                         className='auto-scale-thumbnail' />
                                 </Box>
-                                <FileUploader handleChange={onThumbnailChange}
+                                <FileUploader handleChange={setImage}
                                     name="image"
                                     fileOrFiles={image}
                                     types={imageFileTypes} >
                                     <Button>{t('label_update')}</Button>
                                 </FileUploader>
                             </Box>
-                            <Controller render={({ field: { ref, ...rest } }) => (
+                            {/* <Controller render={({ field: { ref, ...rest } }) => (
                                 <FormControl>
                                     <InputLabel>{t('label_category')}</InputLabel>
                                     <Select
@@ -203,22 +197,22 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                             )}
                                 name="startTime"
                                 control={control}
-                            />
+                            /> */}
 
                             <Controller render={({ field: { ref, ...rest } }) => (
-                                <DateTimePickerInput label={t('label_expire_date')}
+                                <DatePickerInput label={'Birthday'}
                                     value={rest.value ? dayjs(rest.value) : null}
-                                    onChange={rest.onChange} />
+                                    onChange={(e) => rest.onChange(e?.toDate())} />
                             )}
-                                name="endTime"
+                                name="dob"
                                 control={control}
                             />
                         </Grid>
-                        <Grid item md={7} display={'flex'} flexDirection={'column'} gap={1} >
+                        <Grid item md={7} display={'flex'} flexDirection={'column'} gap={1}>
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter gift name'} required
+                                    label={'Enter name'} required
                                     error={errors.name?.message !== undefined}
                                     helperText={errors.name?.message} />
                             )}
@@ -227,34 +221,22 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                             />
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
-                                    multiline={true}
-                                    rows={3}
                                     fullWidth
-                                    label={'Enter description'}
-                                    error={errors.description?.message !== undefined}
-                                    helperText={errors.description?.message} />
+                                    label={'Enter phone'} required
+                                    error={errors.phone?.message !== undefined}
+                                    helperText={errors.phone?.message} />
                             )}
-                                name="description"
+                                name="phone"
                                 control={control}
                             />
-
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
-                                    fullWidth required
-                                    inputMode="decimal"
-                                    label={'Enter price'}
-                                    error={errors.price?.message !== undefined}
-                                    helperText={errors.price?.message} />
+                                    fullWidth
+                                    label={'Enter email'}
+                                    error={errors.email?.message !== undefined}
+                                    helperText={errors.email?.message} />
                             )}
-                                name="price"
-                                control={control}
-                            />
-                            <Controller render={({ field: { ref, ...rest } }) => (
-                                <ChipTextField rows={3}
-                                    hideClearAll disableDeleteOnBackspace
-                                    {...rest} />
-                            )}
-                                name="codes"
+                                name="email"
                                 control={control}
                             />
                         </Grid>
@@ -266,5 +248,5 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                 </DialogActions>
             </form>
         </Dialog>
-    )
+    );
 }

@@ -5,7 +5,7 @@ type AuthStore = {
     setBearer: (value: Nullable<string>) => void;
 }
 
-export const useUserStore = create<AuthStore>((set) => ({
+export const useAuthStore = create<AuthStore>((set) => ({
     bearer: null,
     setBearer: (value: Nullable<string>) => set(_ => ({ bearer: value })),
 }))

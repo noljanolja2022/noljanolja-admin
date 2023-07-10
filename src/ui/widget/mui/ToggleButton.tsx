@@ -10,7 +10,7 @@ export const ToggleButton = styled((props: MuiToggleButtonProps) => (
     <MuiToggleButton {...props} />
 ))(({ theme }) => ({
     "&.MuiToggleButton-root:hover": {
-        backgroundColor: theme.palette.common.yellow[300]
+        backgroundColor: theme.palette.secondary.main
     },
     "&.Mui-selected": {
         backgroundColor: theme.palette.primary.main

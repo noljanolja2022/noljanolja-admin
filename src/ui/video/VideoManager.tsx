@@ -54,6 +54,7 @@ function VideoManager() {
             <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
                 <Button onClick={() => setShowImport(true)}><AddIcon />{t('label_add')}</Button>
             </Box>
+            
             <Table sx={{ minWidth: 650, }}
                 cellSpacing={20}
                 aria-label="video table">

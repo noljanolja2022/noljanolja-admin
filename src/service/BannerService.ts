@@ -11,11 +11,13 @@ const urlPath = 'v1/banners';
 class BannerService {
 
     async getBanners(
+        query: string = '',
         page: number = 1,
         pageSize: number = 5
     ): Promise<Result<Array<Banner>>> {
         return parseResponse(await api.get(urlPath, {
             params: {
+                name: query,
                 page,
                 pageSize
             }

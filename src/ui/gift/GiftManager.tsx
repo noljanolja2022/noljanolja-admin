@@ -1,4 +1,3 @@
-import { t } from "i18next";
 import { Box, Link, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Pagination, Stack, Button } from "../widget/mui";
 import useGiftManager from "../../hook/useGiftManager";
 import { useEffect, useState } from "react";
@@ -9,8 +8,10 @@ import { parseDate } from "../../util/DateUtil";
 import { Gift } from "../../data/model/Gift";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from "react-i18next";
 
 export default function GiftManager() {
+    const { t } = useTranslation();
     const { data, fetchCategories, totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
     const { fetchBrands } = useBrandManager();
     const [editing, setEditing] = useState<Nullable<Partial<Gift>>>(null);
@@ -32,7 +33,7 @@ export default function GiftManager() {
 
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <Button onClick={() => setEditing(null)}>
+            <Button onClick={() => setEditing({})}>
                 <AddIcon />
                 {t('label_add')}
             </Button>
@@ -42,10 +43,10 @@ export default function GiftManager() {
                 <TableRow >
                     <TableCell >{t('label_thumbnail')}</TableCell>
                     <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
-                    <TableCell >Price</TableCell>
-                    <TableCell >Remaining</TableCell>
-                    <TableCell >Total</TableCell>
-                    <TableCell >Description</TableCell>
+                    <TableCell >{t('label_price')}</TableCell>
+                    <TableCell >{t('label_remaining')}</TableCell>
+                    <TableCell >{t('label_total')}</TableCell>
+                    <TableCell >{t('label_description')}</TableCell>
                     <TableCell >{t('label_effective_date')}</TableCell>
                     <TableCell >{t('label_expire_date')}</TableCell>
                     <TableCell ></TableCell>
@@ -55,11 +56,7 @@ export default function GiftManager() {
                 {data.map(item =>
                     <TableRow key={item.id}>
                         <TableCell align="left" sx={{ width: 100, height: 100 }} >
-                            <img src={item.image} alt={item.name} style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'contain'
-                            }} />
+                            <img src={item.image} alt={item.name} className='auto-scale-thumbnail' />
                         </TableCell>
                         <TableCell sx={{ maxWidth: '180px', minWidth: '150px' }}>
                             {item.name}

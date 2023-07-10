@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 
-export default function useWindowWidth(size: number) {
+export default function useWindowMQ() {
     const [width, setWidth] = useState(0)
-
+    const isLg = width > 1024
+    const isMd = width >= 500
+    const isSm = width < 500
     useEffect(() => {
         function handleResize() {
             setWidth(window.innerWidth)
@@ -14,5 +16,5 @@ export default function useWindowWidth(size: number) {
         }
     }, [setWidth])
 
-    return width > size
+    return { isMd, isLg, isSm}
 }

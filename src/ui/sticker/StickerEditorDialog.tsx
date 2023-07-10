@@ -8,12 +8,12 @@ import { responseToBase64Img } from "../../util/StringUtils";
 import { FileUploader } from "react-drag-drop-files";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { AxiosResponse } from "axios";
+import { zipFileTypes } from "../../util/Constants";
 
 type Props = {
     data: Partial<StickerPack>;
     onClose: () => void;
 }
-const fileTypes = ["zip", "7z"];
 
 export default function StickerEditorDialog({ data, onClose }: Props) {
     const [stickerImgs, setStickerImgs] = useState<Record<string, Sticker>>({});
@@ -112,7 +112,7 @@ export default function StickerEditorDialog({ data, onClose }: Props) {
                         <FileUploader handleChange={handleChange}
                             name="sticker file"
                             fileOrFiles={file}
-                            types={fileTypes} required >
+                            types={zipFileTypes} required >
                             <Box
                                 sx={{
                                     cursor: 'pointer',

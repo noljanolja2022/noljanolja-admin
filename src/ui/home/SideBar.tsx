@@ -15,6 +15,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import useWindowMQ from "../../hook/UseWindowWidth";
 
 type DrawerItem = {
     text: string;
@@ -34,7 +35,7 @@ type SidebarItemProps = {
 
 function SideBarItem(props: SidebarItemProps) {
     const { spacing, palette } = useTheme();
-
+    const { isSm, isLg } = useWindowMQ();
     return (
         <NavLink to={props.item.path} onClick={props.onDrawerClose}
             style={{ textDecoration: 'none' }} >
@@ -45,10 +46,10 @@ function SideBarItem(props: SidebarItemProps) {
                     <Box sx={{
                         height: '100%',
                         width: spacing(0.5),
-                        ...(isActive && { backgroundColor: 'yellow' })
+                        ...(isActive && { backgroundColor: palette.common.yellow[500] })
                     }} />
                     {props.item.icon}
-                    {props.item.text}
+                    {(isSm || isLg) && props.item.text}
                 </SidebarBox>
             }
         </NavLink>

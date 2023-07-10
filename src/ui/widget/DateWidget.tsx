@@ -5,7 +5,7 @@ import { DateTimeField, DateTimeFieldProps } from '@mui/x-date-pickers/DateTimeF
 import { DateTimePicker, DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 
-export function DatePickerInput(props: DatePickerProps<Date> & React.RefAttributes<HTMLDivElement>) {
+export function DatePickerInput(props: DatePickerProps<dayjs.Dayjs> & React.RefAttributes<HTMLDivElement>) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker {...props} />
@@ -13,7 +13,7 @@ export function DatePickerInput(props: DatePickerProps<Date> & React.RefAttribut
     )
 }
 
-export function DateTimeFieldInput(props: DateTimeFieldProps<Date> & React.RefAttributes<HTMLDivElement>) {
+export function DateTimeFieldInput(props: DateTimeFieldProps<dayjs.Dayjs> & React.RefAttributes<HTMLDivElement>) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimeField {...props} />

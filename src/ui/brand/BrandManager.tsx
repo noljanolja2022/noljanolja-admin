@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import useBrandManager from "../../hook/useBrandManager";
-import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "../widget/mui";
-import { t } from "i18next";
+import { Box, Button, InputLabel, Pagination, SearchTextField, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField, Tooltip } from "../widget/mui";
 import AddIcon from '@mui/icons-material/Add';
 import BrandEditorDialog from "./BrandEditorDialog";
 import { GiftBrand } from "../../data/model/Gift";
+import { useTranslation } from "react-i18next";
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function BrandManager() {
+    const { t } = useTranslation();
     const { brands, fetchBrands, currentPage, setCurrentPage, totalPage } = useBrandManager();
-    const [editingItem, setEditingItem] = useState<Nullable<Partial<GiftBrand>>>(null);
+    const [editing, setEditing] = useState<Nullable<Partial<GiftBrand>>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
@@ -18,44 +20,47 @@ export default function BrandManager() {
         fetchBrands()
     }, [currentPage])
 
+    // useEffect(() => {
+    //     console.log(query);
+    // }, [query])
+
     return <Stack spacing={1} p={2}>
-        <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <Button onClick={() => setEditingItem({})}>
-                <AddIcon />
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'between', alignItems: 'center' }}>
+            {/* <BrandFilter /> */}
+            <Button onClick={() => setEditing({})} startIcon={<AddIcon />}>
                 {t('label_add')}
             </Button>
         </Box>
+
         <Table sx={{ maxWidth: 550 }}>
             <TableHead>
                 <TableRow >
                     <TableCell>{t('label_thumbnail')}</TableCell>
                     <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
+                    <TableCell />
                 </TableRow>
             </TableHead>
             <TableBody>
                 {brands.map(item =>
-                    <TableRow key={item.id}
-                        onClick={() => setEditingItem(item)}
-                        sx={{
-                            cursor: 'pointer'
-                        }}>
+                    <TableRow key={item.id}>
                         <TableCell align="left" sx={{ width: 100, height: 100 }} >
-                            <img src={item.image} alt={item.name} style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'contain'
-                            }} />
+                            <img src={item.image} alt={item.name} className='auto-scale-thumbnail' />
                         </TableCell>
                         <TableCell sx={{ maxWidth: '180px', minWidth: '150px' }}>
                             {item.name}
+                        </TableCell>
+                        <TableCell >
+                            <Tooltip title={t('label_edit')}>
+                                <EditIcon cursor={'pointer'} onClick={() => setEditing(item)} />
+                            </Tooltip>
                         </TableCell>
                     </TableRow>
                 )}
             </TableBody>
         </Table>
         {totalPage > 1 && <Pagination count={totalPage} shape="rounded" onChange={onChangePage} />}
-        {editingItem && <BrandEditorDialog
-            data={editingItem}
-            onClose={() => setEditingItem(null)} />}
+        {editing && <BrandEditorDialog
+            data={editing}
+            onClose={() => setEditing(null)} />}
     </Stack>
 }

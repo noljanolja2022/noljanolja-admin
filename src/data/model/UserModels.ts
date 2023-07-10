@@ -5,9 +5,11 @@ interface BaseUser {
     phone?: string;
     email?: string;
     gender: Gender;
-    dob?: string;
+    dob?: Date;
     createdAt: Date;
     updatedAt: Date;
+    isActive: boolean;
+    isBlocked: boolean;
 }
 
 export interface User extends BaseUser {
@@ -24,4 +26,13 @@ export type Preference = {
 
 export enum Gender {
     MALE, FEMALE, OTHER
+}
+
+export type UpdateUserPayload = {
+    name: string;
+    avatar: Nullable<File>;
+    phone?: string;
+    email?: string;
+    gender?: Gender;
+    dob?: Date;
 }

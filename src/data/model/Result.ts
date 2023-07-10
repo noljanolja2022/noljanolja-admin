@@ -49,3 +49,7 @@ export interface Pagination {
     pageSize: number;
     total: number;
 }
+
+export function getTotalPages(data: Pagination) {
+    return Math.ceil(data.total / data.pageSize)
+}
