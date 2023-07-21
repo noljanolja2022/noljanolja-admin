@@ -1,21 +1,18 @@
-import { NavLink } from "react-router-dom";
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import ChatIcon from '@mui/icons-material/Chat';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HomeIcon from '@mui/icons-material/Home';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
-import DatasetIcon from '@mui/icons-material/Dataset';
-import CardMembershipIcon from '@mui/icons-material/CardMembership';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { Box, SidebarAccordion, SidebarAccordionSummary, SidebarBox, useTheme } from "../widget/mui";
-import ImportExportIcon from '@mui/icons-material/ImportExport';
-import { useTranslation } from "react-i18next";
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
-import { RoutePaths } from "../../util/routes";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ChatIcon from '@mui/icons-material/Chat';
 import RedeemIcon from '@mui/icons-material/Redeem';
-import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 import useWindowMQ from "../../hook/UseWindowWidth";
+import { RoutePaths } from "../../util/routes";
+import { Box, SidebarAccordion, SidebarAccordionSummary, SidebarBox, useTheme } from "../widget/mui";
 
 type DrawerItem = {
     text: string;
@@ -90,6 +87,7 @@ export default function SideBar(props: Props) {
         { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon color="primary" /> },
         { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon color="primary" /> },
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
+        { path: RoutePaths.checkinManager, text: 'Checkin config', icon: <ChecklistIcon color="primary"/>}
     ]
 
     return (

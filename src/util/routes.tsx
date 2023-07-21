@@ -1,17 +1,18 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import BannerManager from '../ui/banner/BannerManager';
+import BrandManager from '../ui/brand/BrandManager';
+import CheckinConfigManager from '../ui/checkin/CheckinConfigManager';
 import ContentManagement from '../ui/content/ContentManagement';
 import DashBoard from '../ui/dashboard/DashBoard';
+import GiftManager from '../ui/gift/GiftManager';
 import HomePage from '../ui/home/HomePage';
 import LoginPage from '../ui/login/LoginPage';
 import MembershipManagement from '../ui/membership/MembershipManagement';
-import VideoManager from '../ui/video/VideoManager';
-import PrivateRoute from '../ui/widget/PrivateRoute';
+import ChatConfigManager from '../ui/setting/ChatConfigManager';
 import StickerManager from '../ui/sticker/StickerManager';
 import UserManager from '../ui/user/UsersManager';
-import ChatConfigManager from '../ui/setting/ChatConfigManager';
-import GiftManager from '../ui/gift/GiftManager';
-import BrandManager from '../ui/brand/BrandManager';
-import BannerManager from '../ui/banner/BannerManager';
+import VideoManager from '../ui/video/VideoManager';
+import PrivateRoute from '../ui/widget/PrivateRoute';
 
 export const RoutePaths = {
     dashboard: 'dashboard',
@@ -21,7 +22,8 @@ export const RoutePaths = {
     brandManager: 'brand-manager',
     chatRewardConfig: 'chat-reward-config',
     giftManager: 'gift-manager',
-    bannerManager: 'banner'
+    bannerManager: 'banner',
+    checkinManager: 'checkinManager'
 }
 
 export const LoginPath = "/login"
@@ -42,6 +44,7 @@ export default function NoljaRoutes() {
                     <Route path={RoutePaths.giftManager} element={<GiftManager />} />
                     <Route path={RoutePaths.brandManager} element={<BrandManager />} />
                     <Route path={RoutePaths.bannerManager} element={<BannerManager />} />
+                    <Route path={RoutePaths.checkinManager} element={<CheckinConfigManager />} />
                     <Route index element={<Navigate to={RoutePaths.dashboard} />} />
                 </Route>
             </Route>

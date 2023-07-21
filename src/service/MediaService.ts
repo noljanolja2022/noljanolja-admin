@@ -33,11 +33,12 @@ class MediaService {
         }))
     }
 
-    async getVideoList(page: number = 1, pageSize: number = 5): Promise<Result<Array<Video>>> {
+    async getVideoList(query: string = '', page: number = 1, pageSize: number = 5): Promise<Result<Array<Video>>> {
         return parseResponse(await api.get('v1/media/videos', {
             params: {
                 page,
-                pageSize
+                pageSize,
+                query
             }
         }))
     }

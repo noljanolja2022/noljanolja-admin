@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react"
-import { useVideoStore } from "../store/videoStore";
-import { useLoadingStore } from "../store/LoadingStore";
+import { VideoRewardConfigProgress } from "../data/model/ConfigModels";
 import mediaService from "../service/MediaService";
-import { Video } from "../data/model/VideoModels";
-import rewardService from "../service/RewardService";
-import { VideoRewardConfig, VideoRewardConfigProgress } from "../data/model/ConfigModels";
+import { useLoadingStore } from "../store/LoadingStore";
+import { useVideoStore } from "../store/videoStore";
 
 export type VideoSettingCardProps = {
     videoId: string;
@@ -18,9 +15,9 @@ export default function useVideoManager() {
     const { videos, setVideos, currentPage, setCurrentPage, setTotalPage, totalPage } = useVideoStore();
     const { setLoading, setIdle } = useLoadingStore();
 
-    const loadVideos = () => {
+    const fetch = (query: string = '') => {
         setLoading()
-        mediaService.getVideoList(currentPage).then(res => {
+        mediaService.getVideoList(query, currentPage).then(res => {
             setVideos(res.data || [])
             if (res.pagination) {
                 setTotalPage(Math.ceil(res.pagination?.total / res.pagination?.pageSize))
@@ -35,6 +32,6 @@ export default function useVideoManager() {
 
     return {
         videos, totalPage, currentPage,
-        loadVideos, setCurrentPage, setTotalPage
+        fetch, setCurrentPage, setTotalPage
     }
 }

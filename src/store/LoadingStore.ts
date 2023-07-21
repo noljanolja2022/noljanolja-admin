@@ -1,5 +1,6 @@
-import { create } from 'zustand'
-import { SnackbarState, ViewState } from '../data/enum/ViewState'
+import { t } from 'i18next';
+import { create } from 'zustand';
+import { SnackbarState, ViewState } from '../data/enum/ViewState';
 
 type SnackBarProps = {
     message: string;
@@ -15,7 +16,7 @@ type LoadingStore = {
     snackBarProps: Nullable<SnackBarProps>;
     clearSnackBar: () => void
     showSuccessNoti: (message: string) => void,
-    showErrorNoti: (message: string) => void,
+    showErrorNoti: (message?: string) => void,
 }
 
 export const useLoadingStore = create<LoadingStore>((set) => ({
@@ -27,6 +28,6 @@ export const useLoadingStore = create<LoadingStore>((set) => ({
     snackBarProps: null,
     clearSnackBar: () => set(state => ({ snackBarProps: null })),
     showSuccessNoti: (message: string) => set(_ => ({ snackBarProps: { message: message, state: SnackbarState.SUCCESS } })),
-    showErrorNoti: (message: string) => set(_ => ({ snackBarProps: { message: message, state: SnackbarState.ERROR } })),
+    showErrorNoti: (message?: string) => set(_ => ({ snackBarProps: { message: message || t('error_common'), state: SnackbarState.ERROR } })),
 
 }))

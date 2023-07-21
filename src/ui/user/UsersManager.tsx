@@ -1,22 +1,19 @@
+import CheckIcon from '@mui/icons-material/Check';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import LockIcon from '@mui/icons-material/Lock';
 import { t } from "i18next";
-import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "../widget/mui";
-import UserEditorDialog from "./UserEditorDialog";
+import { Image } from 'mui-image';
 import { useEffect, useState } from "react";
 import { User } from "../../data/model/UserModels";
-import AddIcon from '@mui/icons-material/Add';
 import useUsersManager from "../../hook/useUsersManager";
-import { Image } from 'mui-image';
-import EditIcon from '@mui/icons-material/Edit';
-import { parseDate } from "../../util/DateUtil";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ConfirmDialog from "../widget/ConfirmDialog";
-import { useLoadingStore } from "../../store/LoadingStore";
 import userService from "../../service/UserService";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import LockIcon from '@mui/icons-material/Lock';
-
+import { useLoadingStore } from "../../store/LoadingStore";
+import { parseDate } from "../../util/DateUtil";
+import ConfirmDialog from "../widget/ConfirmDialog";
+import { Box, Pagination, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "../widget/mui";
+import UserFilter from "./UserFilter";
+  
 export default function UserManager() {
     const { setLoading, setIdle, showErrorNoti, showSuccessNoti } = useLoadingStore();
     const { users, totalPage, currentPage, setCurrentPage, fetch } = useUsersManager();
@@ -63,9 +60,9 @@ export default function UserManager() {
 
     return (
         <Stack spacing={1} p={2}>
-            {/* <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-                <Button onClick={() => setDetail({})}><AddIcon />{t('label_add')}</Button>
-            </Box> */}
+            <Box>
+                <UserFilter />
+            </Box>
             <TableContainer>
                 <Table aria-label="video table">
                     <TableHead>

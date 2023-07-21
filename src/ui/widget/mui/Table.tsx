@@ -1,9 +1,10 @@
-import TableContainer from "@mui/material/TableContainer";
 import MuiTable, { TableProps as MuiTableProps } from "@mui/material/Table";
+import MuiTableBody, { TableBodyProps as MuiTableBodyProps } from "@mui/material/TableBody";
+import MuiTableCell, { TableCellProps as MuiTableCellProps } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import MuiTableFooter, { TableFooterProps as MuiTableFooterProps } from "@mui/material/TableFooter";
 import MuiTableHead, { TableHeadProps as MuiTableHeadProps } from "@mui/material/TableHead";
 import MuiTableRow, { TableRowProps as MuiTableRowProps } from "@mui/material/TableRow";
-import MuiTableCell, { TableCellProps as MuiTableCellProps } from "@mui/material/TableCell";
-import MuiTableBody, { TableBodyProps as MuiTableBodyProps } from "@mui/material/TableBody";
 import { alpha, styled } from "@mui/material/styles";
 
 const Table = styled((props: MuiTableProps) => (
@@ -29,10 +30,10 @@ const TableHeadRow = styled((props: MuiTableRowProps) => (
 const TableBody = styled((props: MuiTableBodyProps) => (
     <MuiTableBody {...props} />))(({ theme }) => ({
         "& .MuiTableRow-root:nth-of-type(odd)": {
-            backgroundColor: theme.palette.grey[200]
+            backgroundColor: theme.palette.grey[400]
         },
         "& .MuiTableRow-root:nth-of-type(even)": {
-            backgroundColor: theme.palette.grey[300]
+            backgroundColor: theme.palette.grey[500]
         },
         "& .MuiTableRow-root": {
             backgroundColor: theme.palette.grey[300],
@@ -73,4 +74,12 @@ const TableCell = styled((props: MuiTableCellProps) => (
             borderBottomRightRadius: theme.spacing(1)
         }
     }));
-export { TableContainer, Table, TableHead, TableRow, TableCell, TableHeadRow, TableBody }
+
+const TableFooter = styled((props: MuiTableFooterProps) => (
+    <MuiTableFooter {...props}
+
+    />))(({ theme }) => ({
+
+    }));
+export { Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableHeadRow, TableRow };
+

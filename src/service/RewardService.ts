@@ -1,7 +1,10 @@
-import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, UpdateVideoRewardPayload, VideoRewardConfigProgress } from "../data/model/ConfigModels";
+import { CheckinProgress } from "../data/model/ChekinModels";
+import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, UpdateVideoRewardPayload } from "../data/model/ConfigModels";
 import { Result } from "../data/model/Result";
-import parseResponse from "./ResponseParse";
 import api from './ApiClient';
+import parseResponse from "./ResponseParse";
+
+const urlPath = 'v1/reward';
 
 class RewardService {
     async getVideoRewardConfigs(page: number, pageSize: number = 5): Promise<Result<Array<ApiVideoRewardConfig>>> {
@@ -41,6 +44,17 @@ class RewardService {
             numberOfMessages
         }
         return parseResponse(await api.put(`v1/reward/chat/configs`, param))
+    }
+
+    async getCheckinConfig() : Promise<Result<CheckinProgress[]>>{
+        return parseResponse(await api.get(urlPath + '/checkin/configs'))
+    }
+
+    async updateCheckinConfig(configs: CheckinProgress[]) {
+        const params = {
+            configs
+        }
+        return parseResponse(await api.put(urlPath + '/checkin/configs', params))
     }
 }
 

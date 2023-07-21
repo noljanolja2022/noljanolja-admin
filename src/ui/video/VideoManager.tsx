@@ -1,24 +1,25 @@
-import { useEffect, useState } from "react";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { Video } from "../../data/model/VideoModels";
-import { Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme, Box, Button, Link } from "../widget/mui";
-import { convertMsToTime, parseDate } from "../../util/DateUtil";
-import { Pagination } from "../widget/mui/Pagination";
-import { useTranslation } from "react-i18next";
-import SettingsIcon from '@mui/icons-material/Settings';
-import VideoSettingEditorDialog from "./VideoSettingEditorDialog";
-import rewardService from "../../service/RewardService";
-import useVideoManager from "../../hook/useVideoManager";
-import { VideoImport } from "./VideoImport";
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import AddIcon from '@mui/icons-material/Add';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { VideoRewardConfig } from "../../data/model/ConfigModels";
+import { Video } from "../../data/model/VideoModels";
+import useVideoManager from "../../hook/useVideoManager";
+import rewardService from "../../service/RewardService";
+import { useLoadingStore } from "../../store/LoadingStore";
+import { convertMsToTime, parseDate } from "../../util/DateUtil";
+import { Box, Button, Link, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from "../widget/mui";
+import { Pagination } from "../widget/mui/Pagination";
+import VideoFilter from './VideoFilter';
+import { VideoImport } from "./VideoImport";
+import VideoSettingEditorDialog from "./VideoSettingEditorDialog";
 
 function VideoManager() {
     const theme = useTheme();
     const { t } = useTranslation();
     const { setLoading, setIdle } = useLoadingStore();
-    const { videos, loadVideos, currentPage, setCurrentPage, totalPage } = useVideoManager();
+    const { videos, fetch, currentPage, setCurrentPage, totalPage } = useVideoManager();
     const [settingEditor, setSettingEditor] = useState<Nullable<Partial<VideoRewardConfig>>>(null);
     const [showImport, setShowImport] = useState(false);
 
@@ -46,13 +47,14 @@ function VideoManager() {
     }
 
     useEffect(() => {
-        loadVideos()
+        fetch()
     }, [currentPage])
 
     return (
         <Stack spacing={1} p={2}>
-            <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-                <Button onClick={() => setShowImport(true)}><AddIcon />{t('label_add')}</Button>
+            <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row', gap: 2 }}>
+                <VideoFilter/>
+                <Button size='small' onClick={() => setShowImport(true)}><AddIcon />{t('label_add')}</Button>
             </Box>
             
             <Table sx={{ minWidth: 650, }}

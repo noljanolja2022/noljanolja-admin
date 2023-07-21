@@ -1,3 +1,5 @@
+import { t } from "i18next";
+
 export class Result<T> {
     success: boolean;
     data?: T;
@@ -28,7 +30,7 @@ export class Result<T> {
     }
 
     getErrorMsg(): string {
-        return this.error?.message || 'An error has occured'
+        return this.error?.message || t('error_common')
     }
 }
 

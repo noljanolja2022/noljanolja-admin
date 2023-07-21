@@ -1,16 +1,16 @@
-import { parseDate } from "../../util/DateUtil";
-import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import useBannerManager from "../../hook/useBannerManager";
-import EditIcon from '@mui/icons-material/Edit';
-import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import { Banner } from "../../data/model/BannerModels";
-import BannerEditorDialog from "./BannerEditorDialog";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import BannerFilter from "./BannerFilter";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Banner } from "../../data/model/BannerModels";
+import useBannerManager from "../../hook/useBannerManager";
+import { parseDate } from "../../util/DateUtil";
+import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
+import BannerEditorDialog from "./BannerEditorDialog";
+import BannerFilter, { BannerSearchProps } from "./BannerFilter";
 
 export default function BannerManager() {
     const { t } = useTranslation();
@@ -24,10 +24,14 @@ export default function BannerManager() {
         fetch();
     }, [])
 
+    const onSearch = (input: BannerSearchProps) => {
+        fetch(input.name)
+    }
+
     return (
         <Stack spacing={1} p={2}>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'between', alignItems: 'center' }}>
-                <BannerFilter />
+                <BannerFilter onSearch={onSearch}/>
                 <Button onClick={() => setEditing({})} startIcon={<AddIcon />}>
                     {t('label_add')}
                 </Button>
