@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
-import NoljaRoutes from "../util/routes";
+import AppRoutes from "../util/routes";
 import { theme } from "../util/theme";
 import LoadingOverlay from "./widget/LoadingOverlay";
 import NotificationOverlay from "./widget/NotificationOverlay";
@@ -10,6 +10,6 @@ export default function App() {
         <CssBaseline />
         <LoadingOverlay />
         <NotificationOverlay/>
-        <NoljaRoutes />
+        <AppRoutes />
     </ThemeProvider>
 }

@@ -11,7 +11,7 @@ class UserService {
     async getUsers(query: string = '', page: number = 1, pageSize: number = 5): Promise<Result<ApiUser[]>> {
         return parseResponse<ApiUser[]>(await api.get('v1/users', {
             params: {
-                name: query,
+                query,
                 page,
                 pageSize
             }

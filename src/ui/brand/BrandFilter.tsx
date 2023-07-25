@@ -1,12 +1,13 @@
-import { useTranslation } from "react-i18next";
-import { Button, TextField } from "../widget/mui";
+import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
+import { IconButton } from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import useBrandManager from "../../hook/useBrandManager";
-import { FormEventHandler } from "react";
-import { useForm } from "react-hook-form";
+import { Button, TextField } from "../widget/mui";
 
 interface SearchProps {
-    name: string
+    query: string
 }
 
 export default function BrandFilter() {
@@ -20,18 +21,29 @@ export default function BrandFilter() {
     } = useForm<SearchProps>({
         // resolver: yupResolver(LoginSchemaValidator),
         defaultValues: {
-            name: '',
+            query: '',
         }
     });
     const onSearch = (input: SearchProps) => {
-        fetchBrands(input.name)
+        fetchBrands(input.query)
     }
 
     return (
         <form onSubmit={handleSubmit(onSearch)} style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-            <TextField label={t('hint_search')} onChange={(e) => setValue("name", e.currentTarget.value)} />
-            <Button type="submit" startIcon={<SearchIcon />}>
-            </Button>
+            <Controller
+                render={({ field: { ref, ...rest } }) =>
+                    <TextField size="small" value={rest.value}
+                        placeholder={t('hint_search')} onChange={rest.onChange}
+                        InputProps={{
+                            endAdornment: rest.value ?
+                                <IconButton onClick={() => rest.onChange('')}>
+                                    <CloseIcon />
+                                </IconButton> : null
+                        }} />}
+                control={control}
+                name="query"
+            />
+            <Button type="submit" startIcon={<SearchIcon />}>{t('label_search')}</Button>
         </form>
     )
 }

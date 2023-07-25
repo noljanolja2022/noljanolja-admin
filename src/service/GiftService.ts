@@ -1,8 +1,8 @@
 import { Gift, GiftBrand, GiftCategory } from "../data/model/Gift";
 import { Result } from "../data/model/Result";
-import parseResponse from "./ResponseParse";
-import api from './ApiClient';
 import { parseDateToIso } from "../util/DateUtil";
+import api from './ApiClient';
+import parseResponse from "./ResponseParse";
 
 class GiftService {
     async getGifts(
@@ -76,7 +76,7 @@ class GiftService {
     async fetchBrands(query: string = '', page: number = 1, pageSize: number = 10): Promise<Result<Array<GiftBrand>>> {
         return parseResponse(await api.get('v1/gifts/brands', {
             params: {
-                name: query,
+                query,
                 page,
                 pageSize
             }

@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import useBrandManager from "../../hook/useBrandManager";
-import { Box, Button, InputLabel, Pagination, SearchTextField, Stack, Table, TableBody, TableCell, TableHead, TableRow, TextField, Tooltip } from "../widget/mui";
 import AddIcon from '@mui/icons-material/Add';
-import BrandEditorDialog from "./BrandEditorDialog";
-import { GiftBrand } from "../../data/model/Gift";
-import { useTranslation } from "react-i18next";
 import EditIcon from '@mui/icons-material/Edit';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { GiftBrand } from "../../data/model/Gift";
+import useBrandManager from "../../hook/useBrandManager";
+import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
+import BrandEditorDialog from "./BrandEditorDialog";
+import BrandFilter from "./BrandFilter";
 
 export default function BrandManager() {
     const { t } = useTranslation();
@@ -20,13 +21,9 @@ export default function BrandManager() {
         fetchBrands()
     }, [currentPage])
 
-    // useEffect(() => {
-    //     console.log(query);
-    // }, [query])
-
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'between', alignItems: 'center' }}>
-            {/* <BrandFilter /> */}
+            <BrandFilter />
             <Button onClick={() => setEditing({})} startIcon={<AddIcon />}>
                 {t('label_add')}
             </Button>

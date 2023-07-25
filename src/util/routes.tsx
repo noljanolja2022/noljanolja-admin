@@ -28,7 +28,7 @@ export const RoutePaths = {
 
 export const LoginPath = "/login"
 
-export default function NoljaRoutes() {
+export default function AppRoutes() {
     return (
         <Routes>
             <Route element={<PrivateRoute />} >

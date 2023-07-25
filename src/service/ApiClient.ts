@@ -1,12 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { Failure } from '../data/model/Result';
 import { StorageKey } from '../util/Constants';
-import { Failure, Success } from '../data/model/Result';
 import i18n from '../util/translation/LanguageUtil';
-import { firebaseAuthInstance } from './FirebaseService';
 import authService from './AuthService';
+import { firebaseAuthInstance } from './FirebaseService';
 
 const axiosConfig: AxiosRequestConfig<any> = {
-    baseURL: `${import.meta.env.VITE_NOLJA_ADMIN_SERVER}/api/`,
+    baseURL: `${import.meta.env.VITE_ADMIN_SERVER}/api/`,
     // withCredentials: true
 }
 const axiosClient = axios.create(axiosConfig);

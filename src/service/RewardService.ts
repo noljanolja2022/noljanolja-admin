@@ -1,4 +1,4 @@
-import { CheckinProgress } from "../data/model/ChekinModels";
+import { CheckinProgress } from "../data/model/CheckinModels";
 import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, UpdateVideoRewardPayload } from "../data/model/ConfigModels";
 import { Result } from "../data/model/Result";
 import api from './ApiClient';

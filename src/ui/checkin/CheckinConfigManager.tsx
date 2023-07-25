@@ -3,7 +3,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from 'react-i18next';
-import { CheckinProgress } from "../../data/model/ChekinModels";
+import { CheckinProgress } from "../../data/model/CheckinModels";
 import rewardService from '../../service/RewardService';
 import { useLoadingStore } from '../../store/LoadingStore';
 import { Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from "../widget/mui";
@@ -36,7 +36,7 @@ export default function CheckinConfigManager() {
             if (res.data) {
                 setValue("configs", res.data)
             } else {
-                setValue("configs", [{ day: 1, points: 0 }])
+                setValue("configs", [{ day: 1, rewardPoints: 0 }])
             }
         }).finally(() => {
             setIdle();
@@ -97,7 +97,7 @@ export default function CheckinConfigManager() {
                                             <Controller
                                                 render={({ field }) => <TextField type='number' required size="small" value={field.value}
                                                     onChange={(e) => field.onChange(+e.target.value)} />}
-                                                name={`configs.${index}.points`}
+                                                name={`configs.${index}.rewardPoints`}
                                                 control={control}
                                             />
                                         </TableCell>
@@ -127,7 +127,7 @@ export default function CheckinConfigManager() {
                     gap: 2,
                     maxWidth: 850
                 }}>
-                    <Button onClick={() => append({ day: 1, points: 1 })}>{t('label_add')}</Button>
+                    <Button onClick={() => append({ day: 1, rewardPoints: 1 })}>{t('label_add')}</Button>
                     <Button type='submit'>{t('label_save')}</Button>
                 </Box>
             </form>
