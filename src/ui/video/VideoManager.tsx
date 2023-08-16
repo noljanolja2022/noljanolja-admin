@@ -1,6 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SettingsIcon from '@mui/icons-material/Settings';
+import IconButton from '@mui/material/IconButton';
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { VideoRewardConfig } from "../../data/model/ConfigModels";
@@ -53,10 +54,10 @@ function VideoManager() {
     return (
         <Stack spacing={1} p={2}>
             <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row', gap: 2 }}>
-                <VideoFilter/>
+                <VideoFilter />
                 <Button size='small' onClick={() => setShowImport(true)}><AddIcon />{t('label_add')}</Button>
             </Box>
-            
+
             <Table sx={{ minWidth: 650, }}
                 cellSpacing={20}
                 aria-label="video table">
@@ -97,11 +98,8 @@ function VideoManager() {
                                     </Tooltip>
                                 </Link>
                                 <Tooltip title="Reward setting">
-                                    <SettingsIcon cursor={'pointer'} onClick={() => onOpenVideoSetting(video)} />
+                                    <IconButton onClick={() => onOpenVideoSetting(video)}><SettingsIcon /></IconButton>
                                 </Tooltip>
-                                {/* <Tooltip title="Delete">
-                                    <DeleteIcon cursor={'pointer'} onClick={() => setVideoDetail(video)} />
-                                </Tooltip> */}
                             </TableCell>
                         </TableRow>
                     )}

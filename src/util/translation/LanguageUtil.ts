@@ -16,5 +16,6 @@ i18n.use(initReactI18next).init({
     }
 }
 );
-
+const gt = i18n.t;
+export { gt };
 export default i18n;

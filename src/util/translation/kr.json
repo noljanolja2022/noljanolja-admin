@@ -8,7 +8,7 @@
     "label_login": "로그인",
     "label_logout": "로그아웃",
     "label_home": "대시보드",
-    "label_membership": "회원 관리",
+    "label_referral": "추천 정책",
     "label_users": "사용자",
     "label_gift": "선물",
     "label_brand": "브랜드",
@@ -51,5 +51,6 @@
     "error_empty_pwd": "비밀번호는 비워둘 수 없습니다",
     "error_invalid_email": "이메일이 유효하지 않습니다. 다시 시도해 주세요",
     "error_invalid_pwd": "비밀번호를 잘못 입력하셨습니다. 다시 시도해 주세요",
+    "error_empty_field": "이 필드는 필수입니다",
     "error_common": "오류가 발생했습니다"
 }

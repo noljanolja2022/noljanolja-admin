@@ -7,6 +7,7 @@ export interface Banner {
     isActive: boolean,
     priority: BannerPriority,
     action: BannerAction,
+    actionUrl: string,
     startTime: Date,
     endTime: Date,
 }
@@ -33,6 +34,7 @@ export interface CreateBannerPayload {
     isActive: boolean,
     priority: BannerPriority,
     action: BannerAction,
+    actionUrl?: string,
     startTime: Date,
     endTime: Date,
 }
@@ -46,6 +48,7 @@ export interface UpdateBannerPayload {
     isActive: boolean,
     priority: BannerPriority,
     action: BannerAction,
+    actionUrl?: string,
     startTime: Date,
     endTime: Date,
 }

@@ -1,14 +1,15 @@
-import { Box, Link, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, Pagination, Stack, Button } from "../widget/mui";
-import useGiftManager from "../../hook/useGiftManager";
-import { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
-import { GiftEditorDialog } from "./GiftEditorDialog";
-import useBrandManager from "../../hook/useBrandManager";
-import { parseDate } from "../../util/DateUtil";
-import { Gift } from "../../data/model/Gift";
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from "@mui/material/IconButton";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Gift } from "../../data/model/Gift";
+import useBrandManager from "../../hook/useBrandManager";
+import useGiftManager from "../../hook/useGiftManager";
+import { parseDate } from "../../util/DateUtil";
+import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "../widget/mui";
+import { GiftEditorDialog } from "./GiftEditorDialog";
 
 export default function GiftManager() {
     const { t } = useTranslation();
@@ -76,8 +77,8 @@ export default function GiftManager() {
                             {parseDate(item.endTime)}
                         </TableCell>
                         <TableCell>
-                            <EditIcon cursor={'pointer'} onClick={() => setEditing(item)} />
-                            <DeleteIcon cursor={'pointer'} onClick={() => deleteGift(item)} />
+                            <IconButton onClick={() => setEditing(item)} ><EditIcon /></IconButton>
+                            <IconButton onClick={() => deleteGift(item)} ><DeleteIcon /></IconButton>
                         </TableCell>
                     </TableRow>
                 )}

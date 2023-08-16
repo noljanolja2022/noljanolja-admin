@@ -72,3 +72,9 @@ export interface ChatRewardConfig {
     rewardPoint: number;
     numberOfMessages: number;
 }
+
+export interface ReferralConfig {
+    refereePoints: number;
+    refererPoints: number;
+    updatedAt: Date;
+}

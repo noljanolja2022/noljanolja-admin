@@ -83,7 +83,7 @@ export default function SideBar(props: Props) {
         // },
         { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> },
         // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
-        { path: "membership-management", text: t('label_membership'), icon: <CardMembershipIcon color="primary" /> },
+        { path: RoutePaths.referralManager, text: t('label_referral'), icon: <CardMembershipIcon color="primary" /> },
         { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon color="primary" /> },
         { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon color="primary" /> },
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },

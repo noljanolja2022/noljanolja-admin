@@ -1,6 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton } from "@mui/material";
+import IconButton from '@mui/material/IconButton';
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useBrandManager from "../../hook/useBrandManager";

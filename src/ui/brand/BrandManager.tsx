@@ -1,5 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GiftBrand } from "../../data/model/Gift";
@@ -48,7 +49,7 @@ export default function BrandManager() {
                         </TableCell>
                         <TableCell >
                             <Tooltip title={t('label_edit')}>
-                                <EditIcon cursor={'pointer'} onClick={() => setEditing(item)} />
+                                <IconButton onClick={() => setEditing(item)}><EditIcon /></IconButton>
                             </Tooltip>
                         </TableCell>
                     </TableRow>

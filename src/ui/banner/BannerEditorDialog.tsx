@@ -1,16 +1,20 @@
-import { Controller, useForm } from "react-hook-form";
-import { Banner, BannerAction, BannerPriority } from "../../data/model/BannerModels"
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, Switch, TextField, Typography } from "../widget/mui";
-import { DateTimePickerInput } from "../widget/DateWidget";
+import { yupResolver } from '@hookform/resolvers/yup';
 import dayjs from "dayjs";
-import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { Banner, BannerAction, BannerPriority } from "../../data/model/BannerModels";
+import { Result } from "../../data/model/Result";
+import useBannerManager from "../../hook/useBannerManager";
 import bannerService from "../../service/BannerService";
 import { useLoadingStore } from "../../store/LoadingStore";
-import useBannerManager from "../../hook/useBannerManager";
-import { Result } from "../../data/model/Result";
 import { imageFileTypes } from "../../util/Constants";
+import { getTodayDate } from '../../util/DateUtil';
+import yup from "../../util/FormValidator";
+import { gt } from '../../util/translation/LanguageUtil';
+import { DateTimePickerInput } from "../widget/DateWidget";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, Switch, TextField, Typography } from "../widget/mui";
 
 type Props = {
     data: Partial<Banner>;
@@ -26,7 +30,20 @@ interface FormProps {
     status: boolean;
     priority: BannerPriority,
     action: BannerAction,
+    actionUrl?: string
 }
+
+const schema = yup.object<FormProps, any>({
+    name: yup.string().trim().required(gt('error_empty_field')),
+    description: yup.string().trim().required(gt('error_empty_field')),
+    startTime: yup.date().required(gt('error_empty_field')),
+    endTime: yup.date().required(gt('error_empty_field')),
+    status: yup.boolean(),
+    priority: yup.string().required(gt('error_empty_field')),
+    action: yup.string().required(gt('error_empty_field')),
+    content: yup.string().trim().required(gt('error_empty_field')),
+    actionUrl: yup.string().trim()
+});
 
 export default function BannerEditorDialog({ data, onClose }: Props) {
     const { t } = useTranslation();
@@ -34,7 +51,8 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
     const { fetch } = useBannerManager();
     const [image, setImage] = useState<Nullable<File>>(null);
     const [imagePreview, setImagePreview] = useState<Nullable<string>>(data?.image || null)
-
+    const todayDate = getTodayDate()
+    const today = dayjs(todayDate);
     const {
         control,
         handleSubmit,
@@ -42,20 +60,25 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
         setError,
         clearErrors,
         formState: { errors },
+        watch,
     } = useForm<FormProps>({
         defaultValues: {
-            status: true,
-            name: data?.title,
-            description: data?.description,
-            content: data?.content,
+            status: data?.isActive,
+            name: data?.title || '',
+            description: data?.description || '',
+            content: data?.content || '',
             priority: data?.priority,
             action: data?.action,
             startTime: data?.startTime,
             endTime: data?.endTime,
+            actionUrl: data?.actionUrl || '',
             // price: data.price,
             // codes: data.codes,
-        }
+        },
+        resolver: yupResolver(schema)
     });
+
+    const watchAction = watch("action");
     const onThumbnailChange = (file: File) => {
         setImage(file);
     };
@@ -67,12 +90,20 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
     }, [image])
 
     const onUpdate = async (fi: FormProps) => {
+        if (fi.startTime < todayDate || fi.endTime < todayDate) {
+            setError("root", { message: "Invalid date provided. Please update." });
+            return;
+        }
         if (fi.startTime >= fi.endTime) {
-            setError("root", { message: "Effective Date can't be smaller than Expire date" });
+            setError("root", { message: "Effective Date can't be later than Expire date" });
             return;
         }
         if (data.id == null && image == null) {
-            setError("root", { message: "Banner can't be empty" });
+            setError("root", { message: "Banner thumbnail required" });
+            return;
+        }
+        if (fi.action != BannerAction.NONE && !fi.actionUrl) {
+            setError("root", { message: "Url required" });
             return;
         }
         clearErrors();
@@ -89,6 +120,8 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                     endTime: fi.endTime,
                     isActive: fi.status,
                     action: fi.action,
+                    actionUrl: fi.actionUrl,
+
                     priority: fi.priority,
                 })
             } else {
@@ -102,6 +135,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                     endTime: fi.endTime,
                     isActive: fi.status,
                     action: fi.action,
+                    actionUrl: fi.actionUrl,
                     priority: fi.priority,
                 })
             }
@@ -112,8 +146,8 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
             showSuccessNoti('Update Banner succesfully');
             fetch();
             onClose();
-        } catch (e) {
-            alert('here')
+        } catch (e: any) {
+            showErrorNoti(e)
         } finally {
             setIdle();
         }
@@ -157,27 +191,30 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
 
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <DateTimePickerInput label={t('label_effective_date')}
+                                    minDateTime={today}
                                     value={rest.value ? dayjs(rest.value) : null}
-                                    onChange={rest.onChange} />
+                                    onChange={(e) => e && rest.onChange(e.toDate())} />
                             )}
                                 name="startTime"
                                 control={control}
                             />
-
+                            {errors.startTime?.message && <Typography color={'red'}>{errors.startTime?.message}</Typography>}
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <DateTimePickerInput label={t('label_expire_date')}
+                                    minDateTime={today}
                                     value={rest.value ? dayjs(rest.value) : null}
-                                    onChange={rest.onChange} />
+                                    onChange={(e) => e && rest.onChange(e.toDate())} />
                             )}
                                 name="endTime"
                                 control={control}
                             />
+                            {errors.endTime?.message && <Typography color={'red'}>{errors.endTime?.message}</Typography>}
                         </Grid>
                         <Grid item md={7} display={'flex'} flexDirection={'column'} gap={1} >
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter name'} required
+                                    label={'Enter name'}
                                     error={errors.name?.message !== undefined}
                                     helperText={errors.name?.message} />
                             )}
@@ -187,7 +224,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter content'} required
+                                    label={'Enter content'}
                                     error={errors.content?.message !== undefined}
                                     helperText={errors.content?.message} />
                             )}
@@ -196,7 +233,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             />
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
-                                    required
+
                                     multiline={true}
                                     rows={3}
                                     fullWidth
@@ -211,8 +248,6 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                 <FormControl>
                                     <InputLabel>Priority</InputLabel>
                                     <Select
-                                        required
-                                        defaultValue={''}
                                         label={'Priority'}
                                         value={rest.value || ''}
                                         renderValue={_ =>
@@ -220,6 +255,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                                 {rest.value || ''}
                                             </Typography>
                                         }
+
                                         onChange={(event) => {
                                             const newVal = event.target.value as string;
                                             setValue("priority", newVal as BannerPriority)
@@ -234,6 +270,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                             </MenuItem>
                                         )}
                                     </Select>
+                                    {errors.priority?.message && <Typography color={'red'}>{errors.priority.message}</Typography>}
                                 </FormControl>
                             )}
                                 name="priority"
@@ -243,8 +280,6 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                 <FormControl>
                                     <InputLabel>Action</InputLabel>
                                     <Select
-                                        required
-                                        defaultValue={''}
                                         label={'Action'}
                                         value={rest.value || ''}
                                         renderValue={_ =>
@@ -266,12 +301,23 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                             </MenuItem>
                                         )}
                                     </Select>
+                                    {errors.action?.message && <Typography color={'red'}>{errors.action.message}</Typography>}
                                 </FormControl>
                             )}
                                 name="action"
                                 control={control}
                             />
-
+                            {watchAction && watchAction != BannerAction.NONE &&
+                                <Controller render={({ field: { ref, ...rest } }) => (
+                                    <TextField {...rest}
+                                        fullWidth
+                                        label={'Enter url'}
+                                        error={errors.actionUrl?.message !== undefined}
+                                        helperText={errors.actionUrl?.message} />
+                                )}
+                                    name="actionUrl"
+                                    control={control}
+                                />}
                         </Grid>
                     </Grid>
                     <Box textAlign={'center'} pt={2}>

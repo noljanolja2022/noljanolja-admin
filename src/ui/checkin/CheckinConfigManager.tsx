@@ -1,5 +1,6 @@
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
+import IconButton from '@mui/material/IconButton';
 import { useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useTranslation } from 'react-i18next';
@@ -103,11 +104,9 @@ export default function CheckinConfigManager() {
                                         </TableCell>
                                         <TableCell>
                                             <Tooltip title={t('label_delete')}>
-                                                <RemoveCircleIcon
-                                                    onClick={() => {
-                                                        remove(index)
-                                                    }}
-                                                    cursor={'pointer'} color='error' />
+                                                <IconButton onClick={() => {
+                                                    remove(index)
+                                                }}><RemoveCircleIcon color='error' /></IconButton>
                                             </Tooltip>
                                         </TableCell>
                                     </TableRow>

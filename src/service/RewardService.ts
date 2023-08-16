@@ -1,5 +1,5 @@
 import { CheckinProgress } from "../data/model/CheckinModels";
-import { ApiChatRewardConfig, ApiVideoRewardConfig, RoomType, UpdateVideoRewardPayload } from "../data/model/ConfigModels";
+import { ApiChatRewardConfig, ApiVideoRewardConfig, ReferralConfig, RoomType, UpdateVideoRewardPayload } from "../data/model/ConfigModels";
 import { Result } from "../data/model/Result";
 import api from './ApiClient';
 import parseResponse from "./ResponseParse";
@@ -55,6 +55,17 @@ class RewardService {
             configs
         }
         return parseResponse(await api.put(urlPath + '/checkin/configs', params))
+    }
+
+    async getReferralConfig() : Promise<Result<ReferralConfig>> {
+        return parseResponse(await api.get(urlPath + '/referral/configs'))
+    }
+
+    async updateReferralConfig(refereePoints: number, refererPoints: number) : Promise<Result<ReferralConfig>> {
+        return parseResponse(await api.put(urlPath + '/referral/configs', {
+            refereePoints,
+            refererPoints
+        }))
     }
 }
 

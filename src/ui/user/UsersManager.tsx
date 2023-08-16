@@ -1,7 +1,8 @@
 import CheckIcon from '@mui/icons-material/Check';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import IconButton from '@mui/material/IconButton';
 import { t } from "i18next";
 import { Image } from 'mui-image';
 import { useEffect, useState } from "react";
@@ -13,7 +14,6 @@ import { parseDate } from "../../util/DateUtil";
 import ConfirmDialog from "../widget/ConfirmDialog";
 import { Box, Pagination, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography } from "../widget/mui";
 import UserFilter from "./UserFilter";
-  
 export default function UserManager() {
     const { setLoading, setIdle, showErrorNoti, showSuccessNoti } = useLoadingStore();
     const { users, totalPage, currentPage, setCurrentPage, fetch } = useUsersManager();
@@ -98,16 +98,12 @@ export default function UserManager() {
                                     {item.isActive
                                         ?
                                         <Tooltip title={'Deactivate'}>
-                                            <LockIcon cursor={'pointer'} onClick={() => onUpdateStatus(item)} />
+                                            <IconButton onClick={() => onUpdateStatus(item)}><LockIcon /></IconButton>
                                         </Tooltip>
                                         :
                                         <Tooltip title={'Activate'}>
-                                            <CheckCircleIcon cursor={'pointer'} onClick={() => onUpdateStatus(item)} />
+                                            <IconButton onClick={() => onUpdateStatus(item)}><LockOpenIcon /></IconButton>
                                         </Tooltip>}
-
-                                    {/* <Tooltip title={t('label_delete')}>
-                                        <DeleteIcon cursor={'pointer'} onClick={() => setDelUsr(item)} />
-                                    </Tooltip> */}
                                 </TableCell>
                             </TableRow>
                         )}

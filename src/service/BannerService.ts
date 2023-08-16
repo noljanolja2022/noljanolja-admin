@@ -1,8 +1,8 @@
-import { Result } from "../data/model/Result";
-import parseResponse from "./ResponseParse";
-import api from './ApiClient';
 import { Banner, CreateBannerPayload, UpdateBannerPayload } from "../data/model/BannerModels";
+import { Result } from "../data/model/Result";
 import { parseDateToIso } from "../util/DateUtil";
+import api from './ApiClient';
+import parseResponse from "./ResponseParse";
 
 
 const urlPath = 'v1/banners';
@@ -34,7 +34,9 @@ class BannerService {
             description: req.description,
             isActive: req.isActive,
             priority: req.priority,
-            action: req.action
+            action: req.action,
+            actionUrl: req.actionUrl,
+
         }, {
             headers: {
                 "Content-Type": "multipart/form-data",
@@ -53,6 +55,7 @@ class BannerService {
             description: req.description,
             isActive: req.isActive,
             priority: req.priority,
+            actionUrl: req.actionUrl,
             action: req.action
         }, {
             headers: {

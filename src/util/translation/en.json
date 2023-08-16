@@ -8,7 +8,7 @@
     "label_login": "Login",
     "label_logout": "Logout",
     "label_home": "Dashboard",
-    "label_membership": "Membership",
+    "label_referral": "Referral Policy",
     "label_users": "Users",
     "label_gift": "Gifts",
     "label_brand": "Brands",
@@ -50,5 +50,6 @@
     "error_empty_pwd": "Password can't be empty",
     "error_invalid_email": "Email is invalid. Please try again",
     "error_invalid_pwd": "You have entered a wrong password. Please try again",
+    "error_empty_field": "This field is required",
     "error_common": "An error has occurred"
 }

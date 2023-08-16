@@ -33,3 +33,8 @@ export function convertMsToTime(time: number) {
     const seconds = date.getUTCSeconds().toString().padStart(2, '0');
     return `${hours}:${minutes}:${seconds}`;
 }
+
+export function getTodayDate(): Date {
+    const today = new Date();
+    return new Date(`${today.getMonth()+1}-${today.getDate()}-${today.getFullYear()}`);
+}

@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
-import { ChatRewardConfig } from "../../data/model/ConfigModels";
-import ChatConfigEditor from "./ChatConfigEditor";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import useChatRewardConfig from "../../hook/useChatRewardConfig";
 import EditIcon from '@mui/icons-material/Edit';
+import IconButton from "@mui/material/IconButton";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ChatRewardConfig } from "../../data/model/ConfigModels";
+import useChatRewardConfig from "../../hook/useChatRewardConfig";
+import { Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
+import ChatConfigEditor from "./ChatConfigEditor";
 
 export default function ChatConfigManager() {
     const { t } = useTranslation();
@@ -33,7 +34,7 @@ export default function ChatConfigManager() {
                         <TableCell >{item.isActive ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                         <TableCell >
                             <Tooltip title={t('label_edit')}>
-                                <EditIcon cursor={'pointer'} onClick={() => setEditData(item)} />
+                                <IconButton onClick={() => setEditData(item)} ><EditIcon /></IconButton>
                             </Tooltip>
                         </TableCell>
                     </TableRow>

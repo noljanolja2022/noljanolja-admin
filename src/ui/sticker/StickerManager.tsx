@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { StickerPack } from "../../data/model/StickerModels";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "../widget/mui";
-import mediaService from "../../service/MediaService";
 import AddIcon from '@mui/icons-material/Add';
-import { t } from "i18next";
-import StickerEditorDialog from "./StickerEditorDialog";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { AxiosResponse } from "axios";
-import { responseToBase64Img } from "../../util/StringUtils";
-import { useTranslation } from "react-i18next";
 import EditIcon from '@mui/icons-material/Edit';
+import IconButton from "@mui/material/IconButton";
+import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { StickerPack } from "../../data/model/StickerModels";
+import mediaService from "../../service/MediaService";
+import { useLoadingStore } from "../../store/LoadingStore";
+import { responseToBase64Img } from "../../util/StringUtils";
+import { Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from "../widget/mui";
+import StickerEditorDialog from "./StickerEditorDialog";
 
 export default function StickerManager() {
     const { t } = useTranslation();
@@ -82,7 +82,7 @@ export default function StickerManager() {
                                 <TableCell >{item.isAnimated ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                                 <TableCell >
                                     <Tooltip title={t('label_edit')}>
-                                        <EditIcon cursor={'pointer'} onClick={() => setStickerDetail(item)} />
+                                        <IconButton onClick={() => setStickerDetail(item)}><EditIcon /></IconButton>
                                     </Tooltip>
                                 </TableCell>
                             </TableRow>

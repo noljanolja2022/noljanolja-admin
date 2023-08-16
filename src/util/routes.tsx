@@ -7,7 +7,7 @@ import DashBoard from '../ui/dashboard/DashBoard';
 import GiftManager from '../ui/gift/GiftManager';
 import HomePage from '../ui/home/HomePage';
 import LoginPage from '../ui/login/LoginPage';
-import MembershipManagement from '../ui/membership/MembershipManagement';
+import ReferrerManager from '../ui/referral/ReferralManager';
 import ChatConfigManager from '../ui/setting/ChatConfigManager';
 import StickerManager from '../ui/sticker/StickerManager';
 import UserManager from '../ui/user/UsersManager';
@@ -23,7 +23,8 @@ export const RoutePaths = {
     chatRewardConfig: 'chat-reward-config',
     giftManager: 'gift-manager',
     bannerManager: 'banner',
-    checkinManager: 'checkinManager'
+    checkinManager: 'checkinManager',
+    referralManager: 'referralManager'
 }
 
 export const LoginPath = "/login"
@@ -34,7 +35,7 @@ export default function AppRoutes() {
             <Route element={<PrivateRoute />} >
                 <Route path='/' element={<HomePage />} >
                     <Route path={RoutePaths.dashboard} element={<DashBoard />} />
-                    <Route path='membership-management' element={<MembershipManagement />} />
+                    <Route path={RoutePaths.referralManager} element={<ReferrerManager />} />
                     <Route path={RoutePaths.videoManager} element={<VideoManager />} />
                     {/* <Route path={RoutePaths.videoImport} element={<VideoImport />} /> */}
                     <Route path={RoutePaths.stickerManager} element={<StickerManager />} />
