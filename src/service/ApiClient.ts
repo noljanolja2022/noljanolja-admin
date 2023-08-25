@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { Failure } from '../data/model/Result';
 import { StorageKey } from '../util/Constants';
 import i18n from '../util/translation/LanguageUtil';
 import authService from './AuthService';
@@ -43,13 +42,9 @@ axiosClient.interceptors.response.use(
                 }
                 return Promise.reject(error);
             }
-            const err = new Error();
-            err.name = error.response.data.code;
-            err.stack = error;
-            err.message = error.response.data.message;
-            return new Failure(err);
+            return Promise.resolve(error.response.data);
         }
-        return new Failure(error);
+        return Promise.reject(error);
     }
 )
 

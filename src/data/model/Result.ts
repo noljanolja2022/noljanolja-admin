@@ -3,10 +3,10 @@ import { t } from "i18next";
 export class Result<T> {
     success: boolean;
     data?: T;
-    error?: Error;
+    error?: ErrorWrapper;
     pagination?: Pagination;
 
-    constructor(isSuccess: boolean, error?: Error, value?: T, pagination?: Pagination) {
+    constructor(isSuccess: boolean, error?: ErrorWrapper, value?: T, pagination?: Pagination) {
         this.success = isSuccess;
         this.data = value;
         this.error = error;
@@ -25,13 +25,14 @@ export class Result<T> {
         return this.data;
     }
 
-    getError(): Error | undefined {
-        return this.error;
-    }
-
     getErrorMsg(): string {
         return this.error?.message || t('error_common')
     }
+}
+
+type ErrorWrapper = {
+    message: string;
+    code: number;
 }
 
 export class Success<T> extends Result<T> {
@@ -41,8 +42,10 @@ export class Success<T> extends Result<T> {
 }
 
 export class Failure extends Result<never> {
-    constructor(error: Error) {
-        super(false, error);
+    constructor(code: number, message: string) {
+        super(false, {
+            code, message
+        });
     }
 }
 
