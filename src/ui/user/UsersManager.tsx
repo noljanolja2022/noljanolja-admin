@@ -97,11 +97,11 @@ export default function UserManager() {
                                 <TableCell >
                                     {item.isActive
                                         ?
-                                        <Tooltip title={'Deactivate'}>
+                                        <Tooltip title={t('label_deactive')}>
                                             <IconButton onClick={() => onUpdateStatus(item)}><LockIcon /></IconButton>
                                         </Tooltip>
                                         :
-                                        <Tooltip title={'Activate'}>
+                                        <Tooltip title={t('label_activate')}>
                                             <IconButton onClick={() => onUpdateStatus(item)}><LockOpenIcon /></IconButton>
                                         </Tooltip>}
                                 </TableCell>

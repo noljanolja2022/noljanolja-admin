@@ -22,8 +22,8 @@ export default function ChatConfigManager() {
         <Table sx={{ maxWidth: 650 }} aria-label="chat-reward-setting-table">
             <TableHead>
                 <TableRow>
-                    <TableCell >Room Type</TableCell>
-                    <TableCell >Status</TableCell>
+                    <TableCell >{t('label_room_type')}</TableCell>
+                    <TableCell >{t('label_status')}</TableCell>
                     <TableCell ></TableCell>
                 </TableRow>
             </TableHead>

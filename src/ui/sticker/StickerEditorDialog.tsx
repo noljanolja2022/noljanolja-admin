@@ -1,14 +1,14 @@
-import { t } from "i18next";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Stack, Tooltip, Typography } from "../widget/mui";
-import { Sticker, StickerPack } from "../../data/model/StickerModels";
-import { useEffect, useState } from "react";
-import mediaService from "../../service/MediaService";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { responseToBase64Img } from "../../util/StringUtils";
-import { FileUploader } from "react-drag-drop-files";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { AxiosResponse } from "axios";
+import { t } from "i18next";
+import { useEffect, useState } from "react";
+import { FileUploader } from "react-drag-drop-files";
+import { Sticker, StickerPack } from "../../data/model/StickerModels";
+import mediaService from "../../service/MediaService";
+import { useLoadingStore } from "../../store/LoadingStore";
 import { zipFileTypes } from "../../util/Constants";
+import { responseToBase64Img } from "../../util/StringUtils";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Tooltip, Typography } from "../widget/mui";
 
 type Props = {
     data: Partial<StickerPack>;
@@ -76,7 +76,7 @@ export default function StickerEditorDialog({ data, onClose }: Props) {
 
     return (
         <Dialog open fullWidth maxWidth="md">
-            <DialogTitle>{isUpdating ? "Sticker Detail" : "Create sticker"}</DialogTitle>
+            <DialogTitle>{isUpdating ? t('label_sticker_detail') : "Create sticker"}</DialogTitle>
             <DialogContent>
 
                 {isUpdating
@@ -86,7 +86,7 @@ export default function StickerEditorDialog({ data, onClose }: Props) {
                             <Box>
                                 <Typography variant="h4">{data.name}</Typography>
                                 <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={1}>
-                                    Publisher:<Typography variant="h5">{data.publisher}</Typography>
+                                    {t('label_publisher')}:<Typography variant="h5">{data.publisher}</Typography>
                                 </Box>
                             </Box>
                         </Box>

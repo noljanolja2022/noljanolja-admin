@@ -70,7 +70,7 @@ function ReferrerManager() {
                         <TextField {...rest}
                             fullWidth
                             inputMode="numeric"
-                            label={'Enter referree points'}
+                            label={t('hint_enter_referee_points')}
                             onChange={(event) => rest.onChange(formatToInt(event.target.value))}
                             error={errors.refereePoints?.message !== undefined}
                             helperText={errors.refereePoints?.message} />
@@ -82,7 +82,7 @@ function ReferrerManager() {
                         <TextField {...rest}
                             fullWidth
                             inputMode="numeric"
-                            label={'Enter referrer points'}
+                            label={t('hint_enter_referer_points')}
                             onChange={(event) => rest.onChange(formatToInt(event.target.value))}
                             error={errors.refererPoints?.message !== undefined}
                             helperText={errors.refererPoints?.message} />

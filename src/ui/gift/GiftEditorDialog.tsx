@@ -1,16 +1,16 @@
-import { Controller, useForm } from "react-hook-form";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { Box, Button, ChipTextField, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
+import dayjs from "dayjs";
 import { t } from "i18next";
-import { FileUploader } from "react-drag-drop-files";
 import { useEffect, useState } from "react";
-import useGiftManager from "../../hook/useGiftManager";
+import { FileUploader } from "react-drag-drop-files";
+import { Controller, useForm } from "react-hook-form";
 import { Gift, GiftBrand, GiftCategory } from "../../data/model/Gift";
 import useBrandManager from "../../hook/useBrandManager";
+import useGiftManager from "../../hook/useGiftManager";
 import giftService from "../../service/GiftService";
-import { DateTimePickerInput } from "../widget/DateWidget";
-import dayjs from "dayjs";
+import { useLoadingStore } from "../../store/LoadingStore";
 import { imageFileTypes } from "../../util/Constants";
+import { DateTimePickerInput } from "../widget/DateWidget";
+import { Box, Button, ChipTextField, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
 
 type Props = {
     data: Partial<Gift>,
@@ -218,7 +218,7 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter gift name'} required
+                                    label={t('hint_enter_name')} required
                                     error={errors.name?.message !== undefined}
                                     helperText={errors.name?.message} />
                             )}
@@ -230,7 +230,7 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                                     multiline={true}
                                     rows={3}
                                     fullWidth
-                                    label={'Enter description'}
+                                    label={t('hint_enter_description')}
                                     error={errors.description?.message !== undefined}
                                     helperText={errors.description?.message} />
                             )}

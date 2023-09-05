@@ -180,7 +180,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                                 </FileUploader>
                             </Box>
                             <Box display={'flex'} alignItems={'center'}>
-                                <Typography>Status</Typography>
+                                <Typography>{t('label_status')}</Typography>
                                 <Controller
                                     render={({ field: { ref, ...rest } }) =>
                                         <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />}
@@ -214,7 +214,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter name'}
+                                    label={t('hint_enter_name')}
                                     error={errors.name?.message !== undefined}
                                     helperText={errors.name?.message} />
                             )}
@@ -224,7 +224,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter content'}
+                                    label={t('hint_enter_content')}
                                     error={errors.content?.message !== undefined}
                                     helperText={errors.content?.message} />
                             )}
@@ -233,11 +233,10 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             />
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
-
                                     multiline={true}
                                     rows={3}
                                     fullWidth
-                                    label={'Enter description'}
+                                    label={t('hint_enter_description')}
                                     error={errors.description?.message !== undefined}
                                     helperText={errors.description?.message} />
                             )}
@@ -246,7 +245,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             />
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <FormControl>
-                                    <InputLabel>Priority</InputLabel>
+                                    <InputLabel>{t('label_priority')}</InputLabel>
                                     <Select
                                         label={'Priority'}
                                         value={rest.value || ''}
@@ -278,7 +277,7 @@ export default function BannerEditorDialog({ data, onClose }: Props) {
                             />
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <FormControl>
-                                    <InputLabel>Action</InputLabel>
+                                    <InputLabel>{t('label_actions')}</InputLabel>
                                     <Select
                                         label={'Action'}
                                         value={rest.value || ''}

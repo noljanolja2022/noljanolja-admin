@@ -10,7 +10,7 @@ import useVideoManager from "../../hook/useVideoManager";
 import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { convertMsToTime, parseDate } from "../../util/DateUtil";
-import { Box, Button, Link, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from "../widget/mui";
+import { Box, Button, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from "../widget/mui";
 import { Pagination } from "../widget/mui/Pagination";
 import VideoFilter from './VideoFilter';
 import { VideoImport } from "./VideoImport";
@@ -65,10 +65,10 @@ function VideoManager() {
                     <TableRow >
                         <TableCell>{t('label_thumbnail')}</TableCell>
                         <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
-                        <TableCell>Views</TableCell>
-                        <TableCell>Likes</TableCell>
-                        <TableCell>Comments</TableCell>
-                        <TableCell>Duration</TableCell>
+                        <TableCell>{t('label_view')}</TableCell>
+                        <TableCell>{t('label_likes')}</TableCell>
+                        <TableCell>{t('label_comment')}</TableCell>
+                        <TableCell>{t('label_duration')}</TableCell>
                         <TableCell>{t('label_channel')}</TableCell>
                         <TableCell>{t('label_published_date')}</TableCell>
                         <TableCell>{t('label_actions')}</TableCell>
@@ -92,12 +92,10 @@ function VideoManager() {
                             <TableCell >{video.channel.title}</TableCell>
                             <TableCell >{parseDate(new Date(video.publishedAt))}</TableCell>
                             <TableCell >
-                                <Link href={video.url} target="_blank" sx={{ color: 'black' }}>
-                                    <Tooltip title="Open">
-                                        <OpenInNewIcon />
-                                    </Tooltip>
-                                </Link>
-                                <Tooltip title="Reward setting">
+                                <IconButton onClick={() => window.open(video.url, '_blank')}>
+                                    <OpenInNewIcon />
+                                </IconButton>
+                                <Tooltip title={t('label_setting')}>
                                     <IconButton onClick={() => onOpenVideoSetting(video)}><SettingsIcon /></IconButton>
                                 </Tooltip>
                             </TableCell>

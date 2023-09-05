@@ -1,13 +1,13 @@
-import { Controller, useForm } from "react-hook-form";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "../widget/mui";
 import { t } from "i18next";
-import { FileUploader } from "react-drag-drop-files";
 import { useEffect, useState } from "react";
+import { FileUploader } from "react-drag-drop-files";
+import { Controller, useForm } from "react-hook-form";
 import { GiftBrand } from "../../data/model/Gift";
-import giftService from "../../service/GiftService";
 import useBrandManager from "../../hook/useBrandManager";
+import giftService from "../../service/GiftService";
+import { useLoadingStore } from "../../store/LoadingStore";
 import { imageFileTypes } from "../../util/Constants";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "../widget/mui";
 
 type Props = {
     data: Partial<GiftBrand>
@@ -113,7 +113,7 @@ export default function BrandEditorDialog({ data, onClose }: Props) {
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={'Enter a name'} required
+                                    label={t('hint_enter_name')} required
                                     error={errors.name?.message !== undefined}
                                     helperText={errors.name?.message} />
                             )}

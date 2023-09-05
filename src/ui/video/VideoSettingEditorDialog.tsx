@@ -1,15 +1,14 @@
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import InfoIcon from '@mui/icons-material/Info';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Video } from "../../data/model/VideoModels";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Link, Menu, MenuItem, Paper, Stack, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography, useTheme } from "../widget/mui";
-import { useEffect, useState } from "react";
 import { VideoRewardConfig, VideoRewardConfigProgress } from "../../data/model/ConfigModels";
 import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { formatToDecimal, formatToInt } from "../../util/StringUtils";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import InfoIcon from '@mui/icons-material/Info';
-import { Controller, useForm } from "react-hook-form";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, Typography, useTheme } from "../widget/mui";
 
 type Props = {
     data: Partial<VideoRewardConfig>;
@@ -140,7 +139,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
                             <Controller
                                 render={({ field: { ref, ...rest } }) =>
                                     <TextField
-                                        label="Maximum reward times"
+                                        label={t('label_max_reward_time')}
                                         size="small"
                                         fullWidth={false}
                                         required
@@ -263,7 +262,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
                                 <TableRow >
                                     <TableCell >
                                         <Box display={'flex'} flexDirection={'row'} gap={0.5}>
-                                            Milestone
+                                            {t('label_milestone')}
                                             <Tooltip title="Indicate when an user will receive reward based on milestone. Value must be bigger than 0 and smaller and equal to 1">
                                                 <InfoIcon />
                                             </Tooltip>
@@ -271,7 +270,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
                                     </TableCell>
                                     <TableCell>
                                         <Box display={'flex'} flexDirection={'row'} gap={0.5}>
-                                            Points
+                                            {t('label_points')}
                                             <Tooltip title="Total points received each milestone. The later must be bigger than the former">
                                                 <InfoIcon />
                                             </Tooltip>

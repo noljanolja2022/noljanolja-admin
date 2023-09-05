@@ -57,7 +57,7 @@ export default function SideBar(props: Props) {
     const { t } = useTranslation();
 
     const drawerItems: DrawerItem[] = [
-        { path: RoutePaths.dashboard, text: t('label_home'), icon: <HomeIcon color="primary" /> },
+        { path: RoutePaths.dashboard, text: t('label_dashboard'), icon: <HomeIcon color="primary" /> },
         { path: RoutePaths.videoManager, text: t('label_video'), icon: <OndemandVideoIcon color="primary" /> },
         // {
         //     path: "", text: t('label_video'), icon: <OndemandVideoIcon color="primary" />,
@@ -87,7 +87,7 @@ export default function SideBar(props: Props) {
         { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon color="primary" /> },
         { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon color="primary" /> },
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
-        { path: RoutePaths.checkinManager, text: 'Checkin config', icon: <ChecklistIcon color="primary"/>}
+        { path: RoutePaths.checkinManager, text: t('label_checkin_setting'), icon: <ChecklistIcon color="primary"/>}
     ]
 
     return (

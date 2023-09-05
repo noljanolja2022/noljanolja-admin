@@ -8,7 +8,7 @@ import { Gift } from "../../data/model/Gift";
 import useBrandManager from "../../hook/useBrandManager";
 import useGiftManager from "../../hook/useGiftManager";
 import { parseDate } from "../../util/DateUtil";
-import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow } from "../widget/mui";
+import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
 import { GiftEditorDialog } from "./GiftEditorDialog";
 
 export default function GiftManager() {
@@ -77,8 +77,12 @@ export default function GiftManager() {
                             {parseDate(item.endTime)}
                         </TableCell>
                         <TableCell>
-                            <IconButton onClick={() => setEditing(item)} ><EditIcon /></IconButton>
-                            <IconButton onClick={() => deleteGift(item)} ><DeleteIcon /></IconButton>
+                            <Tooltip title={t('label_edit')}>
+                                <IconButton onClick={() => setEditing(item)} ><EditIcon /></IconButton>
+                            </Tooltip>
+                            <Tooltip title={t('label_delete')}>
+                                <IconButton onClick={() => deleteGift(item)} ><DeleteIcon /></IconButton>
+                            </Tooltip>
                         </TableCell>
                     </TableRow>
                 )}

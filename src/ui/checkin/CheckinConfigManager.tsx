@@ -71,10 +71,10 @@ export default function CheckinConfigManager() {
                         <TableHead>
                             <TableRow >
                                 <TableCell sx={{ minWidth: '300px' }}>
-                                    Day
+                                {t('label_day')}
                                 </TableCell>
                                 <TableCell sx={{ minWidth: '300px' }}>
-                                    Points
+                                    {t('label_points')}
                                 </TableCell>
                                 <TableCell />
                             </TableRow>

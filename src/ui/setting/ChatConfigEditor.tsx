@@ -1,10 +1,10 @@
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ChatRewardConfig, RoomType } from "../../data/model/ConfigModels";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Switch, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from "../widget/mui";
+import useChatRewardConfig from "../../hook/useChatRewardConfig";
 import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
-import { Controller, useForm } from "react-hook-form";
-import useChatRewardConfig from "../../hook/useChatRewardConfig";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Switch, TextField, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from "../widget/mui";
 
 type Props = {
     data: Nullable<ChatRewardConfig>,
@@ -62,7 +62,7 @@ export default function ChatConfigEditor({ data, onClose }: Props) {
             <DialogContent>
                 <Grid container rowSpacing={1} columnSpacing={{ md: 1 }}>
                     <Grid item md={6} sm={12}>
-                        <Typography>Status</Typography>
+                        <Typography>{t('label_status')}</Typography>
                     </Grid>
                     <Grid item md={6} sm={12}>
                         <Controller
@@ -74,7 +74,7 @@ export default function ChatConfigEditor({ data, onClose }: Props) {
                         />
                     </Grid>
                     <Grid item md={6} sm={12}>
-                        <Typography>Room Type</Typography>
+                        <Typography>{t('label_room_type')}</Typography>
                     </Grid>
                     <Grid item md={6} sm={12}>
                         <Controller
@@ -102,7 +102,7 @@ export default function ChatConfigEditor({ data, onClose }: Props) {
 
                     <Grid item md={6} sm={12}>
                         <Tooltip title="The amounf of times user will be rewarded by watching full video">
-                            <Typography>Maximum reward times</Typography>
+                            <Typography>{t('label_max_reward_time')}</Typography>
                         </Tooltip>
                     </Grid>
                     <Grid item md={6} sm={12}>

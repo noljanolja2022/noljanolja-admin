@@ -54,7 +54,7 @@ export default function BannerManager() {
                         <TableCell>{t('label_thumbnail')}</TableCell>
                         <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
                         <TableCell>{t('label_description')}</TableCell>
-                        <TableCell>Status</TableCell>
+                        <TableCell>{t('label_status')}</TableCell>
                         <TableCell>Priority</TableCell>
                         <TableCell>{t('label_start_date')}</TableCell>
                         <TableCell>{t('label_end_date')}</TableCell>
