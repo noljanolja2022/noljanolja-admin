@@ -11,6 +11,7 @@ import ReferrerManager from '../ui/referral/ReferralManager';
 import ChatConfigManager from '../ui/setting/ChatConfigManager';
 import StickerManager from '../ui/sticker/StickerManager';
 import UserManager from '../ui/user/UsersManager';
+import VideoPromotionManager from '../ui/video-promotion/VideoPromotionManager';
 import VideoManager from '../ui/video/VideoManager';
 import PrivateRoute from '../ui/widget/PrivateRoute';
 
@@ -22,6 +23,7 @@ export const RoutePaths = {
     brandManager: 'brand-manager',
     chatRewardConfig: 'chat-reward-config',
     giftManager: 'gift-manager',
+    promoteVideoManager: 'video-promotion-manager',
     bannerManager: 'banner',
     checkinManager: 'checkinManager',
     referralManager: 'referralManager'
@@ -46,6 +48,8 @@ export default function AppRoutes() {
                     <Route path={RoutePaths.brandManager} element={<BrandManager />} />
                     <Route path={RoutePaths.bannerManager} element={<BannerManager />} />
                     <Route path={RoutePaths.checkinManager} element={<CheckinConfigManager />} />
+                    <Route path={RoutePaths.promoteVideoManager} element={<VideoPromotionManager />} />
+                    
                     <Route index element={<Navigate to={RoutePaths.dashboard} />} />
                 </Route>
             </Route>

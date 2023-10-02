@@ -15,6 +15,18 @@ export interface Video {
     category: Category
 }
 
+export interface PromotedVideoConfig {
+    id: number;
+    startDate: Date;
+    endDate: Date;
+    autoPlay: boolean;
+    autoLike: boolean;
+    autoComment: boolean;
+    autoSubscribe: boolean;
+    interactionDelay: number;
+    video: Video
+}
+
 export interface Channel {
     id: string,
     title: string,

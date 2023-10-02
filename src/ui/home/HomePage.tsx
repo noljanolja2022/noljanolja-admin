@@ -1,12 +1,12 @@
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import useWindowMQ from "../../hook/UseWindowWidth";
 import LanguageSwitcher from "../widget/LanguageSwitcher";
 import LogoutButton from "../widget/LogoutButton";
-import useWindowMQ from "../../hook/UseWindowWidth";
-import { useTheme } from "@mui/material/styles";
-import MenuIcon from '@mui/icons-material/Menu';
-import SideBar from "./SideBar";
 import { Box, Drawer } from "../widget/mui";
+import SideBar from "./SideBar";
 
 const drawerWidth = 200;
 const appBarHeight = 80;
@@ -87,7 +87,8 @@ function HomePage() {
                     </Box>
                 )}
                 <Box sx={{
-                    overflowY: 'scroll',
+                    overflowY: 'auto',
+                    overflowX: 'auto',
                     flexGrow: 1
                 }}>
                     <Outlet />

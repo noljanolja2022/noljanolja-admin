@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { StorageKey } from '../util/Constants';
+import { useAuthStore } from '../store/AuthStore';
 import i18n from '../util/translation/LanguageUtil';
-import authService from './AuthService';
 import { firebaseAuthInstance } from './FirebaseService';
 
 const axiosConfig: AxiosRequestConfig<any> = {
@@ -12,7 +11,8 @@ const axiosClient = axios.create(axiosConfig);
 axiosClient.interceptors.request.use(
     config => {
         if (window !== undefined) {
-            const bearer = `Bearer ${localStorage.getItem(StorageKey.bearer)}`
+            const token = useAuthStore.getState().bearer
+            const bearer = `Bearer ${token}`
             if (bearer) {
                 config.headers['Authorization'] = bearer
             }
@@ -35,8 +35,9 @@ axiosClient.interceptors.response.use(
                     originalRequest._retry = true;
                     console.log('Token Expired, refreshing token')
                     const newToken = await firebaseAuthInstance.currentUser?.getIdToken(true);
-                    if (newToken)
-                        authService.saveToken(newToken)
+                    if (newToken) {
+                        useAuthStore.getState().setBearer(newToken)
+                    }
                     // Retry the request one time
                     return axiosClient(originalRequest);
                 }

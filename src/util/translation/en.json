@@ -66,6 +66,7 @@
     "label_activate": "Activate",
     "label_deactive": "Deactive",
     "label_day": "Day",
+"label_video_promotion":"Video Promotion",
     "hint_enter_referee_points": "Enter referee points",
     "hint_enter_referer_points": "Enter referrer points",
     "hint_pls_enter_id": "Please enter your username",

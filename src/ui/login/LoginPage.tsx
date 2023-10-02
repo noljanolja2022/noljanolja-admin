@@ -1,19 +1,17 @@
-import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { firebaseAuthInstance } from '../../service/FirebaseService';
-import AuthService from "../../service/AuthService";
-import UserService from "../../service/UserService";
-import AnalyticService from "../../service/AnalyticService";
 import Divider from "@mui/material/Divider";
-import { parseFirebaseErr } from "../../util/ErrorMapper";
-import { useLoadingStore } from "../../store/LoadingStore";
-import { useUserStore } from "../../store/UserStore";
-import { User } from "../../data/model/UserModels";
-import { TextField } from "../widget/mui/TextField";
-import { Button } from "../widget/mui/Button";
-import { Box } from "../widget/mui/Box";
 import { t } from "i18next";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import AnalyticService from '../../service/AnalyticService';
+import { firebaseAuthInstance } from '../../service/FirebaseService';
+import { useAuthStore } from "../../store/AuthStore";
+import { useLoadingStore } from "../../store/LoadingStore";
+import { useUserStore } from "../../store/UserStore";
+import { parseFirebaseErr } from "../../util/ErrorMapper";
+import { Box } from "../widget/mui/Box";
+import { Button } from "../widget/mui/Button";
+import { TextField } from "../widget/mui/TextField";
 
 interface LoginFormProps {
     username: string;
@@ -28,6 +26,7 @@ interface LoginFormProps {
 export default function LoginPage() {
     const navigate = useNavigate();
     const { setLoading, setIdle } = useLoadingStore();
+    const { setBearer, clearBearer } = useAuthStore();
     const { setUser } = useUserStore();
     const {
         control,
@@ -44,39 +43,13 @@ export default function LoginPage() {
     const onSignin = (data: LoginFormProps) => {
         setLoading()
         signInWithEmailAndPassword(firebaseAuthInstance, data.username, data.password).then(userCredential => {
-            const user = userCredential.user;
-            user.getIdToken().then(firebaseToken => {
-                AuthService.saveToken(firebaseToken);
-                UserService.fetchUser().then(res => {
-                    if (res.isFailure()) {
-                        if (res.error?.name === "401001") {
-                            control.setError("root", { message: "Your account doesn't have permission to access this. Please contact admin for support." })
-                        }
-                        return;
-                    }
-                    const apiUser = res.data!;
-                    const newUSer: User = {
-                        id: user.uid,
-                        name: apiUser.name,
-                        email: apiUser.email,
-                        avatar: apiUser.avatar,
-                        phone: apiUser.phone,
-                        gender: apiUser.gender,
-                        createdAt: apiUser.createdAt,
-                        updatedAt: apiUser.updatedAt,
-                    }
-                    setUser(newUSer);
-                    AnalyticService.logLoginEvent();
-                    navigate('/', { replace: true });
-                }).catch(e => {
-                    AuthService.clearToken();
-                }).finally(() => {
-                    setIdle()
-                })
-            })
+            AnalyticService.logLoginEvent();
+            navigate('/', { replace: true });
         }).catch((err: any) => {
             setIdle()
             control.setError("root", { message: parseFirebaseErr(err.code) })
+        }).finally(() => {
+            setIdle();
         });
     }
 

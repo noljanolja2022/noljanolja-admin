@@ -78,3 +78,12 @@ export interface ReferralConfig {
     refererPoints: number;
     updatedAt: Date;
 }
+
+export interface VideoPromotionSetting {
+    id: number;
+    videoId: string;
+    startDate: Date;
+    endDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
+}

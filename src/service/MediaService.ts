@@ -1,6 +1,6 @@
 import { Result } from '../data/model/Result';
 import { StickerPack } from '../data/model/StickerModels';
-import { Video } from '../data/model/VideoModels';
+import { PromotedVideoConfig, Video } from '../data/model/VideoModels';
 import api from './ApiClient';
 import parseResponse from './ResponseParse';
 
@@ -45,6 +45,24 @@ class MediaService {
 
     async deleteVideo(videoId: string) {
         return parseResponse(await api.delete(`v1/media/videos/${videoId}`))
+    }
+
+    async getPromotedVideo() : Promise<Result<Array<PromotedVideoConfig>>>{
+        return parseResponse(await api.get(`v1/media/videos/promoted`));
+    }
+
+    async promoteVideo(video: Video, interactionDelay: number, startDate: Date, endDate: Date,
+        autoLike: boolean = true, autoPlay: boolean = true,
+        autoComment: boolean = true, autoSubscribe: boolean = true) {
+        return parseResponse(await api.post(`v1/media/videos/${video.id}/promoted`, {
+            autoLike,
+            autoPlay,
+            autoComment,
+            autoSubscribe,
+            startDate,
+            endDate,
+            interactionDelay
+        }),)
     }
 }
 

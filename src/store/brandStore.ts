@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 import { GiftBrand } from "../data/model/Gift";
 import { PaginationStore } from './common';
 
@@ -7,7 +7,7 @@ type Store = {
     setBrands: (data: GiftBrand[]) => void;
 } & PaginationStore
 
-export const useBrandStore = create<Store>((set) => ({
+export const useBrandStore = create<Store>((set, get) => ({
     brands: [],
     setBrands: (data: GiftBrand[]) => set((_) => ({ brands: data })),
     currentPage: 1,
