@@ -1,11 +1,11 @@
 import { CheckinProgress } from "../data/model/CheckinModels";
-import { ApiChatRewardConfig, ApiVideoRewardConfig, ReferralConfig, RoomType, UpdateVideoRewardPayload } from "../data/model/ConfigModels";
+import { ApiChatRewardConfig, ApiVideoRewardConfig, CoinExchangeConfig, ReferralConfig, RoomType, UpdateVideoRewardPayload } from "../data/model/ConfigModels";
 import { Result } from "../data/model/Result";
 import api from './ApiClient';
 import parseResponse from "./ResponseParse";
 
 const urlPath = 'v1/reward';
-
+const coinExchangePath = 'v1/coin-exchange'
 class RewardService {
     async getVideoRewardConfigs(page: number, pageSize: number = 5): Promise<Result<Array<ApiVideoRewardConfig>>> {
         return parseResponse(await api.get('v1/reward/videos/configs', {
@@ -46,7 +46,7 @@ class RewardService {
         return parseResponse(await api.put(`v1/reward/chat/configs`, param))
     }
 
-    async getCheckinConfig() : Promise<Result<CheckinProgress[]>>{
+    async getCheckinConfig(): Promise<Result<CheckinProgress[]>> {
         return parseResponse(await api.get(urlPath + '/checkin/configs'))
     }
 
@@ -57,14 +57,28 @@ class RewardService {
         return parseResponse(await api.put(urlPath + '/checkin/configs', params))
     }
 
-    async getReferralConfig() : Promise<Result<ReferralConfig>> {
+    async getReferralConfig(): Promise<Result<ReferralConfig>> {
         return parseResponse(await api.get(urlPath + '/referral/configs'))
     }
 
-    async updateReferralConfig(refereePoints: number, refererPoints: number) : Promise<Result<ReferralConfig>> {
+    async updateReferralConfig(refereePoints: number, refererPoints: number): Promise<Result<ReferralConfig>> {
         return parseResponse(await api.put(urlPath + '/referral/configs', {
             refereePoints,
             refererPoints
+        }))
+    }
+
+    async getCoinExchangeConfig(): Promise<Result<CoinExchangeConfig>> {
+        return parseResponse(await api.get(coinExchangePath + '/rate'))
+    }
+
+    async updateCoinExchangeConfig(
+        coinToPointRate: number,
+        rewardRecurringAmount: number,
+    ): Promise<Result<CoinExchangeConfig>> {
+        return parseResponse(await api.put(coinExchangePath + '/rate', {
+            coinToPointRate,
+            rewardRecurringAmount
         }))
     }
 }

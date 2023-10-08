@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import BannerManager from '../ui/banner/BannerManager';
 import BrandManager from '../ui/brand/BrandManager';
 import CheckinConfigManager from '../ui/checkin/CheckinConfigManager';
+import CoinExchangeManager from '../ui/coin-exchange-manager/CoinExchangeManager';
 import ContentManagement from '../ui/content/ContentManagement';
 import DashBoard from '../ui/dashboard/DashBoard';
 import GiftManager from '../ui/gift/GiftManager';
@@ -26,7 +27,8 @@ export const RoutePaths = {
     promoteVideoManager: 'video-promotion-manager',
     bannerManager: 'banner',
     checkinManager: 'checkinManager',
-    referralManager: 'referralManager'
+    referralManager: 'referralManager',
+    coinExchangeManager: 'coin-exchange-manager'
 }
 
 export const LoginPath = "/login"
@@ -49,7 +51,7 @@ export default function AppRoutes() {
                     <Route path={RoutePaths.bannerManager} element={<BannerManager />} />
                     <Route path={RoutePaths.checkinManager} element={<CheckinConfigManager />} />
                     <Route path={RoutePaths.promoteVideoManager} element={<VideoPromotionManager />} />
-                    
+                    <Route path={RoutePaths.coinExchangeManager} element={<CoinExchangeManager />} />
                     <Route index element={<Navigate to={RoutePaths.dashboard} />} />
                 </Route>
             </Route>

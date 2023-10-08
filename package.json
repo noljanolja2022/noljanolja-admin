@@ -1,6 +1,6 @@
 {
   "name": "noljanolja-admin",
-  "version": "0.1.43",
+  "version": "0.1.44",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -34,7 +34,8 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "yarn && yarn build && ./deploy.sh"
+    "deploy:dev": "yarn && yarn build && ./deploy.sh dev",
+    "deploy:prod": "yarn && yarn build && ./deploy.sh prod"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

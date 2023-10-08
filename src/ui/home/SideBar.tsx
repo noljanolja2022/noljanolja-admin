@@ -5,6 +5,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HomeIcon from '@mui/icons-material/Home';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RedeemIcon from '@mui/icons-material/Redeem';
@@ -14,6 +15,7 @@ import { NavLink } from "react-router-dom";
 import useWindowMQ from "../../hook/UseWindowWidth";
 import { RoutePaths } from "../../util/routes";
 import { Box, SidebarAccordion, SidebarAccordionSummary, SidebarBox, useTheme } from "../widget/mui";
+
 type DrawerItem = {
     text: string;
     icon?: any;
@@ -89,6 +91,7 @@ export default function SideBar(props: Props) {
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
         { path: RoutePaths.checkinManager, text: t('label_checkin_setting'), icon: <ChecklistIcon color="primary"/>},
         { path: RoutePaths.promoteVideoManager, text: t('label_video_promotion'), icon: <CameraIndoorIcon color="primary"/>},
+        { path: RoutePaths.coinExchangeManager, text: t('label_coin_exchange'), icon: <MonetizationOnIcon color="primary"/>},
         //uncomment for debug youtubeapi
         // { path: 'content-management', text: 'test', icon: <CameraIndoorIcon color="primary"/>},
     ]

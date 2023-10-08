@@ -1,15 +1,13 @@
+import { Gift } from "../data/model/Gift";
 import giftService from "../service/GiftService";
 import { useLoadingStore } from "../store/LoadingStore";
-import { useGiftStore } from "../store/giftStore";
 import { useCategoryStore } from "../store/categoryStore";
-import { useBrandStore } from "../store/brandStore";
-import { Gift } from "../data/model/Gift";
+import { useGiftStore } from "../store/giftStore";
 
 export default function useGiftManager() {
     const { setLoading, setIdle, showSuccessNoti, showErrorNoti } = useLoadingStore();
     const { data, setData, totalPage, setTotalPage, currentPage, setCurrentPage } = useGiftStore();
     const { setCategories, categories } = useCategoryStore();
-    const { brands, setBrands } = useBrandStore();
 
     const fetchGifts = () => {
         setLoading()

@@ -87,3 +87,8 @@ export interface VideoPromotionSetting {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface CoinExchangeConfig {
+    coinToPointRate: number;
+    rewardRecurringAmount: number;
+}

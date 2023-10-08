@@ -100,7 +100,7 @@ export default function VideoPromotionEditor() {
                         </Grid>
                         <Grid item md={6}>
                             <Box display={'flex'} alignItems={'center'}>
-                                <Typography>{t('auto play')}</Typography>
+                                <Typography>{t('label_auto_play')}</Typography>
                                 <Controller
                                     render={({ field: { ref, ...rest } }) =>
                                         <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />}
@@ -109,7 +109,7 @@ export default function VideoPromotionEditor() {
                                 />
                             </Box>
                             <Box display={'flex'} alignItems={'center'}>
-                                <Typography>{t('auto like')}</Typography>
+                                <Typography>{t('label_auto_like')}</Typography>
                                 <Controller
                                     render={({ field: { ref, ...rest } }) =>
                                         <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />}
@@ -118,7 +118,7 @@ export default function VideoPromotionEditor() {
                                 />
                             </Box>
                             <Box display={'flex'} alignItems={'center'}>
-                                <Typography>{t('auto comment')}</Typography>
+                                <Typography>{t('label_auto_comment')}</Typography>
                                 <Controller
                                     render={({ field: { ref, ...rest } }) =>
                                         <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />}
@@ -127,7 +127,7 @@ export default function VideoPromotionEditor() {
                                 />
                             </Box>
                             <Box display={'flex'} alignItems={'center'}>
-                                <Typography>{t('auto subscribe')}</Typography>
+                                <Typography>{t('label_auto_subscribe')}</Typography>
                                 <Controller
                                     render={({ field: { ref, ...rest } }) =>
                                         <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />}

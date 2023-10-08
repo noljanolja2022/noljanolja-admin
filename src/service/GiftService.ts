@@ -1,5 +1,6 @@
 import { Gift, GiftBrand, GiftCategory } from "../data/model/Gift";
 import { Result } from "../data/model/Result";
+import { useCategoryStore } from "../store/categoryStore";
 import { parseDateToIso } from "../util/DateUtil";
 import api from './ApiClient';
 import parseResponse from "./ResponseParse";
@@ -110,14 +111,14 @@ class GiftService {
     }
 
     async getCategories(): Promise<Array<GiftCategory>> {
-        const cached = localStorage.getItem('categories')
+        const cached = useCategoryStore.getState().categories
         if (cached) {
-            return JSON.parse(cached) as Array<GiftCategory>
+            return cached
         }
         const res = await this.fetchCategories();
         const resCategories = res.getValue()
         if (resCategories != null) {
-            localStorage.setItem('categories', JSON.stringify(resCategories))
+            useCategoryStore.getState().setCategories(resCategories)
             return resCategories;
         }
         return [];
