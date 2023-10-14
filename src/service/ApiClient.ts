@@ -33,7 +33,6 @@ axiosClient.interceptors.response.use(
                 const originalRequest = error.config;
                 if (!originalRequest._retry) {
                     originalRequest._retry = true;
-                    console.log('Token Expired, refreshing token')
                     const newToken = await firebaseAuthInstance.currentUser?.getIdToken(true);
                     if (newToken) {
                         useAuthStore.getState().setBearer(newToken)

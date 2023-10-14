@@ -38,9 +38,15 @@ export default function PrivateRoute() {
                             gender: apiUser.gender,
                             createdAt: apiUser.createdAt,
                             updatedAt: apiUser.updatedAt,
+                            isActive: apiUser.isActive,
+                            isBlocked: apiUser.isBlocked
                         }
                         setUser(newUSer);
-                    }).finally(() => {
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+                    .finally(() => {
                         setVerified(VerifyingState.SUCCESS)
                     })
                 }).catch(err => {
@@ -50,7 +56,7 @@ export default function PrivateRoute() {
             }
         })
         return () => observer()
-    }, [firebaseAuthInstance.currentUser]);
+    }, []);
 
     switch (verified) {
         case VerifyingState.INIT:

@@ -1,5 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import IconButton from '@mui/material/IconButton';
@@ -47,7 +48,6 @@ export default function UserManager() {
                 return;
             }
             showSuccessNoti('User updated successfully');
-            setDelUsr(null)
             fetch();
         }).finally(() => {
             setIdle();
@@ -104,6 +104,9 @@ export default function UserManager() {
                                         <Tooltip title={t('label_activate')}>
                                             <IconButton onClick={() => onUpdateStatus(item)}><LockOpenIcon /></IconButton>
                                         </Tooltip>}
+                                        <Tooltip title={t('label_delete')}>
+                                            <IconButton onClick={() => setDelUsr(item)}><DeleteIcon /></IconButton>
+                                        </Tooltip>
                                 </TableCell>
                             </TableRow>
                         )}
