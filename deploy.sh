@@ -40,7 +40,7 @@ docker push $IMAGE_NAME
 # ./setup.sh $APP_NAME $IMAGE_NAME
 
 # ELSE IF Update existing deployment with new version, RUN THIS
-# kubectl set image deployment/$APP_NAME $APP_NAME=$IMAGE_NAME
+kubectl set image deployment/$APP_NAME $APP_NAME=$IMAGE_NAME
 kubectl rollout restart deployment/$APP_NAME 
 
 #uncomment this to debug

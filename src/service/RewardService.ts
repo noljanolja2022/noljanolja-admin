@@ -73,11 +73,12 @@ class RewardService {
     }
 
     async updateCoinExchangeConfig(
-        coinToPointRate: number,
+        point: number,
+        coin: number,
         rewardRecurringAmount: number,
     ): Promise<Result<CoinExchangeConfig>> {
         return parseResponse(await api.put(coinExchangePath + '/rate', {
-            coinToPointRate,
+            point, coin,
             rewardRecurringAmount
         }))
     }

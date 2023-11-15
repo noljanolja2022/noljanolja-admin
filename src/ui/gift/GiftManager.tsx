@@ -1,4 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from "@mui/material/IconButton";
@@ -7,18 +9,28 @@ import { useTranslation } from "react-i18next";
 import { Gift } from "../../data/model/Gift";
 import useBrandManager from "../../hook/useBrandManager";
 import useGiftManager from "../../hook/useGiftManager";
+import giftService from '../../service/GiftService';
+import { useLoadingStore } from '../../store/LoadingStore';
 import { parseDate } from "../../util/DateUtil";
 import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
 import { GiftEditorDialog } from "./GiftEditorDialog";
 
 export default function GiftManager() {
+    const { setLoading, setIdle } = useLoadingStore();
     const { t } = useTranslation();
-    const { data, fetchCategories, totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
+    const { data,  totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
     const { fetchBrands } = useBrandManager();
     const [editing, setEditing] = useState<Nullable<Partial<Gift>>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
+    }
+
+    const onImport = () => {
+        setLoading();
+        giftService.importGifts().finally(() => {
+            setIdle()
+        })
     }
 
     useEffect(() => {
@@ -27,14 +39,13 @@ export default function GiftManager() {
 
 
     useEffect(() => {
-        fetchCategories();
         fetchBrands()
     }, [])
 
 
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <Button onClick={() => setEditing({})}>
+            <Button >
                 <AddIcon />
                 {t('label_add')}
             </Button>
@@ -45,11 +56,9 @@ export default function GiftManager() {
                     <TableCell >{t('label_thumbnail')}</TableCell>
                     <TableCell sx={{ maxWidth: '300px' }}>{t('label_name')}</TableCell>
                     <TableCell >{t('label_price')}</TableCell>
-                    <TableCell >{t('label_remaining')}</TableCell>
-                    <TableCell >{t('label_total')}</TableCell>
                     <TableCell >{t('label_description')}</TableCell>
-                    <TableCell >{t('label_effective_date')}</TableCell>
                     <TableCell >{t('label_expire_date')}</TableCell>
+                    <TableCell >{t('label_status')}</TableCell>
                     <TableCell ></TableCell>
                 </TableRow>
             </TableHead>
@@ -65,17 +74,13 @@ export default function GiftManager() {
                         <TableCell >
                             {item.price}
                         </TableCell>
-                        <TableCell >{item.remaining}</TableCell>
-                        <TableCell >{item.total}</TableCell>
-                        <TableCell >
+                        <TableCell sx={{ maxWidth: '700px' }}>
                             {item.description}
-                        </TableCell>
-                        <TableCell >
-                            {parseDate(item.startTime)}
                         </TableCell>
                         <TableCell >
                             {parseDate(item.endTime)}
                         </TableCell>
+                        <TableCell >{item.isActive ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                         <TableCell>
                             <Tooltip title={t('label_edit')}>
                                 <IconButton onClick={() => setEditing(item)} ><EditIcon /></IconButton>

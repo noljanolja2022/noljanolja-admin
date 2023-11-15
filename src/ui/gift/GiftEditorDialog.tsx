@@ -3,7 +3,7 @@ import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { Controller, useForm } from "react-hook-form";
-import { Gift, GiftBrand, GiftCategory } from "../../data/model/Gift";
+import { Gift, GiftBrand } from "../../data/model/Gift";
 import useBrandManager from "../../hook/useBrandManager";
 import useGiftManager from "../../hook/useGiftManager";
 import giftService from "../../service/GiftService";
@@ -17,10 +17,9 @@ type Props = {
     onClose: () => void
 }
 
-interface ImportFormProps {
+interface FormProps {
     name: string;
     description: string;
-    category: GiftCategory;
     brand: GiftBrand;
     startTime: Date;
     endTime: Date;
@@ -32,7 +31,7 @@ interface ImportFormProps {
 export function GiftEditorDialog({ data, onClose }: Props) {
     // const theme = useTheme();
     const { setLoading, setIdle, showSuccessNoti } = useLoadingStore();
-    const { categories, fetchGifts } = useGiftManager();
+    const {  fetchGifts } = useGiftManager();
     const { brands } = useBrandManager();
     const [image, setImage] = useState<Nullable<File>>(null);
     const [imagePreview, setImagePreview] = useState<Nullable<string>>(data?.image || null)
@@ -41,17 +40,14 @@ export function GiftEditorDialog({ data, onClose }: Props) {
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<ImportFormProps>({
+    } = useForm<FormProps>({
         // resolver: yupResolver(LoginSchemaValidator),
         defaultValues: {
             name: data?.name,
             description: data?.description,
-            category: data?.category,
             brand: data?.brand,
-            startTime: data?.startTime,
             endTime: data?.endTime,
             price: data?.price,
-            codes: data?.codes,
         }
     });
     const onThumbnailChange = (file: File) => {
@@ -64,7 +60,7 @@ export function GiftEditorDialog({ data, onClose }: Props) {
         }
     }, [image])
 
-    const onUpdate = (formInput: ImportFormProps) => {
+    const onUpdate = (formInput: FormProps) => {
         setLoading()
         if (data?.id != null) {
             giftService.updateGift(data.id!,
@@ -81,23 +77,7 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                 }).finally(() => {
                     setIdle()
                 })
-        } else {
-            giftService.createGift(formInput.name,
-                formInput.description, image!, formInput.codes,
-                formInput.startTime,
-                formInput.endTime,
-                formInput.category.id, formInput.brand.id, formInput.price).then(res => {
-                    if (res.isFailure()) {
-                        control.setError("root", { message: res.getErrorMsg() })
-                        return;
-                    }
-                    onClose();
-                    showSuccessNoti('Gift created successfully')
-                    fetchGifts();
-                }).finally(() => {
-                    setIdle()
-                })
-        }
+        } 
 
     }
 
@@ -127,39 +107,6 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                                     <Button>{t('label_update')}</Button>
                                 </FileUploader>
                             </Box>
-                            <Controller render={({ field: { ref, ...rest } }) => (
-                                <FormControl>
-                                    <InputLabel>{t('label_category')}</InputLabel>
-                                    <Select
-                                        label={t('label_category')}
-                                        defaultValue={''}
-                                        value={rest.value?.id}
-                                        renderValue={_ =>
-                                            <Typography>
-                                                {rest.value?.code}
-                                            </Typography>
-                                        }
-                                        onChange={(event) => {
-                                            const newId = event.target.value as number;
-                                            const newCategory = categories.filter(e => e.id == newId)[0]
-                                            setValue("category", newCategory)
-                                        }}>
-                                        {categories.map(item =>
-                                            <MenuItem key={item.id} value={item.id} sx={{
-                                                display: 'flex',
-                                                flexDirection: 'row',
-                                                gap: 2,
-                                            }}>
-                                                <img alt={item.code} width={40} src={item.image} />
-                                                {item.code}
-                                            </MenuItem>
-                                        )}
-                                    </Select>
-                                </FormControl>
-                            )}
-                                name="category"
-                                control={control}
-                            />
                             <Controller render={({ field: { ref, ...rest } }) => (
                                 <FormControl>
                                     <InputLabel>{t('label_brand')}</InputLabel>

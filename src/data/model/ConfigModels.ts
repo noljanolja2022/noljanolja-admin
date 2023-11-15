@@ -89,6 +89,7 @@ export interface VideoPromotionSetting {
 }
 
 export interface CoinExchangeConfig {
-    coinToPointRate: number;
+    point: number;
+    coin: number;
     rewardRecurringAmount: number;
 }

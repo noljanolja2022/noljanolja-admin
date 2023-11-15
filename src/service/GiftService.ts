@@ -1,6 +1,5 @@
-import { Gift, GiftBrand, GiftCategory } from "../data/model/Gift";
+import { Gift, GiftBrand } from "../data/model/Gift";
 import { Result } from "../data/model/Result";
-import { useCategoryStore } from "../store/categoryStore";
 import { parseDateToIso } from "../util/DateUtil";
 import api from './ApiClient';
 import parseResponse from "./ResponseParse";
@@ -20,6 +19,10 @@ class GiftService {
 
     async getGift(giftId: number): Promise<Result<Gift>> {
         return parseResponse(await api.get(`v1/gifts/${giftId}`))
+    }
+
+    async importGifts() {
+        return parseResponse(await api.get(`v1/gifts/import`)) 
     }
 
     async createGift(name: string, description: string,
@@ -69,7 +72,7 @@ class GiftService {
         }))
     }
 
-    async deleteGift(giftId: number) {
+    async deleteGift(giftId: string) {
         return parseResponse(await api.delete(`v1/gifts/${giftId}`))
     }
 
@@ -95,7 +98,7 @@ class GiftService {
         }))
     }
 
-    async updateBrand(id: number, image: Nullable<File>, name: Nullable<string>) {
+    async updateBrand(id: string, image: Nullable<File>, name: Nullable<string>) {
         return parseResponse(await api.patch(`v1/gifts/brands/${id}`, {
             image: image,
             name: name
@@ -105,25 +108,6 @@ class GiftService {
             }
         }))
     }
-
-    async fetchCategories(): Promise<Result<Array<GiftCategory>>> {
-        return parseResponse(await api.get('v1/gifts/categories'))
-    }
-
-    async getCategories(): Promise<Array<GiftCategory>> {
-        const cached = useCategoryStore.getState().categories
-        if (cached) {
-            return cached
-        }
-        const res = await this.fetchCategories();
-        const resCategories = res.getValue()
-        if (resCategories != null) {
-            useCategoryStore.getState().setCategories(resCategories)
-            return resCategories;
-        }
-        return [];
-    }
-
 }
 
 const giftService = new GiftService();

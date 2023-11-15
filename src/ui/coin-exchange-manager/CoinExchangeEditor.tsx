@@ -7,7 +7,8 @@ import { formatToDecimal, formatToInt } from "../../util/StringUtils";
 import { Button, Stack, TextField } from "../widget/mui";
 
 type FieldProps = {
-    coinToPointRate: number;
+    point: number;
+    coin: number;
     rewardRecurringAmount: number;
 }
 
@@ -17,7 +18,8 @@ export default function CoinExchangeEditor() {
 
     const { control, handleSubmit, setError, formState: { errors }, setValue } = useForm<FieldProps>({
         defaultValues: {
-            coinToPointRate: 0,
+            point: 0,
+            coin: 0,
             rewardRecurringAmount: 0
         }
     });
@@ -30,7 +32,8 @@ export default function CoinExchangeEditor() {
                 return;
             }
             const data = res.data;
-            setValue("coinToPointRate", data?.coinToPointRate || 0)
+            setValue("point", data?.point ?? 0)
+            setValue("coin", data?.coin ?? 0)
             setValue("rewardRecurringAmount", data?.rewardRecurringAmount || 0)
         }).finally(() => {
             setIdle();
@@ -39,7 +42,7 @@ export default function CoinExchangeEditor() {
 
     const onUpdate = (formInput: FieldProps) => {
         setLoading();
-        rewardService.updateCoinExchangeConfig(formInput.coinToPointRate, formInput.rewardRecurringAmount).then(res => {
+        rewardService.updateCoinExchangeConfig(formInput.point, formInput.coin, formInput.rewardRecurringAmount).then(res => {
             if (res.isFailure()) {
                 showErrorNoti("Unable to update coin exchange config")
                 return;
@@ -52,18 +55,31 @@ export default function CoinExchangeEditor() {
 
     return (
         <form onSubmit={handleSubmit(onUpdate)}>
-            <Stack gap={2} maxWidth={200} mt={2}>
+            <Stack gap={2} maxWidth={300} mt={2}>
+                <p>For every conversion made, user will be exchange x points to gain y coins</p>
                 <Controller render={({ field: { ref, ...rest } }) => (
                     <TextField {...rest}
-                        inputMode="decimal"
-                        label={t('enter rate')}
+                        inputMode="numeric"
+                        label={t('Point used for each conversion')}
                         onChange={(event) => rest.onChange(formatToDecimal(event.target.value))}
-                        error={errors.coinToPointRate?.message !== undefined}
-                        helperText={errors.coinToPointRate?.message} />
+                        error={errors.point?.message !== undefined}
+                        helperText={errors.point?.message} />
                 )}
-                    name="coinToPointRate"
+                    name="point"
                     control={control}
                 />
+                <Controller render={({ field: { ref, ...rest } }) => (
+                    <TextField {...rest}
+                        inputMode="numeric"
+                        label={t('Coin earned for each conversion')}
+                        onChange={(event) => rest.onChange(formatToDecimal(event.target.value))}
+                        error={errors.coin?.message !== undefined}
+                        helperText={errors.coin?.message} />
+                )}
+                    name="coin"
+                    control={control}
+                />
+                <p>This will force user to watch ad after every n point to coin conversion made</p>
                 <Controller render={({ field: { ref, ...rest } }) => (
                     <TextField {...rest}
                         inputMode="numeric"
