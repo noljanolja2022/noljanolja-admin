@@ -5,6 +5,7 @@ import CheckinConfigManager from '../ui/checkin/CheckinConfigManager';
 import CoinExchangeManager from '../ui/coin-exchange-manager/CoinExchangeManager';
 import ContentManagement from '../ui/content/ContentManagement';
 import DashBoard from '../ui/dashboard/DashBoard';
+import GiftCategoryManager from '../ui/gift-category/GiftCategoryManager';
 import GiftManager from '../ui/gift/GiftManager';
 import HomePage from '../ui/home/HomePage';
 import LoginPage from '../ui/login/LoginPage';
@@ -22,6 +23,7 @@ export const RoutePaths = {
     stickerManager: 'sticker-manager',
     userManager: 'user-manager',
     brandManager: 'brand-manager',
+    categoryManager: 'gift-category-manager',
     chatRewardConfig: 'chat-reward-config',
     giftManager: 'gift-manager',
     promoteVideoManager: 'video-promotion-manager',
@@ -48,6 +50,7 @@ export default function AppRoutes() {
                     <Route path={RoutePaths.chatRewardConfig} element={<ChatConfigManager />} />
                     <Route path={RoutePaths.giftManager} element={<GiftManager />} />
                     <Route path={RoutePaths.brandManager} element={<BrandManager />} />
+                    <Route path={RoutePaths.categoryManager} element={<GiftCategoryManager />} />
                     <Route path={RoutePaths.bannerManager} element={<BannerManager />} />
                     <Route path={RoutePaths.checkinManager} element={<CheckinConfigManager />} />
                     <Route path={RoutePaths.promoteVideoManager} element={<VideoPromotionManager />} />

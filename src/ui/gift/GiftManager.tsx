@@ -8,18 +8,21 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Gift } from "../../data/model/Gift";
 import useBrandManager from "../../hook/useBrandManager";
+import useGiftCategoryManager from '../../hook/useGiftCategory';
 import useGiftManager from "../../hook/useGiftManager";
 import giftService from '../../service/GiftService';
 import { useLoadingStore } from '../../store/LoadingStore';
 import { parseDate } from "../../util/DateUtil";
 import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
 import { GiftEditorDialog } from "./GiftEditorDialog";
+import GiftFilter from './GiftFilter';
 
 export default function GiftManager() {
     const { setLoading, setIdle } = useLoadingStore();
     const { t } = useTranslation();
-    const { data,  totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
+    const { data, totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
     const { fetchBrands } = useBrandManager();
+    const { fetch: fetchCategory } = useGiftCategoryManager();
     const [editing, setEditing] = useState<Nullable<Partial<Gift>>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -39,12 +42,14 @@ export default function GiftManager() {
 
 
     useEffect(() => {
-        fetchBrands()
+        fetchBrands();
+        fetchCategory()
     }, [])
 
 
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
+            <GiftFilter/>
             <Button >
                 <AddIcon />
                 {t('label_add')}

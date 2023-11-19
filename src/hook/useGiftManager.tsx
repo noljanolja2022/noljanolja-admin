@@ -7,9 +7,9 @@ export default function useGiftManager() {
     const { setLoading, setIdle, showSuccessNoti, showErrorNoti } = useLoadingStore();
     const { data, setData, totalPage, setTotalPage, currentPage, setCurrentPage } = useGiftStore();
 
-    const fetchGifts = (page?: number) => {
+    const fetchGifts = (query: string = '', page?: number) => {
         setLoading()
-        giftService.getGifts(page || currentPage).then(res => {
+        giftService.getGifts(query, page || currentPage).then(res => {
             if (res.isFailure()) {
                 return;
             }

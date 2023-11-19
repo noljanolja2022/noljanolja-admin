@@ -1,6 +1,7 @@
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import CategoryIcon from '@mui/icons-material/Category';
 import ChatIcon from '@mui/icons-material/Chat';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
@@ -15,7 +16,6 @@ import { NavLink } from "react-router-dom";
 import useWindowMQ from "../../hook/UseWindowWidth";
 import { RoutePaths } from "../../util/routes";
 import { Box, SidebarAccordion, SidebarAccordionSummary, SidebarBox, useTheme } from "../widget/mui";
-
 type DrawerItem = {
     text: string;
     icon?: any;
@@ -88,6 +88,7 @@ export default function SideBar(props: Props) {
         { path: RoutePaths.referralManager, text: t('label_referral'), icon: <CardMembershipIcon color="primary" /> },
         { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon color="primary" /> },
         { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon color="primary" /> },
+        { path: RoutePaths.categoryManager, text: t('label_category'), icon: <CategoryIcon color="primary" /> },
         { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
         { path: RoutePaths.checkinManager, text: t('label_checkin_setting'), icon: <ChecklistIcon color="primary"/>},
         { path: RoutePaths.promoteVideoManager, text: t('label_video_promotion'), icon: <CameraIndoorIcon color="primary"/>},

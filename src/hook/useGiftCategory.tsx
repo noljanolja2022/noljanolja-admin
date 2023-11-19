@@ -1,19 +1,19 @@
 import { getTotalPages } from "../data/model/Result";
 import giftService from "../service/GiftService";
 import { useLoadingStore } from "../store/LoadingStore";
-import { useBrandStore } from "../store/brandStore";
+import { useGiftCategoryStore } from "../store/categoryStore";
 
-export default function useBrandManager() {
+export default function useGiftCategoryManager() {
     const { setLoading, setIdle } = useLoadingStore();
-    const { brands, setBrands, currentPage, totalPage, setCurrentPage,setTotalPage } = useBrandStore();
+    const { categories, setCategories, currentPage, totalPage, setCurrentPage,setTotalPage } = useGiftCategoryStore();
 
-    const fetchBrands = (query: string = '') => {
+    const fetch = (query: string = '') => {
         setLoading()
-        giftService.fetchBrands(query, currentPage).then(res => {
+        giftService.fetchCategories(query, currentPage).then(res => {
             if (res.isFailure()) {
                 return;
             }
-            setBrands(res.data || [])
+            setCategories(res.data || [])
             if (res.pagination) {
                 setTotalPage(getTotalPages(res.pagination!))
             }
@@ -23,6 +23,6 @@ export default function useBrandManager() {
     }
 
     return {
-        fetchBrands, brands, currentPage, totalPage, setCurrentPage,
+         fetch, categories, currentPage, totalPage, setCurrentPage,
     }
 }

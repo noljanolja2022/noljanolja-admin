@@ -85,7 +85,9 @@ export default function UserManager() {
                                         alt={item.avatar || `avatar-${item.id}`}
                                         className='auto-scale-thumbnail'
                                         style={{
-                                            borderRadius: 4
+                                            borderRadius: 4,
+                                            maxWidth: 100,
+                                            maxHeight: 100
                                         }} />
                                 </TableCell>
                                 <TableCell >{item.name}</TableCell>

@@ -1,4 +1,4 @@
-import { Gift, GiftBrand } from "../data/model/Gift";
+import { Gift, GiftBrand, GiftCategory } from "../data/model/Gift";
 import { Result } from "../data/model/Result";
 import { parseDateToIso } from "../util/DateUtil";
 import api from './ApiClient';
@@ -6,11 +6,13 @@ import parseResponse from "./ResponseParse";
 
 class GiftService {
     async getGifts(
+        query: string = '',
         page: number = 1,
         pageSize: number = 5
     ): Promise<Result<Array<Gift>>> {
         return parseResponse(await api.get('v1/gifts', {
             params: {
+                query,
                 page,
                 pageSize
             }
@@ -50,25 +52,16 @@ class GiftService {
         }))
     }
 
-    async updateGift(id: number,
-        image: Nullable<File>,
-        name?: string,
-        description?: string,
-        startTime?: Date,
-        endTime?: Date,
-        price?: number,
+    async updateGift(
+        id: string,
+        price: number,
+        isActive: boolean,
+        categoryId?: number
     ) {
         return parseResponse(await api.patch(`v1/gifts/${id}`, {
-            image: image,
-            name: name,
-            startTime: startTime && parseDateToIso(startTime),
-            endTime: endTime && parseDateToIso(endTime),
-            description,
+            isActive,
+            categoryId,
             price
-        }, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            }
         }))
     }
 
@@ -85,6 +78,21 @@ class GiftService {
                 pageSize
             }
         }))
+    }
+
+
+    async fetchCategories(query: string = '', page: number = 1, pageSize: number = 10): Promise<Result<Array<GiftCategory>>> {
+        return parseResponse(await api.get('v1/gifts/categories', {
+            params: {
+                query,
+                page,
+                pageSize
+            }
+        }))
+    }
+
+    async updateCategory(payload: Partial<GiftCategory>): Promise<Result<GiftCategory>> {
+        return parseResponse(await api.put(`v1/gifts/categories`, payload))
     }
 
     async createBrand(image: File, name: string) {

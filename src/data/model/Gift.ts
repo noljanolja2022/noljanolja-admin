@@ -6,13 +6,24 @@ export interface Gift {
     image: string;
     endTime: Date;
     brand: GiftBrand;
+    category: Nullable<GiftCategory>;
     price: number;
     retailPrice: number;
     isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface GiftBrand {
     id: string,
     name: string,
     image: string
+}
+
+export interface GiftCategory {
+    id: number;
+    name: string;
+    image: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
