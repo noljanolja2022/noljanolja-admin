@@ -70,7 +70,7 @@ class GiftService {
     }
 
 
-    async fetchBrands(query: string = '', page: number = 1, pageSize: number = 10): Promise<Result<Array<GiftBrand>>> {
+    async fetchBrands(query: string = '', page: number = 1, pageSize: number = 5): Promise<Result<Array<GiftBrand>>> {
         return parseResponse(await api.get('v1/gifts/brands', {
             params: {
                 query,

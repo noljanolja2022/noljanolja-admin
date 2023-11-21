@@ -1,4 +1,3 @@
-import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,7 +22,7 @@ export default function GiftManager() {
     const { data, totalPage, currentPage, setCurrentPage, fetchGifts, deleteGift } = useGiftManager();
     const { fetchBrands } = useBrandManager();
     const { fetch: fetchCategory } = useGiftCategoryManager();
-    const [editing, setEditing] = useState<Nullable<Partial<Gift>>>(null);
+    const [editing, setEditing] = useState<Nullable<Gift>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
@@ -31,7 +30,9 @@ export default function GiftManager() {
 
     const onImport = () => {
         setLoading();
-        giftService.importGifts().finally(() => {
+        giftService.importGifts().then(res => {
+            fetchGifts()
+        }).finally(() => {
             setIdle()
         })
     }
@@ -49,10 +50,9 @@ export default function GiftManager() {
 
     return <Stack spacing={1} p={2}>
         <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <GiftFilter/>
-            <Button >
-                <AddIcon />
-                {t('label_add')}
+            <GiftFilter />
+            <Button onClick={onImport}>
+                Sync data with GiftBiz
             </Button>
         </Box>
         <Table sx={{ minWidth: 650, }}>
