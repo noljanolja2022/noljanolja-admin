@@ -1,6 +1,6 @@
 {
   "name": "noljanolja-admin",
-  "version": "0.1.49",
+  "version": "0.1.50",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -25,6 +25,9 @@
     "react-i18next": "^13.0.1",
     "react-router-dom": "^6.10.0",
     "react-use": "^17.4.0",
+    "rsocket-composite-metadata": "1.0.0-alpha.3",
+    "rsocket-core": "1.0.0-alpha.3",
+    "rsocket-websocket-client": "1.0.0-alpha.3",
     "typescript": "^5.0.4",
     "yup": "^1.2.0",
     "zustand": "^4.4.1"

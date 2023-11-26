@@ -3085,6 +3085,9 @@ __metadata:
     react-i18next: "npm:^13.0.1"
     react-router-dom: "npm:^6.10.0"
     react-use: "npm:^17.4.0"
+    rsocket-composite-metadata: "npm:1.0.0-alpha.3"
+    rsocket-core: "npm:1.0.0-alpha.3"
+    rsocket-websocket-client: "npm:1.0.0-alpha.3"
     typescript: "npm:^5.0.4"
     vite: "npm:^4.2.2"
     vite-tsconfig-paths: "npm:^4.2.0"
@@ -3494,6 +3497,38 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: efb166531cd12a830a538d4c40b723d04e139905008a205ed0aba176cd3337e3d33077c668ba383a2cca66a27197c4272845fe7a7d4c3fbab0c01d7bc34d194b
+  languageName: node
+  linkType: hard
+
+"rsocket-composite-metadata@npm:1.0.0-alpha.3":
+  version: 1.0.0-alpha.3
+  resolution: "rsocket-composite-metadata@npm:1.0.0-alpha.3"
+  dependencies:
+    rsocket-core: "npm:^1.0.0-alpha.3"
+  checksum: 062de59775f3e2d86bf045eab7687c7f084db0719f8848dfcc831662e52640f31edde92743c21591cc5c075fcb7b4d50011a3a0aa61cf96fec4a64563f95d713
+  languageName: node
+  linkType: hard
+
+"rsocket-core@npm:1.0.0-alpha.3":
+  version: 1.0.0-alpha.3
+  resolution: "rsocket-core@npm:1.0.0-alpha.3"
+  checksum: c1fda4a34ed645c354d8ee67d6ab1721ed1a3761e05d02b805f09b51fb78dfe9e101018fac69beed6e0c81153a494e7714c22028b6f4b2e4bb3e675db28a51de
+  languageName: node
+  linkType: hard
+
+"rsocket-core@npm:^1.0.0-alpha.3":
+  version: 1.0.0-alpha-rxjs-adapter-optional-metadata.0
+  resolution: "rsocket-core@npm:1.0.0-alpha-rxjs-adapter-optional-metadata.0"
+  checksum: 956d88b0daf967f441bac9b652a4c369b318c67e3cd8960ba7f814bcb2aa51d9581d6f883e9ea6090f5e5e4d9b693be3856af722efcebd794f5964c8254622e5
+  languageName: node
+  linkType: hard
+
+"rsocket-websocket-client@npm:1.0.0-alpha.3":
+  version: 1.0.0-alpha.3
+  resolution: "rsocket-websocket-client@npm:1.0.0-alpha.3"
+  dependencies:
+    rsocket-core: "npm:^1.0.0-alpha.3"
+  checksum: 6de01c55fb01b9cdbc76764591aa6273b354e3239b0ad1d39418f3c2e54fc937e7be0c4511ef2f7fbcd8ff437e5b37d60abd74f549a0e397b06a0090cde8505d
   languageName: node
   linkType: hard
 

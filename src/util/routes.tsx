@@ -3,8 +3,8 @@ import BannerManager from '../ui/banner/BannerManager';
 import BrandManager from '../ui/brand/BrandManager';
 import CheckinConfigManager from '../ui/checkin/CheckinConfigManager';
 import CoinExchangeManager from '../ui/coin-exchange-manager/CoinExchangeManager';
-import ContentManagement from '../ui/content/ContentManagement';
 import DashBoard from '../ui/dashboard/DashBoard';
+import DebugPage from '../ui/debug-page';
 import GiftCategoryManager from '../ui/gift-category/GiftCategoryManager';
 import GiftManager from '../ui/gift/GiftManager';
 import HomePage from '../ui/home/HomePage';
@@ -45,7 +45,7 @@ export default function AppRoutes() {
                     <Route path={RoutePaths.videoManager} element={<VideoManager />} />
                     {/* <Route path={RoutePaths.videoImport} element={<VideoImport />} /> */}
                     <Route path={RoutePaths.stickerManager} element={<StickerManager />} />
-                    <Route path='content-management' element={<ContentManagement />} />
+                    <Route path='debug-page' element={<DebugPage />} />
                     <Route path={RoutePaths.userManager} element={<UserManager />} />
                     <Route path={RoutePaths.chatRewardConfig} element={<ChatConfigManager />} />
                     <Route path={RoutePaths.giftManager} element={<GiftManager />} />
