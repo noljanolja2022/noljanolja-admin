@@ -40,19 +40,13 @@ export default function DebugPage() {
             console.log(err)
         })
     }
-
     const onFireAndForget = () => {
         if (!socketData && !socketRoute) {
             alert('Fill both route and data first')
             return;
         }
-        // const route = "v1/videos"
         socket?.fireAndForget({
-            data: Buffer.from(JSON.stringify(socketData)),
-            // metadata: Buffer.concat([
-            //     Buffer.from(String.fromCharCode(socketRoute.length)),
-            //     Buffer.from(socketRoute),
-            // ]),
+            data: Buffer.from(socketData),
             metadata: constructMetadata(socketRoute)
         }, {
             onComplete() {
