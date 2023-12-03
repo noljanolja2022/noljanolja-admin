@@ -15,9 +15,9 @@ export default function useVideoManager() {
     const { videos, setVideos, currentPage, setCurrentPage, setTotalPage, totalPage } = useVideoStore();
     const { setLoading, setIdle } = useLoadingStore();
 
-    const fetch = (query: string = '') => {
+    const fetch = (query: string = '', isActive : boolean = false) => {
         setLoading()
-        mediaService.getVideoList(query, currentPage).then(res => {
+        mediaService.getVideoList(query,isActive, currentPage).then(res => {
             setVideos(res.data || [])
             if (res.pagination) {
                 setTotalPage(Math.ceil(res.pagination?.total / res.pagination?.pageSize))

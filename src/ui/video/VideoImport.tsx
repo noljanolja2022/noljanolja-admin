@@ -1,10 +1,9 @@
-import { useState, FormEvent } from "react";
-import mediaService from "../../service/MediaService";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Paper, Switch, TextField, Typography } from "../widget/mui";
 import { t } from "i18next";
-import { useLoadingStore } from "../../store/LoadingStore";
 import { Controller, useForm } from "react-hook-form";
 import useVideoManager from "../../hook/useVideoManager";
+import mediaService from "../../service/MediaService";
+import { useLoadingStore } from "../../store/LoadingStore";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Switch, TextField, Typography } from "../widget/mui";
 
 interface ImportFormProps {
     url: string;
@@ -17,6 +16,7 @@ type Props = {
 
 export function VideoImport(props: Props) {
     const { setLoading, setIdle } = useLoadingStore();
+    const {fetch} = useVideoManager();
     const {
         control,
         handleSubmit,
@@ -37,6 +37,7 @@ export function VideoImport(props: Props) {
             setValue("url", '');
         }).finally(() => {
             setIdle()
+            fetch()
         })
     }
 

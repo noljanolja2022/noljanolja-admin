@@ -2,7 +2,9 @@
 
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import IconButton from '@mui/material/IconButton';
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useVideoManager from '../../hook/useVideoManager';
@@ -10,6 +12,7 @@ import { Button, TextField } from "../widget/mui";
 
 interface SearchProps {
     query: string
+    isActive: boolean
 }
 
 
@@ -28,7 +31,7 @@ export default function VideoFilter() {
         }
     });
     const onSearch = (input: SearchProps) => {
-        fetch(input.query)
+        fetch(input.query, input.isActive)
     }
 
     return (
@@ -46,6 +49,12 @@ export default function VideoFilter() {
                 control={control}
                 name="query"
             />
+            <Controller
+                render={({ field: { onChange, value, } }) =>
+                    <FormControlLabel control={<Checkbox value={value} onChange={onChange} />} label="Active" />
+                }
+                control={control}
+                name="isActive" />
             <Button type="submit" startIcon={<SearchIcon />}>{t('label_search')}</Button>
         </form>
     )
