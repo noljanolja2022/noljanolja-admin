@@ -40,12 +40,11 @@ function SideBarItem(props: SidebarItemProps) {
             style={{ textDecoration: 'none' }} >
             {({ isActive }) =>
                 <SidebarBox sx={{
-                    ...(isActive && { backgroundColor: palette.common.gray[500] })
+                    ...(isActive && { backgroundColor: '#5A68FF' })
                 }}>
                     <Box sx={{
                         height: '100%',
                         width: spacing(0.5),
-                        ...(isActive && { backgroundColor: palette.common.yellow[500] })
                     }} />
                     {props.item.icon}
                     {(isSm || isLg) && props.item.text}
@@ -59,42 +58,42 @@ export default function SideBar(props: Props) {
     const { t } = useTranslation();
 
     const drawerItems: DrawerItem[] = [
-        { path: RoutePaths.dashboard, text: t('label_dashboard'), icon: <HomeIcon color="primary" /> },
-        { path: RoutePaths.videoManager, text: t('label_video'), icon: <OndemandVideoIcon color="primary" /> },
+        { path: RoutePaths.dashboard, text: t('label_dashboard'), icon: <HomeIcon /> },
+        { path: RoutePaths.videoManager, text: t('label_video'), icon: <OndemandVideoIcon /> },
         // {
-        //     path: "", text: t('label_video'), icon: <OndemandVideoIcon color="primary" />,
+        //     path: "", text: t('label_video'), icon: <OndemandVideoIcon />,
         //     subMenu: [
-        //         { path: RoutePaths.videoManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
-        //         { path: RoutePaths.videoImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
+        //         { path: RoutePaths.videoManager, text: 'List', icon: <FormatListBulletedIcon /> },
+        //         { path: RoutePaths.videoImport, text: 'Import', icon: <ImportExportIcon /> }
         //     ]
         // },
         // {
-        //     path: "", text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" />,
+        //     path: "", text: t('label_sticker'), icon: <EmojiEmotionsIcon />,
         //     subMenu: [
-        //         { path: RoutePaths.stickerManager, text: 'List', icon: <FormatListBulletedIcon color="primary" /> },
-        //         { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon color="primary" /> }
+        //         { path: RoutePaths.stickerManager, text: 'List', icon: <FormatListBulletedIcon /> },
+        //         { path: RoutePaths.stickerImport, text: 'Import', icon: <ImportExportIcon /> }
         //     ]
         // },
-        { path: RoutePaths.stickerManager, text: t('label_sticker'), icon: <EmojiEmotionsIcon color="primary" /> },
-        { path: RoutePaths.bannerManager, text: t('label_banner'), icon: <ViewCarouselIcon color="primary" /> },
+        { path: RoutePaths.stickerManager, text: t('label_sticker'), icon: <EmojiEmotionsIcon /> },
+        { path: RoutePaths.bannerManager, text: t('label_banner'), icon: <ViewCarouselIcon /> },
         // {
-        //     path: "", text: t('label_setting'), icon: <SettingsIcon color="primary" />,
+        //     path: "", text: t('label_setting'), icon: <SettingsIcon />,
         //     subMenu: [
-        //         { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> }
+        //         { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon /> }
         //     ]
         // },
-        { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon color="primary" /> },
-        // { path: "content-management", text: t('label_content'), icon: <DatasetIcon color="primary" /> },
-        { path: RoutePaths.referralManager, text: t('label_referral'), icon: <CardMembershipIcon color="primary" /> },
-        { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon color="primary" /> },
-        { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon color="primary" /> },
-        { path: RoutePaths.categoryManager, text: t('label_category'), icon: <CategoryIcon color="primary" /> },
-        { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon color="primary" /> },
-        { path: RoutePaths.checkinManager, text: t('label_checkin_setting'), icon: <ChecklistIcon color="primary"/>},
-        { path: RoutePaths.promoteVideoManager, text: t('label_video_promotion'), icon: <CameraIndoorIcon color="primary"/>},
-        { path: RoutePaths.coinExchangeManager, text: t('label_coin_exchange'), icon: <MonetizationOnIcon color="primary"/>},
+        { path: RoutePaths.chatRewardConfig, text: t('label_chat_setting'), icon: <ChatIcon /> },
+        // { path: "content-management", text: t('label_content'), icon: <DatasetIcon /> },
+        { path: RoutePaths.referralManager, text: t('label_referral'), icon: <CardMembershipIcon /> },
+        { path: RoutePaths.giftManager, text: t('label_gift'), icon: <RedeemIcon /> },
+        { path: RoutePaths.brandManager, text: t('label_brand'), icon: <BrandingWatermarkIcon /> },
+        { path: RoutePaths.categoryManager, text: t('label_category'), icon: <CategoryIcon /> },
+        { path: RoutePaths.userManager, text: t('label_users'), icon: <PeopleAltIcon /> },
+        { path: RoutePaths.checkinManager, text: t('label_checkin_setting'), icon: <ChecklistIcon/>},
+        { path: RoutePaths.promoteVideoManager, text: t('label_video_promotion'), icon: <CameraIndoorIcon/>},
+        { path: RoutePaths.coinExchangeManager, text: t('label_coin_exchange'), icon: <MonetizationOnIcon/>},
         //uncomment for debug youtubeapi
-        // { path: 'content-management', text: 'test', icon: <CameraIndoorIcon color="primary"/>},
+        // { path: 'content-management', text: 'test', icon: <CameraIndoorIcon/>},
     ]
 
     return (

@@ -49,13 +49,13 @@ export default function VideoFilter() {
                 control={control}
                 name="query"
             />
+            <Button type="submit" startIcon={<SearchIcon />}>{t('label_search')}</Button>
             <Controller
                 render={({ field: { onChange, value, } }) =>
                     <FormControlLabel control={<Checkbox value={value} onChange={onChange} />} label="Active" />
                 }
                 control={control}
                 name="isActive" />
-            <Button type="submit" startIcon={<SearchIcon />}>{t('label_search')}</Button>
         </form>
     )
 }

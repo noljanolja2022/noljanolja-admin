@@ -16,6 +16,7 @@ export const SidebarBox = styled((props: MuiBoxProps) => (
         gap: '0.5rem',
         color: 'white',
         paddingRight: 2,
+        backgroundColor: '#2D363D',
     }} />
 ))(({ theme }) => ({
     '&:hover': {

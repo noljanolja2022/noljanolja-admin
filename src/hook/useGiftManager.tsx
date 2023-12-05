@@ -7,9 +7,11 @@ export default function useGiftManager() {
     const { setLoading, setIdle, showSuccessNoti, showErrorNoti } = useLoadingStore();
     const { data, setData, totalPage, setTotalPage, currentPage, setCurrentPage } = useGiftStore();
 
-    const fetchGifts = (query: string = '', page?: number) => {
+    const fetchGifts = (query: string = '', isFeatured: boolean = false, isTodayOffer: boolean = false, isRecommended: boolean = false, page?: number) => {
         setLoading()
-        giftService.getGifts(query, page || currentPage).then(res => {
+        console.log(query)
+        console.log(isFeatured)
+        giftService.getGifts(query, isFeatured, isTodayOffer, isRecommended, page || currentPage).then(res => {
             if (res.isFailure()) {
                 return;
             }
@@ -31,7 +33,7 @@ export default function useGiftManager() {
             if (res.isFailure()) {
                 showErrorNoti('Gift deleted failed');
                 return;
-            } 
+            }
             showSuccessNoti('Gift deleted successfully');
             fetchGifts()
         }).finally(() => {

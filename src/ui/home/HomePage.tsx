@@ -35,7 +35,7 @@ function HomePage() {
                 alignItems="center"
                 paddingX={2}
                 color={'white'}
-                bgcolor={'black'}>
+                bgcolor={'#2D363D'}>
                 <Box
                     display="flex"
                     flexDirection="row"
@@ -44,7 +44,7 @@ function HomePage() {
                     {isSm && (
                         <MenuIcon onClick={handleDrawerOpen} />
                     )}
-                    {!isSm && <img src='pp-yy-white.png' alt='App logo White' height={50} width={126} />}
+                    {!isSm && <img src='pp-yy-white.png' alt='App logo White' height={50} width={126}/>}
                 </Box>
                 <Box gap={2}
                     display="flex"
@@ -82,7 +82,7 @@ function HomePage() {
                 {isMd && (
                     <Box id='side-bar' sx={{
                         ...(isLg && { minWidth: drawerWidth })
-                    }} position="sticky" bgcolor={"black"}>
+                    }} position="sticky" bgcolor={"#2D363D"}>
                         <SideBar onDrawerClose={handleDrawerClose} />
                     </Box>
                 )}
