@@ -7,11 +7,9 @@ export default function useGiftManager() {
     const { setLoading, setIdle, showSuccessNoti, showErrorNoti } = useLoadingStore();
     const { data, setData, totalPage, setTotalPage, currentPage, setCurrentPage } = useGiftStore();
 
-    const fetchGifts = (query: string = '', isFeatured: boolean = false, isTodayOffer: boolean = false, isRecommended: boolean = false, page?: number) => {
+    const fetchGifts = (query: string = '', isFeatured: boolean = false, isTodayOffer: boolean = false, isRecommended: boolean = false, locale: string = 'KR', page?: number) => {
         setLoading()
-        console.log(query)
-        console.log(isFeatured)
-        giftService.getGifts(query, isFeatured, isTodayOffer, isRecommended, page || currentPage).then(res => {
+        giftService.getGifts(query, isFeatured, isTodayOffer, isRecommended, locale , page || currentPage).then(res => {
             if (res.isFailure()) {
                 return;
             }

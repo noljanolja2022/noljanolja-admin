@@ -17,6 +17,7 @@ interface SearchProps {
     isFeatured: boolean
     isTodayOffer: boolean
     isRecommended: boolean
+    locale: string
 }
 
 
@@ -32,11 +33,12 @@ export default function GiftFilter() {
         // resolver: yupResolver(LoginSchemaValidator),
         defaultValues: {
             query: '',
+            locale: 'KR'
         }
     });
     const onSearch = (input: SearchProps) => {
 
-        fetchGifts(input.query, input.isFeatured, input.isTodayOffer, input.isRecommended)
+        fetchGifts(input.query, input.isFeatured, input.isTodayOffer, input.isRecommended, input.locale)
     }
 
     return (

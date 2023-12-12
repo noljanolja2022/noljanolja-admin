@@ -12,6 +12,8 @@ export interface Gift {
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
+    isFeatured: boolean;
+    isTodayOffer: boolean;
 }
 
 export interface GiftBrand {
