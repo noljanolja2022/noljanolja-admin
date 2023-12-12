@@ -10,6 +10,7 @@ class GiftService {
         isFeatured : boolean = false,
         isTodayOffer : boolean = false,
         isRecommended : boolean = false,
+        locale: string = 'KR',
         page: number = 1,
         pageSize: number = 5
     ): Promise<Result<Array<Gift>>> {
@@ -19,6 +20,7 @@ class GiftService {
                 isFeatured,
                 isTodayOffer,
                 isRecommended,
+                locale,
                 page,
                 pageSize
             }
@@ -62,12 +64,16 @@ class GiftService {
         id: string,
         price: number,
         isActive: boolean,
+        isFeatured : boolean,
+        isTodayOffer : boolean,
         categoryId?: number
     ) {
         return parseResponse(await api.patch(`v1/gifts/${id}`, {
             isActive,
             categoryId,
-            price
+            price,
+            isFeatured,
+            isTodayOffer
         }))
     }
 

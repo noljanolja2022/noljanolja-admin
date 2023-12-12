@@ -19,6 +19,8 @@ interface FormProps {
     category: Nullable<GiftCategory>;
     price: number;
     isActive: boolean;
+    isFeatured: boolean;
+    isTodayOffer: boolean;
 }
 
 
@@ -37,13 +39,15 @@ export function GiftEditorDialog({ data, onClose }: Props) {
         defaultValues: {
             isActive: data?.isActive ?? false,
             price: data?.price ?? 0,
-            category: data?.category
+            category: data?.category,
+            isFeatured: data?.isFeatured ?? false,
+            isTodayOffer: data?.isTodayOffer ?? false,
         }
     });
 
     const onUpdate = (formInput: FormProps) => {
         setLoading()
-        giftService.updateGift(data.id, formInput.price, formInput.isActive, formInput.category?.id).then(res => {
+        giftService.updateGift(data.id, formInput.price, formInput.isActive, formInput.isFeatured, formInput.isTodayOffer, formInput.category?.id).then(res => {
             if (res.isFailure()) {
                 control.setError("root", { message: res.getErrorMsg() })
                 return;
@@ -76,15 +80,37 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                                         className='auto-scale-thumbnail' />
                                 </Box>
                             </Box>
-                            <Box display={'flex'} alignItems={'center'}>
-                                <Typography>{t('label_status')}</Typography>
-                                <Controller
-                                    render={({ field: { ref, ...rest } }) =>
-                                        <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />}
-                                    control={control}
-                                    name="isActive"
-                                />
+                            <Box display={'flex'} flexDirection={'column'} gap={1}>
+                                <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={1}>
+                                    <Typography>{t('label_status')}</Typography>
+                                    <Controller
+                                        render={({ field: { ref, ...rest } }) => (
+                                            <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />
+                                        )}
+                                        control={control}
+                                        name="isActive"
+                                    />
+                                    <Typography>{t('label_featured')}</Typography>
+                                    <Controller
+                                        render={({ field: { ref, ...rest } }) => (
+                                            <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />
+                                        )}
+                                        control={control}
+                                        name="isFeatured"
+                                    />
+                                </Box>
+                                <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={1}>
+                                    <Typography>{t('label_today_offer')}</Typography>
+                                    <Controller
+                                        render={({ field: { ref, ...rest } }) => (
+                                            <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />
+                                        )}
+                                        control={control}
+                                        name="isTodayOffer"
+                                    />
+                                </Box>
                             </Box>
+
 
 
                             <TextField value={parseDate(new Date(data.endTime))}

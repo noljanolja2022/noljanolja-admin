@@ -71,7 +71,8 @@
     "label_auto_play":"Auto Play",
     "label_auto_comment":"Auto Comment",
     "label_auto_subscribe":"Auto Subscribe",
-    "label_auto_like":"Auto Like",
+    "label_featured":"Featured",
+    "label_today_offer":"Today Offer",
 
     "hint_enter_referee_points": "Enter referee points",
     "hint_enter_referer_points": "Enter referrer points",
