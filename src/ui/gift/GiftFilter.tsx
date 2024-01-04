@@ -96,14 +96,14 @@ export default function GiftFilter() {
                         onChange={(e) => onChange(e.target.value)}
                     >
                         <FormControlLabel
-                        control={<Radio color="info" />}
-                        label="KR"
-                        value="KR"
+                            control={<Radio color="info" />}
+                            label="KR"
+                            value="KR"
                         />
                         <FormControlLabel
-                        control={<Radio color="info" />}
-                        label="IN"
-                        value="IN"
+                            control={<Radio color="info" />}
+                            label="IN"
+                            value="IN"
                         />
                     </RadioGroup>
                 )}
