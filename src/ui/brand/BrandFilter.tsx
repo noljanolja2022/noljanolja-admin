@@ -26,6 +26,7 @@ export default function BrandFilter() {
         // resolver: yupResolver(LoginSchemaValidator),
         defaultValues: {
             query: '',
+            locale: 'KR'
         }
     });
     const onSearch = (input: SearchProps) => {
@@ -56,14 +57,14 @@ export default function BrandFilter() {
                         onChange={(e) => onChange(e.target.value)}
                     >
                         <FormControlLabel
-                        control={<Radio color="info" />}
-                        label="KR"
-                        value="KR"
+                            control={<Radio color="info" />}
+                            label="KR"
+                            value="KR"
                         />
                         <FormControlLabel
-                        control={<Radio color="info" />}
-                        label="IN"
-                        value="IN"
+                            control={<Radio color="info" />}
+                            label="IN"
+                            value="IN"
                         />
                     </RadioGroup>
                 )}
