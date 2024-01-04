@@ -1,6 +1,9 @@
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useBrandManager from "../../hook/useBrandManager";
@@ -8,6 +11,7 @@ import { Button, TextField } from "../widget/mui";
 
 interface SearchProps {
     query: string
+    locale: string
 }
 
 export default function BrandFilter() {
@@ -25,7 +29,7 @@ export default function BrandFilter() {
         }
     });
     const onSearch = (input: SearchProps) => {
-        fetchBrands(input.query)
+        fetchBrands(input.query, input.locale)
     }
 
     return (
@@ -44,6 +48,28 @@ export default function BrandFilter() {
                 name="query"
             />
             <Button type="submit" startIcon={<SearchIcon />}>{t('label_search')}</Button>
+            <Controller
+                render={({ field: { onChange, value } }) => (
+                    <RadioGroup
+                        row
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                    >
+                        <FormControlLabel
+                        control={<Radio color="info" />}
+                        label="KR"
+                        value="KR"
+                        />
+                        <FormControlLabel
+                        control={<Radio color="info" />}
+                        label="IN"
+                        value="IN"
+                        />
+                    </RadioGroup>
+                )}
+                control={control}
+                name="locale"
+            />
         </form>
     )
 }

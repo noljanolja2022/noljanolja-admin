@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import useGiftManager from '../../hook/useGiftManager';
 import { Button, TextField } from "../widget/mui";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import Switch from '@mui/material/Switch';
 
 
@@ -37,7 +39,6 @@ export default function GiftFilter() {
         }
     });
     const onSearch = (input: SearchProps) => {
-
         fetchGifts(input.query, input.isFeatured, input.isTodayOffer, input.isRecommended, input.locale)
     }
 
@@ -81,11 +82,33 @@ export default function GiftFilter() {
                 render={({ field: { onChange, value } }) => (
                     <FormControlLabel
                         control={<Switch color="info" checked={value} onChange={(e) => onChange(e.target.checked)} />}
-                        label="Recommended"
+                        label="isRecommended"
                     />
                 )}
                 control={control}
                 name="isRecommended"
+            />
+            <Controller
+                render={({ field: { onChange, value } }) => (
+                    <RadioGroup
+                        row
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                    >
+                        <FormControlLabel
+                        control={<Radio color="info" />}
+                        label="KR"
+                        value="KR"
+                        />
+                        <FormControlLabel
+                        control={<Radio color="info" />}
+                        label="IN"
+                        value="IN"
+                        />
+                    </RadioGroup>
+                )}
+                control={control}
+                name="locale"
             />
         </form>
     )
