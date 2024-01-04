@@ -7,9 +7,9 @@ export default function useBrandManager() {
     const { setLoading, setIdle } = useLoadingStore();
     const { brands, setBrands, currentPage, totalPage, setCurrentPage,setTotalPage } = useBrandStore();
 
-    const fetchBrands = (query: string = '') => {
+    const fetchBrands = (query: string = '', locale: string = 'KR') => {
         setLoading()
-        giftService.fetchBrands(query, currentPage).then(res => {
+        giftService.fetchBrands(query, locale, currentPage).then(res => {
             if (res.isFailure()) {
                 return;
             }
