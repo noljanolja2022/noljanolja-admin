@@ -31,7 +31,7 @@ gcloud config set project $PROJECT_NAME
 gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION
 
 # Build docker image
-docker build --no-cache . -t $IMAGE_NAME
+docker build --platform linux/amd64 --no-cache . -t $IMAGE_NAME
 
 # Push image to artifact registry
 docker push $IMAGE_NAME

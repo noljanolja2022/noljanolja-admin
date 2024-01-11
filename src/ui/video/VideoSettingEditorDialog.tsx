@@ -125,7 +125,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
             <form onSubmit={handleSubmit(onSaveConfig)}>
                 <DialogContent>
                     <Grid container justifyContent={'space-between'} rowSpacing={1} columnSpacing={{ md: 2 }}>
-                        <Grid item md={5} display={'flex'} flexDirection={'column'} gap={2}>
+                        <Grid item md={6} display={'flex'} flexDirection={'column'} gap={2}>
                             <Box display={'flex'} alignItems={'center'}>
                                 <Typography>Status</Typography>
                                 <Controller
@@ -155,7 +155,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
                             <Controller
                                 render={({ field: { ref, ...rest } }) =>
                                     <TextField
-                                        label="Total points gained by watching this video"
+                                        label="Total points gained for watching"
                                         size="small"
                                         fullWidth={false}
                                         required
@@ -171,7 +171,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
 
                         </Grid>
 
-                        <Grid item md={5} display={'flex'} flexDirection={'column'} gap={2}>
+                        <Grid item md={6} display={'flex'} flexDirection={'column'} gap={2}>
                             <Controller
                                 render={({ field: { ref, ...rest } }) =>
                                     <TextField
