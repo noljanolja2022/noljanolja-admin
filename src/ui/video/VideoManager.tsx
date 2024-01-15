@@ -1,3 +1,6 @@
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -15,6 +18,7 @@ import { Pagination } from "../widget/mui/Pagination";
 import VideoFilter from './VideoFilter';
 import { VideoImport } from "./VideoImport";
 import VideoSettingEditorDialog from "./VideoSettingEditorDialog";
+import mediaService from '../../service/MediaService';
 
 function VideoManager() {
     const theme = useTheme();
@@ -47,6 +51,19 @@ function VideoManager() {
         })
     }
 
+    const onSoftDeleteVideo = (item: Video) => {
+        setLoading();
+        mediaService.softDeleteVideo(item.id).then(res => {
+            if (res.isFailure()) {
+                console.log(res.error?.message)
+                return;
+            }
+            fetch();
+        }).finally(() => {
+            setIdle();
+        })
+    }
+
     useEffect(() => {
         fetch()
     }, [currentPage])
@@ -71,6 +88,7 @@ function VideoManager() {
                         <TableCell>{t('label_duration')}</TableCell>
                         <TableCell>{t('label_channel')}</TableCell>
                         <TableCell>{t('label_published_date')}</TableCell>
+                        <TableCell>{t('label_status')}</TableCell>
                         <TableCell>{t('label_actions')}</TableCell>
                     </TableRow>
                 </TableHead>
@@ -91,12 +109,16 @@ function VideoManager() {
                             <TableCell >{convertMsToTime(video.durationMs)}</TableCell>
                             <TableCell >{video.channel.title}</TableCell>
                             <TableCell >{parseDate(new Date(video.publishedAt))}</TableCell>
+                            <TableCell >{video.deletedAt == null ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                             <TableCell >
                                 <IconButton onClick={() => window.open(video.url, '_blank')}>
                                     <OpenInNewIcon />
                                 </IconButton>
                                 <Tooltip title={t('label_setting')}>
                                     <IconButton onClick={() => onOpenVideoSetting(video)}><SettingsIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title={t('label_delete')}>
+                                    <IconButton onClick={() => onSoftDeleteVideo(video)}><DeleteIcon /></IconButton>
                                 </Tooltip>
                             </TableCell>
                         </TableRow>
