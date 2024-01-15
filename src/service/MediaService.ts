@@ -43,7 +43,7 @@ class MediaService {
         }))
     }
 
-    async deleteVideo(videoId: string) {
+    async softDeleteVideo(videoId: string) {
         return parseResponse(await api.delete(`v1/media/videos/${videoId}`))
     }
 

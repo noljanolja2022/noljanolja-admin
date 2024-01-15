@@ -13,6 +13,9 @@ export interface Video {
     isHighlighted: boolean,
     channel: Channel,
     category: Category
+    createdAt: Date,
+    updatedAt: Date,
+    deletedAt: Date | null
 }
 
 export interface PromotedVideoConfig {
