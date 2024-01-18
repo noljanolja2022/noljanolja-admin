@@ -26,10 +26,11 @@ class MediaService {
         })
     }
 
-    async importVideo(youtubeUrl: string, isHighlighted: boolean): Promise<Result<Video>> {
+    async importVideo(youtubeUrl: string, isHighlighted: boolean, availableFrom: string = ''): Promise<Result<Video>> {
         return parseResponse(await api.post('v1/media/videos', {
             youtubeUrl,
-            isHighlighted
+            isHighlighted, 
+            availableFrom
         }))
     }
 

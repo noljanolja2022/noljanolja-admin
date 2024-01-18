@@ -6,6 +6,14 @@ export function parseDate(date?: Date) {
     return `${tmp.getDate()}/${tmp.getMonth()+1}/${tmp.getFullYear()}`
 }
 
+export function parseDateTime(date?: Date) {
+    if (!date) {
+        return "-"
+    }
+    const tmp = new Date(date)
+    return `${tmp.getDate()}/${tmp.getMonth()+1}/${tmp.getFullYear()} ${tmp.getHours()}:${tmp.getMinutes()}:${tmp.getSeconds()}`
+}
+
 export function parseDateToIso(date: Date) {
     return (new Date(date)).toISOString()
 }

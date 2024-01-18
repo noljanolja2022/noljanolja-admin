@@ -12,7 +12,7 @@ import { Video } from "../../data/model/VideoModels";
 import useVideoManager from "../../hook/useVideoManager";
 import rewardService from "../../service/RewardService";
 import { useLoadingStore } from "../../store/LoadingStore";
-import { convertMsToTime, parseDate } from "../../util/DateUtil";
+import { convertMsToTime, parseDate, parseDateTime } from "../../util/DateUtil";
 import { Box, Button, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from "../widget/mui";
 import { Pagination } from "../widget/mui/Pagination";
 import VideoFilter from './VideoFilter';
@@ -88,6 +88,7 @@ function VideoManager() {
                         <TableCell>{t('label_duration')}</TableCell>
                         <TableCell>{t('label_channel')}</TableCell>
                         <TableCell>{t('label_published_date')}</TableCell>
+                        <TableCell>{t('label_available_from')}</TableCell>
                         <TableCell>{t('label_status')}</TableCell>
                         <TableCell>{t('label_actions')}</TableCell>
                     </TableRow>
@@ -109,6 +110,7 @@ function VideoManager() {
                             <TableCell >{convertMsToTime(video.durationMs)}</TableCell>
                             <TableCell >{video.channel.title}</TableCell>
                             <TableCell >{parseDate(new Date(video.publishedAt))}</TableCell>
+                            <TableCell >{video.availableFrom == null ? '' : parseDateTime(video.availableFrom)}</TableCell>
                             <TableCell >{video.deletedAt == null ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                             <TableCell >
                                 <IconButton onClick={() => window.open(video.url, '_blank')}>
