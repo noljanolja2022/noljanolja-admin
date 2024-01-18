@@ -11,6 +11,7 @@ export interface Video {
     favoriteCount: number,
     commentCount: number,
     isHighlighted: boolean,
+    availableFrom: Date | null,
     channel: Channel,
     category: Category
     createdAt: Date,

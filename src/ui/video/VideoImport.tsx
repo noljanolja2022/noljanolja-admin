@@ -8,6 +8,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Switch,
 interface ImportFormProps {
     url: string;
     isHighlight: boolean;
+    availableFrom: string;
 }
 
 type Props = {
@@ -28,7 +29,7 @@ export function VideoImport(props: Props) {
 
     const onImportVideo = (data: ImportFormProps) => {
         setLoading()
-        mediaService.importVideo(data.url, data.isHighlight).then(res => {
+        mediaService.importVideo(data.url, data.isHighlight, data.availableFrom).then(res => {
             if (res.isFailure()) {
                 control.setError("root", { message: res.getErrorMsg() })
                 return;
@@ -55,6 +56,16 @@ export function VideoImport(props: Props) {
                             )}
                             control={control}
                             name="url"
+                            defaultValue=""
+                        />
+                        <Controller
+                            render={({ field: { ref, ...rest } }) => (
+                                <TextField {...rest}
+                                    fullWidth
+                                    label={t('hint_available_from')} />
+                            )}
+                            control={control}
+                            name="availableFrom"
                             defaultValue=""
                         />
                         <Box display={'flex'} alignItems={'center'}>
