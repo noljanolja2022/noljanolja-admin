@@ -24,6 +24,33 @@ export const formatToDecimal = (input: string) => {
         .replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2")
 }
 
+export const parseStringToDateTime = (input: string) => {
+    if (!input) {
+        return new Date();
+    }
+
+    return new Date(input);
+}
+
+export const formatDateTimeToString = (input: Date) => {
+    if (!input) {
+        return '';
+    }
+
+    let year = input.getFullYear();
+    let month = input.getMonth() + 1;
+    let monthStr = month.toString();
+    if (monthStr.length === 1) monthStr = '0' + monthStr;
+    let dt = input.getDate().toString();
+    if (dt.length === 1) dt = '0' + dt;
+    let hour = input.getHours().toString();
+    if (hour.length === 1) hour = '0' + hour;
+    let min = input.getMinutes().toString();
+    if (min.length === 1) min = '0' + min;
+
+    return `${year}-${monthStr}-${dt} ${hour}:${min}`;
+}
+
 export const responseToBase64Img = (res: AxiosResponse<any, any>) => {
     return `data:${res.headers['content-type']};base64,${new Buffer(res.data).toString('base64')}`;
 }

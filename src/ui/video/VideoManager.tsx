@@ -7,7 +7,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { VideoRewardConfig } from "../../data/model/ConfigModels";
+import { VideoRewardConfig, convertApiVideoRewardConfigToVideoRewardConfig } from "../../data/model/ConfigModels";
 import { Video } from "../../data/model/VideoModels";
 import useVideoManager from "../../hook/useVideoManager";
 import rewardService from "../../service/RewardService";
@@ -40,7 +40,7 @@ function VideoManager() {
                 return;
             }
             if (res.data != null) {
-                setSettingEditor(res.data)
+                setSettingEditor(convertApiVideoRewardConfigToVideoRewardConfig(res.data))
             } else {
                 setSettingEditor({
                     videoId: item.id,
