@@ -12,11 +12,29 @@ export interface ApiVideoRewardConfig {
     likeMaxApplyTimes: number;
     likeRewardPoints: number;
     rewardProgresses: ApiVideoRewardConfigProgress[];
+    accumulationConfigLog: string;
 }
 
 export interface ApiVideoRewardConfigProgress {
     progress: number;
     point: number;
+}
+
+export function convertApiVideoRewardConfigToVideoRewardConfig(apiVideoRewardConfig: ApiVideoRewardConfig): VideoRewardConfig {
+    return {
+        id: apiVideoRewardConfig.id,
+        videoId: apiVideoRewardConfig.videoId,
+        isActive: apiVideoRewardConfig.isActive,
+        maxApplyTimes: apiVideoRewardConfig.maxApplyTimes,
+        totalPoints: apiVideoRewardConfig.totalPoints,
+        minCommentLength: apiVideoRewardConfig.minCommentLength,
+        commentMaxApplyTimes: apiVideoRewardConfig.commentMaxApplyTimes,
+        commentRewardPoints: apiVideoRewardConfig.commentRewardPoints,
+        likeMaxApplyTimes: apiVideoRewardConfig.likeMaxApplyTimes,
+        likeRewardPoints: apiVideoRewardConfig.likeRewardPoints,
+        rewardProgresses: apiVideoRewardConfig.rewardProgresses,
+        accumulationConfigLog: JSON.parse(apiVideoRewardConfig.accumulationConfigLog)
+    }
 }
 
 export interface VideoRewardConfig {
@@ -31,11 +49,17 @@ export interface VideoRewardConfig {
     likeMaxApplyTimes: number;
     likeRewardPoints: number;
     rewardProgresses: VideoRewardConfigProgress[];
+    accumulationConfigLog: AccumulationConfigLog[];
 }
 
 export interface VideoRewardConfigProgress {
     progress: number;
     point: number;
+}
+
+export interface AccumulationConfigLog {
+    startTime: string;
+    percentage: number;
 }
 
 export interface UpdateVideoRewardPayload {
@@ -49,6 +73,7 @@ export interface UpdateVideoRewardPayload {
     commentRewardPoints: number;
     likeMaxApplyTimes: number;
     likeRewardPoints: number;
+    accumulationConfigLog: string;
 }
 
 export enum RoomType {
