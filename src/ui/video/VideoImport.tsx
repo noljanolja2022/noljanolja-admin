@@ -4,6 +4,7 @@ import useVideoManager from "../../hook/useVideoManager";
 import mediaService from "../../service/MediaService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Switch, TextField, Typography } from "../widget/mui";
+import { formatDateTimeToString } from "../../util/StringUtils";
 
 interface ImportFormProps {
     url: string;
@@ -28,11 +29,14 @@ export function VideoImport(props: Props) {
     });
 
     const onImportVideo = (data: ImportFormProps) => {
-        if (data.availableFrom.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/) === null) {
+        if (data.availableFrom.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null) {
             control.setError("root", { message: 'Date format is invalid' })
             return;
         }
         setLoading()
+
+        data.availableFrom = data.availableFrom + ':00Z'
+        data.availableFrom = data.availableFrom.replace(' ', 'T')
         mediaService.importVideo(data.url, data.isHighlight, data.availableFrom).then(res => {
             if (res.isFailure()) {
                 control.setError("root", { message: res.getErrorMsg() })
@@ -67,11 +71,12 @@ export function VideoImport(props: Props) {
                                 <TextField {...rest}
                                     fullWidth
                                     label={t('hint_available_from')} 
+                                    error={rest.value.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null}
                                     />
                             )}
                             control={control}
                             name="availableFrom"
-                            defaultValue=""
+                            defaultValue={formatDateTimeToString(new Date())}
                         />
                         <Box display={'flex'} alignItems={'center'}>
                             <Typography>Is Highlighted:</Typography>

@@ -11,7 +11,7 @@ export function parseDateTime(date?: Date) {
         return "-"
     }
     const tmp = new Date(date)
-    return `${tmp.getDate()}/${tmp.getMonth()+1}/${tmp.getFullYear()} ${tmp.getHours()}:${tmp.getMinutes()}:${tmp.getSeconds()}`
+    return `${tmp.getDate().toString().padStart(2, '0')}/${(tmp.getMonth()+1 + '').padStart(2, '0')}/${tmp.getFullYear()} ${tmp.getHours().toString().padStart(2, '0')}:${tmp.getMinutes().toString().padStart(2, '0')}:${tmp.getSeconds().toString().padStart(2, '0')}`
 }
 
 export function parseDateToIso(date: Date) {
