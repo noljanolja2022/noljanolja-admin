@@ -75,7 +75,7 @@
     "label_today_offer":"Today Offer",
     "label_available_from": "Available From",
     "label_start_time": "Start Time",
-    "label_percentage": "Percentage",
+    "label_percentage": "Percentage (%)",
 
     "hint_enter_referee_points": "Enter referee points",
     "hint_enter_referer_points": "Enter referrer points",
