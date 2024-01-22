@@ -25,6 +25,10 @@ export function convertApiVideoRewardConfigToVideoRewardConfig(apiVideoRewardCon
     for (let i = 0; i < accumulationConfigLog.length; i++) {
         accumulationConfigLog[i].startTime = accumulationConfigLog[i].startTime.replace('T', ' ')
     }
+    let rewardProgresses = apiVideoRewardConfig.rewardProgresses
+    for (let i = 0; i < rewardProgresses.length; i++) {
+        rewardProgresses[i].progress = rewardProgresses[i].progress * 100
+    }
     return {
         id: apiVideoRewardConfig.id,
         videoId: apiVideoRewardConfig.videoId,

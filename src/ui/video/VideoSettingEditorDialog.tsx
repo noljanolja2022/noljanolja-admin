@@ -122,7 +122,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
                 mileStone => mileStone.point != 0 && mileStone.progress != 0)
             .map(e => ({
                 point: e.point,
-                progress: e.progress
+                progress: e.progress / 100
             }))
         if (eligibleProgress.length == 0) {
             alert("Progress isn't right")
@@ -311,7 +311,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
                                     <TableCell >
                                         <Box display={'flex'} flexDirection={'row'} gap={0.5}>
                                             {t('label_milestone')}
-                                            <Tooltip title="Indicate when an user will receive reward based on milestone. Value must be bigger than 0 and smaller and equal to 1">
+                                            <Tooltip title="Indicate when an user will receive reward based on milestone. Value must be bigger than 0 and smaller and equal to 100">
                                                 <InfoIcon />
                                             </Tooltip>
                                         </Box>
@@ -408,8 +408,8 @@ export function VideoRewardProgressInput({ progress, point, onChangePoint, onCha
                     inputMode="decimal"
                     type="number"
                     value={progress}
-                    error={progress < 0 || progress > 1}
-                    onChange={(event) => onChangeProgress(formatToDecimal(event.target.value))}
+                    error={progress < 0 || progress > 100}
+                    onChange={(event) => onChangeProgress(formatToInt(event.target.value))}
                 />
             </TableCell>
             <TableCell >
