@@ -28,6 +28,10 @@ export function VideoImport(props: Props) {
     });
 
     const onImportVideo = (data: ImportFormProps) => {
+        if (data.availableFrom.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/) === null) {
+            control.setError("root", { message: 'Date format is invalid' })
+            return;
+        }
         setLoading()
         mediaService.importVideo(data.url, data.isHighlight, data.availableFrom).then(res => {
             if (res.isFailure()) {
@@ -62,7 +66,8 @@ export function VideoImport(props: Props) {
                             render={({ field: { ref, ...rest } }) => (
                                 <TextField {...rest}
                                     fullWidth
-                                    label={t('hint_available_from')} />
+                                    label={t('hint_available_from')} 
+                                    />
                             )}
                             control={control}
                             name="availableFrom"

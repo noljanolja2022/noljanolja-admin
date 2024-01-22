@@ -131,7 +131,7 @@ export default function VideoSettingEditorDialog({ data, onClose }: Props) {
 
         const eligibleAccummulatedConfigs: AccumulationConfigLog[] = accummulatedConfigs
             .filter(
-                config => config.percentage >= 0 && config.percentage <= 100 && config.startTime.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/) != null)
+                config => config.percentage >= 0 && config.percentage <= 100 && config.startTime.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) != null)
             .map(e => ({
                 percentage: e.percentage,
                 startTime: e.startTime.replace(' ', 'T')
@@ -450,7 +450,7 @@ export function AccumulationConfigLogInput({ startTime, percentage, onChangeStar
                     required
                     inputMode="text"
                     type="text"
-                    error={startTime.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/) === null}
+                    error={startTime.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null}
                     value={startTime}
                     onChange={(event) => onChangeStartTime(event.target.value)}
                 />
