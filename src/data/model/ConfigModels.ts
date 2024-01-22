@@ -21,6 +21,10 @@ export interface ApiVideoRewardConfigProgress {
 }
 
 export function convertApiVideoRewardConfigToVideoRewardConfig(apiVideoRewardConfig: ApiVideoRewardConfig): VideoRewardConfig {
+    let accumulationConfigLog = JSON.parse(apiVideoRewardConfig.accumulationConfigLog)
+    for (let i = 0; i < accumulationConfigLog.length; i++) {
+        accumulationConfigLog[i].startTime = accumulationConfigLog[i].startTime.replace('T', ' ')
+    }
     return {
         id: apiVideoRewardConfig.id,
         videoId: apiVideoRewardConfig.videoId,
@@ -33,7 +37,7 @@ export function convertApiVideoRewardConfigToVideoRewardConfig(apiVideoRewardCon
         likeMaxApplyTimes: apiVideoRewardConfig.likeMaxApplyTimes,
         likeRewardPoints: apiVideoRewardConfig.likeRewardPoints,
         rewardProgresses: apiVideoRewardConfig.rewardProgresses,
-        accumulationConfigLog: JSON.parse(apiVideoRewardConfig.accumulationConfigLog)
+        accumulationConfigLog: accumulationConfigLog
     }
 }
 
