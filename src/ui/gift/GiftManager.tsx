@@ -2,10 +2,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 import IconButton from "@mui/material/IconButton";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Gift } from "../../data/model/Gift";
+import { Gift, GiftBrand, GiftCategory } from "../../data/model/Gift";
 import useBrandManager from "../../hook/useBrandManager";
 import useGiftCategoryManager from '../../hook/useGiftCategory';
 import useGiftManager from "../../hook/useGiftManager";
@@ -15,6 +16,7 @@ import { parseDate } from "../../util/DateUtil";
 import { Box, Button, Pagination, Stack, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "../widget/mui";
 import { GiftEditorDialog } from "./GiftEditorDialog";
 import GiftFilter from './GiftFilter';
+import { GiftAddDialogParams, GiftAddDialog } from './GiftAddDialog';
 
 export default function GiftManager() {
     const { setLoading, setIdle } = useLoadingStore();
@@ -23,6 +25,7 @@ export default function GiftManager() {
     const { fetchBrands } = useBrandManager();
     const { fetch: fetchCategory } = useGiftCategoryManager();
     const [editing, setEditing] = useState<Nullable<Gift>>(null);
+    const [adding, setAdding] = useState<Nullable<GiftAddDialogParams>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
@@ -41,19 +44,43 @@ export default function GiftManager() {
         fetchGifts()
     }, [currentPage])
 
-
     useEffect(() => {
         fetchBrands();
         fetchCategory()
     }, [])
 
 
+
     return <Stack spacing={1} p={2}>
-        <Box sx={{ display: 'flex', justifyContent: 'end', flexDirection: 'row' }}>
-            <GiftFilter />
-            <Button onClick={onImport}>
-                Sync data with GiftBiz
-            </Button>
+        <GiftFilter />
+        
+        <Box sx={{ display: 'flex', justifyContent: 'end', flexGrow: 1, gap: 2, flexDirection: 'row' }}>
+            <Button onClick={onImport}>Sync data with GiftBiz</Button>
+            
+            <Button onClick={
+                () => {
+                    let brands: GiftBrand[] = [];
+                    let categories: GiftCategory[] = [];
+                    giftService.fetchBrands("", "IN", 1, 1000).then(res => {
+                        if (res.isFailure()) {
+                            return;
+                        }
+                        brands.push(...res.data ?? [])
+                    }).finally(() => {
+                        giftService.fetchCategories("", 1, 100).then(res => {
+                            if (res.isFailure()) {
+                                return;
+                            }
+                            categories.push(...res.data ?? [])
+                        }).finally(() => {
+                            setAdding({
+                                brands: brands,
+                                categories: categories
+                            })
+                        })
+                    })
+                }
+            }><AddIcon />{t('label_add')}</Button>
         </Box>
         <Table sx={{ minWidth: 650, }}>
             <TableHead>
@@ -100,5 +127,6 @@ export default function GiftManager() {
         </Table>
         {totalPage > 1 && <Pagination count={totalPage} shape="rounded" onChange={onChangePage} />}
         {editing && <GiftEditorDialog data={editing} onClose={() => setEditing(null)} />}
+        {adding && <GiftAddDialog data={adding} onClose={() => setAdding(null)}/>}
     </Stack>
 }

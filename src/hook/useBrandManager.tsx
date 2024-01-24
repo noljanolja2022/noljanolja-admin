@@ -5,11 +5,11 @@ import { useBrandStore } from "../store/brandStore";
 
 export default function useBrandManager() {
     const { setLoading, setIdle } = useLoadingStore();
-    const { brands, setBrands, currentPage, totalPage, setCurrentPage,setTotalPage } = useBrandStore();
+    const { brands, setBrands, currentPage, totalPage, setCurrentPage, setTotalPage } = useBrandStore();
 
-    const fetchBrands = (query: string = '', locale: string = 'KR') => {
+    const fetchBrands = (query: string = '', locale: string = 'KR', page: number = currentPage, pageSize: number = 5) => {
         setLoading()
-        giftService.fetchBrands(query, locale, currentPage).then(res => {
+        giftService.fetchBrands(query, locale, page, pageSize).then(res => {
             if (res.isFailure()) {
                 return;
             }
