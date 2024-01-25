@@ -1,8 +1,6 @@
 import { t } from "i18next";
 import { Controller, useForm } from "react-hook-form";
-import { Gift, GiftBrand, GiftCategory } from "../../data/model/Gift";
-import useGiftCategoryManager from "../../hook/useGiftCategory";
-import useBrandManager from "../../hook/useBrandManager";
+import { GiftBrand, GiftCategory } from "../../data/model/Gift";
 import giftService from "../../service/GiftService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
@@ -29,7 +27,6 @@ interface FormProps {
     brand: Nullable<GiftBrand>;
     isActive: boolean;
 }
-
 
 export function GiftAddDialog({data, onClose }: Props) {
     const { setLoading, setIdle, showSuccessNoti } = useLoadingStore();
@@ -190,7 +187,6 @@ export function GiftAddDialog({data, onClose }: Props) {
                                     )}
                                 </Select>
                             </FormControl>
-
                         )}
                             name="category"
                             control={control}
