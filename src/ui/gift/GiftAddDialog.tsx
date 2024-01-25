@@ -75,7 +75,7 @@ export function GiftAddDialog({data, onClose }: Props) {
 
     return (
         <Dialog open fullWidth maxWidth="sm">
-            <DialogTitle>Add Gift (Indian Only)</DialogTitle>
+            <DialogTitle>Add Gift (India Only)</DialogTitle>
             <form onSubmit={handleSubmit(importIndianGift)} >
                 <DialogContent>
                     <Grid item 
