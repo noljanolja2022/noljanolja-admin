@@ -35,6 +35,28 @@ class GiftService {
         return parseResponse(await api.get(`v1/gifts/import`)) 
     }
 
+    async importIndianGift(
+        voucherCode: string,
+        name: string,
+        description: string,
+        image: string,
+        brandId: string,
+        categoryId: number,
+        price: number,
+        isActive: boolean,
+    ) {
+        return parseResponse(await api.post('v1/gifts/indian/import', {
+            voucherCode,
+            name,
+            description,
+            image,
+            brandId,
+            categoryId,
+            price,
+            isActive,
+        }))
+    }
+
     async createGift(name: string, description: string,
         image: File, codes: string[],
         startTime: Date,

@@ -186,7 +186,6 @@ export function GiftEditorDialog({ data, onClose }: Props) {
                                 name="price"
                                 control={control}
                             />
-
                         </Grid>
                     </Grid>
                 </DialogContent>
