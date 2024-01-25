@@ -78,6 +78,7 @@
     "label_percentage": "Percentage (%)",
     "label_voucher_code": "Voucher Code",
     "label_image_url": "Image URL",
+    "label_is_active": "Active",
 
     "hint_enter_referee_points": "Enter referee points",
     "hint_enter_referer_points": "Enter referrer points",
