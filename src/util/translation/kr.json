@@ -75,6 +75,8 @@
     "label_available_from": "사용 가능",
     "label_start_time": "시작 시간",
     "label_percentage": "백분율 (%)",
+    "label_voucher_code": "바우처 코드",
+    "label_image_url": "이미지 URL",
 
     "hint_enter_referee_points": "피추천인 포인트",
     "hint_enter_referer_points": "추천인 포인트",

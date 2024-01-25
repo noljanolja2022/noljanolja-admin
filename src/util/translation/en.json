@@ -76,6 +76,8 @@
     "label_available_from": "Available From",
     "label_start_time": "Start Time",
     "label_percentage": "Percentage (%)",
+    "label_voucher_code": "Voucher Code",
+    "label_image_url": "Image URL",
 
     "hint_enter_referee_points": "Enter referee points",
     "hint_enter_referer_points": "Enter referrer points",

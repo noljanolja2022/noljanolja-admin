@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Gift, GiftBrand, GiftCategory } from "../../data/model/Gift";
 import useGiftCategoryManager from "../../hook/useGiftCategory";
 import useBrandManager from "../../hook/useBrandManager";
+import giftService from "../../service/GiftService";
 import { useLoadingStore } from "../../store/LoadingStore";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
 
@@ -20,7 +21,7 @@ interface FormProps {
     id: string;
     name: string;
     description: string;
-    image: string;
+    imageUrl: string;
     brandId: string;
     categoryId: number;
     price: number;
@@ -35,6 +36,7 @@ export function GiftAddDialog({data, onClose }: Props) {
 
     const {
         control,
+        handleSubmit,
         setValue,
         formState: { errors },
     } = useForm<FormProps>({
@@ -42,7 +44,7 @@ export function GiftAddDialog({data, onClose }: Props) {
             id: '',
             name: '',
             description:  '',
-            image: '',
+            imageUrl: '',
             brandId:  data.brands[0]?.id ?? '',
             categoryId:  data.categories[0]?.id ?? 0,
             price:  0,
@@ -50,10 +52,34 @@ export function GiftAddDialog({data, onClose }: Props) {
         }
     });
 
+    const importIndianGift = (formInput: FormProps) => {
+        console.log(formInput)
+        setLoading()
+        giftService.importIndianGift(
+            formInput.id,
+            formInput.name,
+            formInput.description,
+            formInput.imageUrl,
+            formInput.brandId,
+            formInput.categoryId,
+            formInput.price,
+            formInput.isActive
+        ).then(res => {
+            if (res.isFailure()) {
+                control.setError("root", { message: res.getErrorMsg() })
+                return;
+            }
+            onClose();
+            showSuccessNoti('Import Indian gift successfully')
+        }).finally(() => {
+            setIdle()
+        })
+    }
+
     return (
         <Dialog open fullWidth maxWidth="sm">
-            <DialogTitle>Add Gift</DialogTitle>
-            <form onSubmit={() => {}} >
+            <DialogTitle>Add Gift (Indian Only)</DialogTitle>
+            <form onSubmit={handleSubmit(importIndianGift)} >
                 <DialogContent>
                     <Grid item 
                         display={'flex'}
@@ -61,7 +87,7 @@ export function GiftAddDialog({data, onClose }: Props) {
                         gap={1}>
 
                         <Controller render={({ field: { ref, ...rest } }) => (
-                            <TextField
+                            <TextField {...rest}
                                 label={t('label_voucher_code')}
                                 fullWidth />
                             )}
@@ -70,7 +96,7 @@ export function GiftAddDialog({data, onClose }: Props) {
                         />
 
                         <Controller render={({ field: { ref, ...rest } }) => (
-                            <TextField
+                            <TextField {...rest}
                                 label={t('label_name')}
                                 fullWidth />
                             )}
@@ -79,7 +105,7 @@ export function GiftAddDialog({data, onClose }: Props) {
                         />
 
                         <Controller render={({ field: { ref, ...rest } }) => (
-                            <TextField
+                            <TextField {...rest}
                                 multiline={true}
                                 rows={6}
                                 label={t('label_description')}
@@ -91,10 +117,10 @@ export function GiftAddDialog({data, onClose }: Props) {
 
                         <Controller render={({ field: { ref, ...rest } }) => (
                             <TextField  {...rest}
-                                label={t('label_image')}
+                                label={t('label_image_url')}
                                 fullWidth />
                             )}
-                            name="image"
+                            name="imageUrl"
                             control={control}
                         />
                         
