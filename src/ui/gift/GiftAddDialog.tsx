@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { GiftBrand, GiftCategory } from "../../data/model/Gift";
 import giftService from "../../service/GiftService";
 import { useLoadingStore } from "../../store/LoadingStore";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
+import { Switch, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "../widget/mui";
 
 type Props = {
     data: GiftAddDialogParams,
@@ -45,7 +45,7 @@ export function GiftAddDialog({data, onClose }: Props) {
             brandId:  data.brands[0]?.id ?? '',
             categoryId:  data.categories[0]?.id ?? 0,
             price:  0,
-            isActive: true,
+            isActive: false,
         }
     });
 
@@ -201,6 +201,15 @@ export function GiftAddDialog({data, onClose }: Props) {
                         )}
                             name="price"
                             control={control}
+                        />
+
+                        <Typography>{t('label_is_active')}</Typography>
+                        <Controller
+                            render={({ field: { ref, ...rest } }) => (
+                                <Switch checked={rest.value} onChange={(e) => rest.onChange(e.target.checked)} />
+                            )}
+                            control={control}
+                            name="isActive"
                         />
                     </Grid>
                 </DialogContent>
