@@ -10,6 +10,7 @@ interface ImportFormProps {
     url: string;
     isHighlight: boolean;
     availableFrom: string;
+    availableTo: string;
 }
 
 type Props = {
@@ -29,15 +30,26 @@ export function VideoImport(props: Props) {
     });
 
     const onImportVideo = (data: ImportFormProps) => {
-        if (data.availableFrom.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null) {
-            control.setError("root", { message: 'Date format is invalid' })
-            return;
+        if (data.availableFrom !== '') {
+            if (data.availableFrom.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null) {
+                control.setError("root", { message: '\'Available From\' format is invalid' })
+                return;
+            }
+            data.availableFrom = data.availableFrom + ':00Z'
+            data.availableFrom = data.availableFrom.replace(' ', 'T')
+        } 
+       
+        if (data.availableTo !== '') {
+            if (data.availableTo.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null) {
+                control.setError("root", { message: '\'Available To\' format is invalid' })
+                return;
+            }
+            data.availableTo = data.availableTo + ':00Z'
+            data.availableTo = data.availableTo.replace(' ', 'T')
         }
         setLoading()
 
-        data.availableFrom = data.availableFrom + ':00Z'
-        data.availableFrom = data.availableFrom.replace(' ', 'T')
-        mediaService.importVideo(data.url, data.isHighlight, data.availableFrom).then(res => {
+        mediaService.importVideo(data.url, data.isHighlight, data.availableFrom, data.availableTo).then(res => {
             if (res.isFailure()) {
                 control.setError("root", { message: res.getErrorMsg() })
                 return;
@@ -71,12 +83,24 @@ export function VideoImport(props: Props) {
                                 <TextField {...rest}
                                     fullWidth
                                     label={t('hint_available_from')} 
-                                    error={rest.value.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null}
+                                    error={rest.value != '' && rest.value.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null}
                                     />
                             )}
                             control={control}
                             name="availableFrom"
                             defaultValue={formatDateTimeToString(new Date())}
+                        />
+                        <Controller
+                            render={({ field: { ref, ...rest } }) => (
+                                <TextField {...rest}
+                                    fullWidth
+                                    label={t('hint_available_to')} 
+                                    error={rest.value != '' && rest.value.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/) === null}
+                                    />
+                            )}
+                            control={control}
+                            name="availableTo"
+                            defaultValue=""
                         />
                         <Box display={'flex'} alignItems={'center'}>
                             <Typography>Is Highlighted:</Typography>

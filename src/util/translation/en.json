@@ -87,6 +87,7 @@
     "hint_enter_youtube_url": "Please enter youtube url",
     "hint_search": "Search...",
     "hint_available_from": "Available from (2024-01-07 22:52)",
+    "hint_available_to": "Available to (2024-01-07 22:52)",
     "error_empty_email": "Email can't be empty",
     "error_empty_pwd": "Password can't be empty",
     "error_invalid_email": "Email is invalid. Please try again",
