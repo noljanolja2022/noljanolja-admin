@@ -86,6 +86,7 @@
     "hint_enter_youtube_url": "유튜브 URL을 입력해주세요",
     "hint_search": "검색",
     "hint_available_from": "부터 사용 가능 (2024-01-07 22:52)",
+    "hint_available_to": "사용할 수 (2024-01-07 22:52)",
     "error_empty_email": "이메일이 입력되지 않았습니다!",
     "error_empty_pwd": "패스워드가 입력되지 않았습니다.",
     "error_invalid_email": "이메일이 유효하지 않습니다. 다시 입력해주세요.",
