@@ -1,6 +1,6 @@
 import { Result } from '../data/model/Result';
 import { StickerPack } from '../data/model/StickerModels';
-import { PromotedVideoConfig, Video } from '../data/model/VideoModels';
+import { PromotedVideoConfig, Video, VideoAnalytic } from '../data/model/VideoModels';
 import api from './ApiClient';
 import parseResponse from './ResponseParse';
 
@@ -41,7 +41,17 @@ class MediaService {
             params: {
                 page,
                 pageSize,
-                query,isActive
+                query,
+                isActive
+            }
+        }))
+    }
+
+    async getVideoAnalytics(page: number = 1, pageSize: number = 5): Promise<Result<Array<VideoAnalytic>>> {
+        return parseResponse(await api.get('v1/media/videos/analytics', {
+            params: {
+                page,
+                pageSize,
             }
         }))
     }

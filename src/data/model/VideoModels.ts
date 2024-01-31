@@ -21,6 +21,18 @@ export interface Video {
     deletedAt: Date | null
 }
 
+export interface VideoAnalytic {
+    id: string,
+    title: string,
+    thumbnail: string,
+    url: string,
+    viewCount: number,
+    likeCount: number,
+    favoriteCount: number,
+    commentCount: number,
+    rewardedPoints: number,
+}
+
 export interface PromotedVideoConfig {
     id: number;
     startDate: Date;
