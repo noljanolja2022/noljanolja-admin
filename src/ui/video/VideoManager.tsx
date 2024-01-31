@@ -1,6 +1,7 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -17,6 +18,7 @@ import { Box, Button, Stack, Table, TableBody, TableCell, TableHead, TableRow, T
 import { Pagination } from "../widget/mui/Pagination";
 import VideoFilter from './VideoFilter';
 import { VideoImport } from "./VideoImport";
+import VideoRewardConfigEditorDialog from "./VideoRewardConfigEditorDialog";
 import VideoSettingEditorDialog from "./VideoSettingEditorDialog";
 import mediaService from '../../service/MediaService';
 
@@ -25,8 +27,9 @@ function VideoManager() {
     const { t } = useTranslation();
     const { setLoading, setIdle } = useLoadingStore();
     const { videos, fetch, currentPage, setCurrentPage, totalPage } = useVideoManager();
-    const [settingEditor, setSettingEditor] = useState<Nullable<Partial<VideoRewardConfig>>>(null);
+    const [rewardConfigEditor, setRewardConfigEditor] = useState<Nullable<Partial<VideoRewardConfig>>>(null);
     const [showImport, setShowImport] = useState(false);
+    const [videoSettingEditor, setVideoSettingEditor] = useState<Nullable<Partial<Video>>>(null);
 
     const onChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value)
@@ -40,15 +43,19 @@ function VideoManager() {
                 return;
             }
             if (res.data != null) {
-                setSettingEditor(convertApiVideoRewardConfigToVideoRewardConfig(res.data))
+                setRewardConfigEditor(convertApiVideoRewardConfigToVideoRewardConfig(res.data))
             } else {
-                setSettingEditor({
+                setRewardConfigEditor({
                     videoId: item.id,
                 })
             }
         }).finally(() => {
             setIdle();
         })
+    }
+
+    const onOpenVideoEditting = (item: Video) => {
+        setVideoSettingEditor(item)
     }
 
     const onSoftDeleteVideo = (item: Video) => {
@@ -111,13 +118,16 @@ function VideoManager() {
                             <TableCell >{video.channel.title}</TableCell>
                             <TableCell >{parseDate(new Date(video.publishedAt))}</TableCell>
                             <TableCell >{video.availableFrom == null ? '' : parseDateTime(video.availableFrom)}</TableCell>
-                            <TableCell >{video.deletedAt == null ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
+                            <TableCell >{video.isDeactivated === false ? <CheckIcon color="success" /> : <CloseIcon color="error" />}</TableCell>
                             <TableCell >
                                 <IconButton onClick={() => window.open(video.url, '_blank')}>
                                     <OpenInNewIcon />
                                 </IconButton>
                                 <Tooltip title={t('label_setting')}>
                                     <IconButton onClick={() => onOpenVideoSetting(video)}><SettingsIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title={t('label_edit')}>
+                                    <IconButton onClick={() => onOpenVideoEditting(video)}><EditIcon /></IconButton>
                                 </Tooltip>
                                 <Tooltip title={t('label_delete')}>
                                     <IconButton onClick={() => onSoftDeleteVideo(video)}><DeleteIcon /></IconButton>
@@ -128,9 +138,11 @@ function VideoManager() {
                 </TableBody>
             </Table>
             {totalPage > 1 && <Pagination count={totalPage} shape="rounded" onChange={onChangePage} />}
-            {settingEditor && <VideoSettingEditorDialog data={settingEditor}
-                onClose={() => setSettingEditor(null)} />}
+            {rewardConfigEditor && <VideoRewardConfigEditorDialog data={rewardConfigEditor}
+                onClose={() => setRewardConfigEditor(null)} />}
             {showImport && <VideoImport onClose={() => setShowImport(false)} />}
+            {videoSettingEditor && <VideoSettingEditorDialog data={videoSettingEditor}
+                onClose={() => setVideoSettingEditor(null)} />}
         </Stack>
     )
 }

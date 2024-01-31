@@ -33,9 +33,11 @@ export const parseStringToDateTime = (input: string) => {
 }
 
 export const formatDateTimeToString = (input: Date) => {
-    if (!input) {
+    if (!input || input === null) {
         return '';
     }
+
+    input = new Date(input)
 
     let year = input.getFullYear();
     let month = input.getMonth() + 1;
@@ -47,7 +49,7 @@ export const formatDateTimeToString = (input: Date) => {
     if (hour.length === 1) hour = '0' + hour;
     let min = input.getMinutes().toString();
     if (min.length === 1) min = '0' + min;
-
+    
     return `${year}-${monthStr}-${dt} ${hour}:${min}`;
 }
 
