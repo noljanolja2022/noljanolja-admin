@@ -49,7 +49,7 @@ export function VideoImport(props: Props) {
         }
         setLoading()
 
-        mediaService.importVideo(data.url, data.isHighlight, data.availableFrom, data.availableTo).then(res => {
+        mediaService.importVideo(data.url, data.isHighlight, false, data.availableFrom, data.availableTo).then(res => {
             if (res.isFailure()) {
                 control.setError("root", { message: res.getErrorMsg() })
                 return;

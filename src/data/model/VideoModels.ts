@@ -12,6 +12,8 @@ export interface Video {
     commentCount: number,
     isHighlighted: boolean,
     availableFrom: Date | null,
+    availableTo: Date | null,
+    isDeactivated: boolean,
     channel: Channel,
     category: Category
     createdAt: Date,
