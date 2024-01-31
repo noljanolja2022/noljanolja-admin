@@ -16,6 +16,7 @@ import UserManager from '../ui/user/UsersManager';
 import VideoPromotionManager from '../ui/video-promotion/VideoPromotionManager';
 import VideoManager from '../ui/video/VideoManager';
 import PrivateRoute from '../ui/widget/PrivateRoute';
+import VideoAnalyticManager from '../ui/video-analytic/videoAnalyticManager';
 
 export const RoutePaths = {
     dashboard: 'dashboard',
@@ -30,7 +31,8 @@ export const RoutePaths = {
     bannerManager: 'banner',
     checkinManager: 'checkinManager',
     referralManager: 'referralManager',
-    coinExchangeManager: 'coin-exchange-manager'
+    coinExchangeManager: 'coin-exchange-manager',
+    videoAnalyticManager: 'video-analytic-manager'
 }
 
 export const LoginPath = "/login"
@@ -55,6 +57,7 @@ export default function AppRoutes() {
                     <Route path={RoutePaths.checkinManager} element={<CheckinConfigManager />} />
                     <Route path={RoutePaths.promoteVideoManager} element={<VideoPromotionManager />} />
                     <Route path={RoutePaths.coinExchangeManager} element={<CoinExchangeManager />} />
+                    <Route path={RoutePaths.videoAnalyticManager} element={<VideoAnalyticManager />} />
                     <Route index element={<Navigate to={RoutePaths.dashboard} />} />
                 </Route>
             </Route>

@@ -11,6 +11,7 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import useWindowMQ from "../../hook/UseWindowWidth";
@@ -92,6 +93,9 @@ export default function SideBar(props: Props) {
         { path: RoutePaths.checkinManager, text: t('label_checkin_setting'), icon: <ChecklistIcon/>},
         { path: RoutePaths.promoteVideoManager, text: t('label_video_promotion'), icon: <CameraIndoorIcon/>},
         { path: RoutePaths.coinExchangeManager, text: t('label_coin_exchange'), icon: <MonetizationOnIcon/>},
+        { path: '', text: t('label_analytic'), icon: <AnalyticsIcon/>, subMenu: [
+            {path: RoutePaths.videoAnalyticManager, text: t('label_video_analytic'), icon: <OndemandVideoIcon/>}
+        ]}
         //uncomment for debug youtubeapi
         // { path: 'content-management', text: 'test', icon: <CameraIndoorIcon/>},
     ]
